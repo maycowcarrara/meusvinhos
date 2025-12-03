@@ -7,6 +7,9 @@
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -41,13 +44,13 @@
         body.theme-superman { --theme-name: "Kal-El"; --bg-page: #f0f8ff; --card-bg: #ffffff; --primary: #003D7C; --accent: #AC0D0D; --secondary: #F2B900; --text-main: #00274c; --text-muted: #5c7c99; --font-title: 'Orbitron', sans-serif; --font-body: 'Montserrat', sans-serif; --font-script: 'Orbitron', sans-serif; --border-color: #89CFF0; --shadow-color: rgba(0, 61, 124, 0.2); --wave-opacity: 0.2; }
 
         /* =========================================
-           BASE CSS
+           BASE
            ========================================= */
         * { box-sizing: border-box; }
         body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
         .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
 
-        /* HEADER & CARD CAPA */
+        /* HEADER & FILTROS */
         .header-card-body { padding: 40px 20px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 40px; }
         .header-icon { width: 80px; height: 80px; fill: var(--primary); margin-bottom: 20px; }
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 3em; margin: 0; line-height: 1; }
@@ -56,13 +59,21 @@
         /* FILTROS OTIMIZADOS */
         .filter-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 25px; background: transparent; align-items: center; }
         
-        /* Inputs */
         .filter-input, .filter-select { padding: 8px 12px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.7); border-radius: 20px; font-family: var(--font-body); color: var(--text-main); font-size: 0.9em; flex: 1 1 auto; outline: none; transition: all 0.3s; min-width: 120px; max-width: 200px; }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); box-shadow: 0 0 5px var(--shadow-color); }
         
-        /* Botão Limpar Minimalista */
-        .clear-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 1.2em; flex-shrink: 0; }
-        .clear-btn:hover { background: var(--secondary); color: white; border-color: var(--secondary); }
+        /* Botões de Ação (Limpar e Exportar) */
+        .action-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 1.1em; flex-shrink: 0; }
+        .action-btn:hover { background: var(--secondary); color: white; border-color: var(--secondary); transform: scale(1.1); }
+        .action-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* Loading overlay para exportação */
+        #exportLoading {
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(255,255,255,0.9); z-index: 20000;
+            justify-content: center; align-items: center; flex-direction: column;
+            color: var(--primary); font-family: var(--font-title);
+        }
 
         .filter-stats { width: 100%; text-align: center; color: var(--text-muted); font-size: 0.8em; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -78,21 +89,17 @@
         .photos img:hover { transform: scale(1.02); }
         .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         
-        /* Typography */
         .wine-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 10px; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
         .flag-box { width: 45px; height: 30px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
         .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
         .wine-name { font-family: var(--font-title); font-size: 1.8em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
         .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1.5px; margin-top: 5px; }
         .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1.05em; line-height: 1.5; margin: 15px 0; padding-left: 15px; border-left: 3px solid var(--secondary); }
-        
         .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; background-color: rgba(0,0,0,0.03); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9em; }
         .tech-item { display: flex; align-items: center; gap: 6px; color: var(--text-main); }
         .tech-icon { width: 18px; height: 18px; fill: var(--primary); flex-shrink: 0; }
-        
         .rating-stars { color: #ddd; font-size: 1.4em; cursor: pointer; margin-bottom: 10px; }
         .rating-stars span.active { color: #f1c40f; }
-        
         .strength-wrapper { margin-top: auto; }
         .strength-label { display: flex; justify-content: space-between; font-size: 0.75em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; font-weight: bold; }
         .strength-track { background: #e0e0e0; height: 8px; border-radius: 10px; overflow: hidden; }
@@ -110,13 +117,11 @@
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
         .close-modal:hover { color: var(--primary); }
 
-        /* GRÁFICOS CSS NO MODAL */
+        /* GRÁFICOS & INFO */
         .chart-row { margin-bottom: 15px; }
         .chart-label { display: flex; justify-content: space-between; font-size: 0.9em; margin-bottom: 5px; font-weight: bold; }
         .chart-bar-bg { background: #eee; height: 12px; border-radius: 6px; overflow: hidden; }
         .chart-bar-fill { height: 100%; background: var(--primary); width: 0; transition: width 1s; }
-
-        /* INFO MODAL STYLES */
         .info-section { margin-bottom: 20px; }
         .info-title { font-family: var(--font-title); color: var(--accent); font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; }
         .info-text { font-size: 0.9em; line-height: 1.4; color: var(--text-muted); }
@@ -139,7 +144,7 @@
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
             .tech-grid { grid-template-columns: 1fr; }
-            .filter-input, .filter-select { flex: 1 1 100%; } /* Filtros empilhados no mobile */
+            .filter-input, .filter-select { flex: 1 1 100%; } 
         }
 
         @media print {
@@ -154,6 +159,11 @@
     </style>
 </head>
 <body class="">
+
+    <div id="exportLoading">
+        <div style="font-size: 3em;">🍷</div>
+        <div style="margin-top:20px;">Gerando arquivo...</div>
+    </div>
 
     <div class="fab-container no-print">
         <div class="fab" onclick="openInfoModal()" title="Enciclopédia">?</div>
@@ -177,8 +187,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('biModal')">&times;</span>
             <h2 style="color: var(--primary); font-family: var(--font-title); text-align: center; margin-top:0;">Estatísticas da Adega</h2>
-            <div id="chartsContainer">
-                </div>
+            <div id="chartsContainer"></div>
         </div>
     </div>
 
@@ -186,25 +195,8 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('infoModal')">&times;</span>
             <h2 style="color: var(--primary); font-family: var(--font-title); text-align: center;">Guia Rápido</h2>
-            
-            <div class="info-section">
-                <div class="info-title">Escala de Corpo (Força)</div>
-                <div class="info-text">
-                    <strong>1 - Leve/Suave:</strong> Vinhos fáceis, doces ou muito jovens. Parecem suco.<br>
-                    <strong>3 - Médio Corpo:</strong> Equilibrados. Tem presença mas não "pesam". Gastronômicos.<br>
-                    <strong>5 - Robusto:</strong> Vinhos com muito tanino, álcool e extração. Enchem a boca.
-                </div>
-            </div>
-            
-            <div class="info-section">
-                <div class="info-title">Uvas Comuns</div>
-                <div class="info-text">
-                    <strong>Cabernet Sauvignon:</strong> A rainha. Estruturada, tânica, aromas de cassis.<br>
-                    <strong>Malbec:</strong> Fruta doce, macia, encorpada. Típica da Argentina.<br>
-                    <strong>Carmenere:</strong> Especiarias, pimentão doce, textura aveludada.<br>
-                    <strong>Tannat/Syrah:</strong> Potência, cor escura, muita estrutura.
-                </div>
-            </div>
+            <div class="info-section"><div class="info-title">Escala de Corpo</div><div class="info-text"><strong>1 - Leve:</strong> Vinhos jovens, fáceis de beber.<br><strong>3 - Médio:</strong> Equilibrados, boa acidez.<br><strong>5 - Robusto:</strong> Muita estrutura, taninos e álcool.</div></div>
+            <div class="info-section"><div class="info-title">Uvas</div><div class="info-text"><strong>Cabernet:</strong> Tânica e estruturada.<br><strong>Malbec:</strong> Frutada e macia.<br><strong>Carmenere:</strong> Especiarias e herbáceo.<br><strong>Syrah:</strong> Potente e escura.</div></div>
         </div>
     </div>
 
@@ -218,22 +210,25 @@
                 <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
                 <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Países</option></select>
                 <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safras</option></select>
+                <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
+                <select id="strengthSelect" class="filter-select" onchange="applyFilters()"><option value="">Corpo</option><option value="1">1 - Suave</option><option value="3">3 - Médio</option><option value="5">5 - Robusto</option></select>
                 <select id="sortSelect" class="filter-select" onchange="applyFilters()">
-                    <option value="nome">Ordenar: Nome (A-Z)</option>
-                    <option value="forcaDesc">Ordenar: + Fortes</option>
-                    <option value="safraDesc">Ordenar: + Recentes</option>
-                    <option value="abvDesc">Ordenar: + Álcool</option>
+                    <option value="nome">Ordem: Nome</option>
+                    <option value="forcaDesc">Ordem: + Forte</option>
+                    <option value="safraDesc">Ordem: Safra</option>
+                    <option value="abvDesc">Ordem: Álcool</option>
                 </select>
-                <button class="clear-btn" onclick="clearFilters()" title="Limpar Filtros">&#10005;</button>
+                <button class="action-btn" onclick="clearFilters()" title="Limpar Filtros">&#10005;</button>
+                <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
+                <button class="action-btn" onclick="exportToImage()" title="Exportar Imagem"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></button>
+                <div class="filter-stats" id="filterStats"></div>
             </div>
-            <div class="filter-stats" id="filterStats"></div>
         </div>
 
         <div id="wineListContainer" style="display: contents;"></div>
     </div>
 
     <script>
-        // --- DADOS ---
         const flags = { "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`, "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`, "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`, "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`, "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`, "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`, "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M240 250 A 200 200 0 0 0 550 200" stroke="#fff" stroke-width="15" fill="none"/></svg>` };
         const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,17.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
         const iconDrop = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M12,2c-5.33,5.33-8,10.67-8,16c0,4.42,3.58,8,8,8s8-3.58,8-8C20,12.67,17.33,7.33,12,2z M12,24c-3.31,0-6-2.69-6-6c0-4,2-8,6-12c4,4,6,8,6,12C18,21.31,15.31,24,12,24z"/></svg>`;
@@ -257,7 +252,6 @@
             { nome: "Bituruna Niágara Suave", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Niágara", abv: "10,7%", safra: "NV", forca: 1, poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil.", imgFrente: "images/20251202_111725.jpg", imgVerso: "images/20251202_111725.jpg" }
         ];
 
-        // POVOAR FILTROS
         function populateFilters() {
             const countries = new Set(vinhos.map(v => v.pais).sort());
             const years = new Set(vinhos.map(v => v.safra).sort());
@@ -272,18 +266,16 @@
             abvs.forEach(val => aSelect.innerHTML += `<option value="${val}">${val}</option>`);
         }
 
-        // RATING
         function getRating(wineName) { return parseInt(localStorage.getItem(`rating_${wineName}`) || 0); }
         function setRating(wineName, rating) {
             localStorage.setItem(`rating_${wineName}`, rating);
             applyFilters();
         }
 
-        // RENDERIZAR
         function renderCatalog(listToRender) {
             const container = document.getElementById('wineListContainer');
             container.innerHTML = ''; 
-            document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} rótulos`;
+            document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} de ${vinhos.length} rótulos`;
 
             if(listToRender.length === 0) {
                 container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">Nenhum vinho encontrado.</div>';
@@ -337,49 +329,28 @@
             });
         }
 
-        // LÓGICA DE FILTRO & SORT
         function applyFilters() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const countryVal = document.getElementById('countrySelect').value;
             const yearVal = document.getElementById('yearSelect').value;
             const abvVal = document.getElementById('abvSelect').value;
-            const strengthVal = document.getElementById('strengthSelect').value; // Aqui pode ser vazio se não selecionado
+            const strengthVal = document.getElementById('strengthSelect').value;
             const sortVal = document.getElementById('sortSelect').value;
 
-            // Filtro
             let filtered = vinhos.filter(v => {
-                // Busca Global
                 const allData = (v.nome + " " + v.pais + " " + v.regiao + " " + v.uvas + " " + v.safra + " " + v.abv).toLowerCase();
                 const matchText = allData.includes(searchText);
-                
                 const matchCountry = countryVal === "" || v.pais === countryVal;
                 const matchYear = yearVal === "" || v.safra === yearVal;
                 const matchAbv = abvVal === "" || v.abv === abvVal;
-                
-                // Correção aqui: Verificar se strengthVal não é vazio antes de comparar
                 const matchStrength = strengthVal === "" || v.forca.toString() === strengthVal;
-
                 return matchText && matchCountry && matchYear && matchAbv && matchStrength;
             });
 
-            // Ordenação
-            if(sortVal === 'nome') {
-                filtered.sort((a,b) => a.nome.localeCompare(b.nome));
-            } else if(sortVal === 'forcaDesc') {
-                filtered.sort((a,b) => b.forca - a.forca);
-            } else if(sortVal === 'safraDesc') {
-                filtered.sort((a,b) => {
-                    const sa = a.safra === 'NV' ? 0 : parseInt(a.safra);
-                    const sb = b.safra === 'NV' ? 0 : parseInt(b.safra);
-                    return sb - sa;
-                });
-            } else if(sortVal === 'abvDesc') {
-                filtered.sort((a,b) => {
-                    const aa = parseFloat(a.abv.replace(',','.'));
-                    const ab = parseFloat(b.abv.replace(',','.'));
-                    return ab - aa;
-                });
-            }
+            if(sortVal === 'nome') filtered.sort((a,b) => a.nome.localeCompare(b.nome));
+            else if(sortVal === 'forcaDesc') filtered.sort((a,b) => b.forca - a.forca);
+            else if(sortVal === 'safraDesc') filtered.sort((a,b) => (b.safra === 'NV' ? 0 : parseInt(b.safra)) - (a.safra === 'NV' ? 0 : parseInt(a.safra)));
+            else if(sortVal === 'abvDesc') filtered.sort((a,b) => parseFloat(b.abv.replace(',','.')) - parseFloat(a.abv.replace(',','.')));
 
             renderCatalog(filtered);
         }
@@ -389,54 +360,66 @@
             document.getElementById('countrySelect').value = "";
             document.getElementById('yearSelect').value = "";
             document.getElementById('abvSelect').value = "";
-            document.getElementById('strengthSelect').value = ""; // Reseta o filtro de corpo
+            document.getElementById('strengthSelect').value = "";
             document.getElementById('sortSelect').value = "nome";
             applyFilters();
         }
 
-        // --- DASHBOARD GRÁFICO ---
+        // Export Functions
+        async function exportToPDF() {
+            document.getElementById('exportLoading').style.display = 'flex';
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const cards = document.querySelectorAll('#wineListContainer .wine-card');
+            
+            for(let i=0; i<cards.length; i++) {
+                if(i > 0 && i % 2 === 0) doc.addPage();
+                const canvas = await html2canvas(cards[i], { scale: 2, useCORS: true });
+                const imgData = canvas.toDataURL('image/png');
+                const yPos = (i % 2) * 140 + 10; 
+                doc.addImage(imgData, 'PNG', 10, yPos, 190, 130);
+            }
+            doc.save('adega-export.pdf');
+            document.getElementById('exportLoading').style.display = 'none';
+        }
+
+        async function exportToImage() {
+            document.getElementById('exportLoading').style.display = 'flex';
+            const element = document.getElementById('wineListContainer');
+            const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+            const link = document.createElement('a');
+            link.download = 'adega-snapshot.png';
+            link.href = canvas.toDataURL();
+            link.click();
+            document.getElementById('exportLoading').style.display = 'none';
+        }
+
+        // Dashboard & Modals
         function openDashboard() {
-            // Stats Básicos
-            // (Logica de KPIs igual à anterior, mas vou focar nos GRÁFICOS aqui)
-            
-            // Gráfico País
-            const counts = {}; 
-            vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
-            let sortedCountries = Object.keys(counts).sort((a,b) => counts[b] - counts[a]); // Top países
-            
-            let chartsHTML = '<div class="chart-section"><h3 style="margin-top:0">Distribuição por País</h3>';
+            const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
+            let sortedCountries = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
+            let html = '<div class="chart-section"><h3 style="margin-top:0">Distribuição por País</h3>';
             sortedCountries.forEach(c => {
                 const pct = (counts[c] / vinhos.length) * 100;
-                chartsHTML += `
-                    <div class="chart-row">
-                        <div class="chart-label"><span>${c}</span><span>${counts[c]}</span></div>
-                        <div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${pct}%"></div></div>
-                    </div>`;
+                html += `<div class="chart-row"><div class="chart-label"><span>${c}</span><span>${counts[c]}</span></div><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${pct}%"></div></div></div>`;
             });
-            chartsHTML += '</div>';
-
-            // Gráfico Força
-            const forcaCounts = {1:0, 2:0, 3:0, 4:0, 5:0};
-            vinhos.forEach(v => forcaCounts[v.forca]++);
-            chartsHTML += '<div class="chart-section"><h3>Intensidade (Corpo)</h3>';
+            html += '</div>';
+            
+            const forcaCounts = {1:0, 2:0, 3:0, 4:0, 5:0}; vinhos.forEach(v => forcaCounts[v.forca]++);
+            html += '<div class="chart-section"><h3>Intensidade</h3>';
             for(let i=1; i<=5; i++) {
                 const pct = (forcaCounts[i] / vinhos.length) * 100;
-                chartsHTML += `
-                    <div class="chart-row">
-                        <div class="chart-label"><span>Nível ${i}</span><span>${forcaCounts[i]}</span></div>
-                        <div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${pct}%"></div></div>
-                    </div>`;
+                html += `<div class="chart-row"><div class="chart-label"><span>Nível ${i}</span><span>${forcaCounts[i]}</span></div><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${pct}%"></div></div></div>`;
             }
-            chartsHTML += '</div>';
-
-            document.getElementById('chartsContainer').innerHTML = chartsHTML;
+            html += '</div>';
+            document.getElementById('chartsContainer').innerHTML = html;
             document.getElementById('biModal').style.display = "flex";
         }
 
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
 
-        // --- LIGHTBOX (Pan & Zoom Melhorado) ---
+        // Lightbox Logic (Pan & Zoom)
         let currentScale = 1;
         let isDragging = false;
         let startX, startY, translateX = 0, translateY = 0;
@@ -449,80 +432,36 @@
             img.src = src;
             resetZoom();
         }
-
         function closeLightbox() { modal.style.display = 'none'; }
-
-        function resetZoom() {
-            currentScale = 1; translateX = 0; translateY = 0;
-            updateTransform();
-        }
-
+        function resetZoom() { currentScale = 1; translateX = 0; translateY = 0; updateTransform(); }
         function zoomImage(factor) {
             currentScale += factor;
-            if (currentScale < 0.5) currentScale = 0.5;
-            if (currentScale > 4) currentScale = 4;
+            if(currentScale < 0.5) currentScale = 0.5;
+            if(currentScale > 4) currentScale = 4;
             updateTransform();
         }
+        function updateTransform() { img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`; }
 
-        function updateTransform() {
-            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
-        }
+        wrapper.addEventListener('mousedown', e => { if(currentScale<=1)return; isDragging=true; startX=e.clientX-translateX; startY=e.clientY-translateY; wrapper.style.cursor='grabbing'; e.preventDefault(); });
+        window.addEventListener('mouseup', () => { isDragging=false; wrapper.style.cursor='grab'; });
+        window.addEventListener('mousemove', e => { if(!isDragging)return; e.preventDefault(); translateX=e.clientX-startX; translateY=e.clientY-startY; updateTransform(); });
+        
+        wrapper.addEventListener('touchstart', e => { if(currentScale<=1)return; isDragging=true; startX=e.touches[0].clientX-translateX; startY=e.touches[0].clientY-translateY; });
+        wrapper.addEventListener('touchend', () => { isDragging=false; });
+        wrapper.addEventListener('touchmove', e => { if(!isDragging)return; e.preventDefault(); translateX=e.touches[0].clientX-startX; translateY=e.touches[0].clientY-translateY; updateTransform(); });
 
-        // Drag Mouse
-        wrapper.addEventListener('mousedown', e => {
-            if(currentScale <= 1) return;
-            isDragging = true;
-            startX = e.clientX - translateX;
-            startY = e.clientY - translateY;
-            wrapper.style.cursor = 'grabbing';
-            e.preventDefault();
-        });
+        wrapper.addEventListener('wheel', e => { e.preventDefault(); if(e.deltaY < 0) zoomImage(0.2); else zoomImage(-0.2); });
 
-        window.addEventListener('mouseup', () => { isDragging = false; wrapper.style.cursor = 'grab'; });
-
-        window.addEventListener('mousemove', e => {
-            if (!isDragging) return;
-            e.preventDefault();
-            translateX = e.clientX - startX;
-            translateY = e.clientY - startY;
-            updateTransform();
-        });
-
-        // Drag Touch
-        wrapper.addEventListener('touchstart', e => {
-            if(currentScale <= 1) return;
-            isDragging = true;
-            startX = e.touches[0].clientX - translateX;
-            startY = e.touches[0].clientY - translateY;
-        });
-        wrapper.addEventListener('touchend', () => { isDragging = false; });
-        wrapper.addEventListener('touchmove', e => {
-            if (!isDragging) return;
-            e.preventDefault(); 
-            translateX = e.touches[0].clientX - startX;
-            translateY = e.touches[0].clientY - startY;
-            updateTransform();
-        });
-
-        // Wheel Zoom
-        wrapper.addEventListener('wheel', e => {
-            e.preventDefault();
-            if (e.deltaY < 0) zoomImage(0.2); else zoomImage(-0.2);
-        });
-
-        // ESC & Click Outside
+        // Event Listeners Globais
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeLightbox();
-                closeModal('biModal');
-                closeModal('infoModal');
-            }
+            if (event.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }
         });
+        
+        document.getElementById('lightbox').onclick = function(e) { if(e.target === this) closeLightbox(); };
+        document.getElementById('biModal').onclick = function(e) { if(e.target === this) closeModal('biModal'); };
+        document.getElementById('infoModal').onclick = function(e) { if(e.target === this) closeModal('infoModal'); };
 
-        // Clicar no fundo escuro fecha (já implementado no HTML onclick)
-        // document.getElementById('lightbox').onclick = closeLightbox; // Reforço
-
-        // --- INIT ---
+        // Theme & Init
         const themes = [ { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' }, { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' } ];
         let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme') || 0);
         if(currentThemeIndex >= themes.length) currentThemeIndex = 0;
