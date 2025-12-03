@@ -40,35 +40,35 @@
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.5em; margin-top: 5px; }
 
-        /* FILTROS COMPACTOS */
+        /* FILTROS COMPACTOS - AJUSTADO */
         .filter-section {
-            max-width: 900px; margin: 0 auto 30px auto;
-            background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color);
-            padding: 8px 12px; box-shadow: 0 2px 8px var(--shadow-color);
-            display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: nowrap;
-            overflow-x: auto; /* Permite scroll horizontal em telas muito pequenas */
+            max-width: 900px; margin: 0 auto 20px auto;
+            background: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color);
+            padding: 4px 8px; box-shadow: 0 2px 8px var(--shadow-color);
+            display: flex; align-items: center; justify-content: space-between; gap: 4px; flex-wrap: nowrap;
+            overflow-x: auto;
         }
         
-        .filter-group { display: flex; gap: 6px; flex: 1; align-items: center; }
+        .filter-group { display: flex; gap: 4px; flex: 1; align-items: center; }
         
         .filter-input, .filter-select { 
-            padding: 5px 8px; border: 1px solid var(--border-color); background: var(--bg-page); 
-            border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
-            outline: none; height: 30px; 
+            padding: 3px 6px; border: 1px solid var(--border-color); background: var(--bg-page); 
+            border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.8em; 
+            outline: none; height: 26px; 
         }
-        .filter-input { min-width: 100px; flex-grow: 1; }
-        .filter-select { min-width: 90px; }
+        .filter-input { min-width: 80px; flex-grow: 1; }
+        .filter-select { min-width: 70px; }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
 
         .action-btn { 
             background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); 
-            width: 30px; height: 30px; border-radius: 4px; cursor: pointer; 
+            width: 26px; height: 26px; border-radius: 4px; cursor: pointer; 
             display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; 
         }
         .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .action-btn svg { width: 16px; height: 16px; fill: currentColor; }
+        .action-btn svg { width: 14px; height: 14px; fill: currentColor; }
         
-        .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; margin-left: auto; font-weight: bold; }
+        .filter-stats { font-size: 0.7em; color: var(--text-muted); white-space: nowrap; margin-left: auto; font-weight: bold; }
 
         /* LOADING */
         #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
@@ -109,7 +109,7 @@
         .fab:hover { opacity: 1; transform: scale(1.1); }
         .fab svg { width: 22px; height: 22px; fill: white; }
 
-        /* MODALS */
+        /* MODALS BASE */
         .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
         .modal-content { background: var(--card-bg); padding: 25px; width: 90%; max-width: 650px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
@@ -151,7 +151,15 @@
             body { background: white; padding: 0; }
             .catalog-grid { display: block; }
             .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; page-break-inside: avoid; }
-            .photos img { filter: none; }
+            .photos { flex: 0 0 180px; }
+            .photos img { 
+                filter: none; 
+                height: auto;
+                max-height: 280px;
+                width: auto;
+                max-width: 90px;
+                object-fit: contain;
+            }
             .bg-text-top { opacity: 0.05 !important; }
             .card-wave-top, .strength-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
@@ -177,13 +185,79 @@
     </div>
 
     <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas</h2><div id="chartsContainer"></div></div></div>
-    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve/Suave) a 5 (Robusto/Estruturado).<br><strong>Taninos:</strong> Sensação de secura na boca (adstringência).</div></div></div>
+
+    <!-- GUIA RÁPIDO MELHORADO -->
+    <div id="infoModal" class="modal no-print">
+        <div class="modal-content" style="max-width: 550px;">
+            <span class="close-modal" onclick="closeModal('infoModal')">&times;</span>
+            
+            <h2 style="text-align:center; color:var(--primary); margin-bottom: 20px; font-family: var(--font-title);">
+                🍷 Guia Rápido
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 14px; border-radius: 10px;">
+                    <div style="font-weight: bold; font-size: 0.9em; margin-bottom: 6px;">📊 Escala de Corpo</div>
+                    <div style="font-size: 0.8em; line-height: 1.4;">
+                        <strong>1</strong> = Leve, delicado<br>
+                        <strong>2-3</strong> = Médio, equilibrado<br>
+                        <strong>4-5</strong> = Robusto, encorpado
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, var(--accent), var(--secondary)); color: white; padding: 14px; border-radius: 10px;">
+                    <div style="font-weight: bold; font-size: 0.9em; margin-bottom: 6px;">🫗 Taninos</div>
+                    <div style="font-size: 0.8em; line-height: 1.4;">
+                        Sensação de "secura" na boca (adstringência). Vinhos tintos geralmente têm mais taninos que brancos.
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.03); padding: 14px; border-radius: 10px; margin-bottom: 16px;">
+                <div style="font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 0.95em;">🎯 Como usar este catálogo</div>
+                <ul style="font-size: 0.85em; line-height: 1.6; padding-left: 18px; margin: 0; color: var(--text-main);">
+                    <li><strong>Filtros:</strong> Use país, safra ou álcool para encontrar vinhos específicos</li>
+                    <li><strong>Ordenação:</strong> Organize por nome, força ou safra</li>
+                    <li><strong>Estrelas:</strong> Clique nas ★ para avaliar seus favoritos (salva no navegador)</li>
+                    <li><strong>Zoom:</strong> Clique nas fotos para ampliar (pinça no celular)</li>
+                    <li><strong>PDF:</strong> Exporte o catálogo para compartilhar ou imprimir</li>
+                </ul>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div style="border: 1px solid var(--border-color); padding: 12px; border-radius: 8px;">
+                    <div style="font-weight: bold; font-size: 0.85em; color: var(--primary); margin-bottom: 4px;">🍇 Uvas Tintas</div>
+                    <div style="font-size: 0.75em; color: var(--text-muted); line-height: 1.5;">
+                        Malbec, Tempranillo, Syrah, Touriga Nacional, Sangiovese, Carmenere
+                    </div>
+                </div>
+                <div style="border: 1px solid var(--border-color); padding: 12px; border-radius: 8px;">
+                    <div style="font-weight: bold; font-size: 0.85em; color: var(--primary); margin-bottom: 4px;">🥂 Uvas Brancas</div>
+                    <div style="font-size: 0.75em; color: var(--text-muted); line-height: 1.5;">
+                        Niágara, Casca Dura, Sauvignon Blanc, Chardonnay
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-page); padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent);">
+                <div style="font-weight: bold; font-size: 0.85em; color: var(--accent); margin-bottom: 4px;">💡 Dica de harmonização</div>
+                <div style="font-size: 0.8em; color: var(--text-muted); line-height: 1.5;">
+                    Vinhos leves (corpo 1-2) combinam com peixes e saladas. Vinhos encorpados (corpo 4-5) pedem carnes vermelhas e queijos maturados.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 18px;">
+                <button onclick="closeModal('infoModal')" style="background: var(--primary); color: white; border: none; padding: 10px 28px; border-radius: 25px; cursor: pointer; font-family: var(--font-body); font-weight: bold;">
+                    Entendi! 👍
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="catalog-grid">
         <div class="header-card-body">
             <svg class="header-icon" viewBox="0 0 24 24"><path d="M12 2C12.55 2 13 2.45 13 3V4.17C14.17 4.58 15 5.69 15 7C15 8.66 13.66 10 12 10C10.34 10 9 8.66 9 7C9 5.69 9.83 4.58 11 4.17V3C11 2.45 11.45 2 12 2M17 9C18.1 9 19 9.9 19 11C19 12.1 18.1 13 17 13C16.9 13 16.8 13 16.7 12.98C16.89 12.38 17 11.72 17 11.03V11H17M7 9C7 11.03 7.11 12.38 7.3 12.98C7.2 13 7.1 13 7 13C5.9 13 5 12.1 5 11C5 9.9 5.9 9 7 9M12 11C13.66 11 15 12.34 15 14C15 15.66 13.66 17 12 17C10.34 17 9 15.66 9 14C9 12.34 10.34 11 12 11M17.3 14.02C17.11 14.62 17 15.97 17 18C17 19.1 16.1 20 15 20C14.72 20 14.45 19.94 14.2 19.84C14.54 19.04 14.82 18.07 14.94 17.01C14.98 17 15.02 16.99 15.06 16.99C15.04 16.95 15.02 16.92 15 16.88C14.78 16.95 14.54 16.99 14.3 17.02C14.11 17.62 14 18.97 14 21C14 22.1 13.1 23 12 23C10.9 23 10 22.1 10 21C10 18.97 9.89 17.62 9.7 17.02C9.46 16.99 9.22 16.95 9 16.88C8.98 16.92 8.96 16.95 8.94 16.99C8.98 16.99 9.02 17 9.06 17.01C9.18 18.07 9.46 19.04 9.8 19.84C9.55 19.94 9.28 20 9 20C7.9 20 7 19.1 7 18C7 15.97 6.89 14.62 6.7 14.02C6.8 14.01 6.9 14 7 14C7.02 14 7.04 14 7.06 14C7.14 14.78 7.33 15.63 7.58 16.51C7.83 16.45 8.09 16.41 8.37 16.39C8.43 15.71 8.65 15.12 9 14.65V14.64C9 14.42 9.04 14.21 9.13 14.01C9.7 13.63 10.74 13.31 11.97 13.04C12.04 13.31 13.7 13.63 14.27 14.01C14.35 14.21 14.39 14.42 14.39 14.64V14.65C14.74 15.12 14.97 15.71 15.02 16.39C15.3 16.41 15.57 16.45 15.82 16.51C16.06 15.63 16.25 14.78 16.33 14C16.35 14 16.37 14 16.39 14C16.49 14 16.59 14.01 16.69 14.02Z"/></svg>
             <h1 class="main-title">Adega Pessoal M&M</h1>
-            <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
+            <p class="main-subtitle">Coleção Selecionada • Catálogo Analítico</p>
         </div>
 
         <div id="filterSection" class="filter-section no-print">
@@ -400,7 +474,7 @@
             // Top Grape
             const grapeCounts = {};
             vinhos.forEach(v => {
-                const uvas = v.uvas.split(','); // Divide se tiver mais de uma
+                const uvas = v.uvas.split(',');
                 uvas.forEach(u => {
                     const uvaTrim = u.trim();
                     grapeCounts[uvaTrim] = (grapeCounts[uvaTrim] || 0) + 1;
@@ -452,13 +526,13 @@
         function openLightbox(src) {
             modal.style.display = 'flex';
             img.src = src;
-            document.body.style.overflow = 'hidden'; // Bloqueia scroll da página
+            document.body.style.overflow = 'hidden';
             resetZoom();
         }
 
         function closeLightbox() {
             modal.style.display = 'none';
-            document.body.style.overflow = ''; // Libera scroll
+            document.body.style.overflow = '';
         }
 
         function resetZoom() {
@@ -523,7 +597,7 @@
 
         // Wheel Zoom (Desktop)
         wrapper.addEventListener('wheel', e => {
-            e.preventDefault(); // Impede scroll da página
+            e.preventDefault();
             if (e.deltaY < 0) zoomManual(0.2);
             else zoomManual(-0.2);
         });
@@ -532,7 +606,6 @@
         modal.addEventListener('click', e => {
             if (e.target === modal || e.target === wrapper) closeLightbox();
         });
-        // Não fechar ao clicar na imagem
         img.addEventListener('click', e => e.stopPropagation());
 
         // ESC fecha tudo
