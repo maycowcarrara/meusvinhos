@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adega Pessoal - Catálogo Final</title>
+    <title>Adega Pessoal M&M - Catálogo Digital</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,17 +11,15 @@
 
     <style>
         /* =========================================
-           SISTEMA DE TEMAS (CSS VARIABLES)
+           SISTEMA DE TEMAS
            ========================================= */
-        
-        /* TEMA 1: CLÁSSICO (Padrão) */
         :root {
             --theme-name: "Clássico";
             --bg-page: #f4f1ea;
             --card-bg: #ffffff;
-            --primary: #722f37;       /* Merlot */
-            --accent: #c5a059;        /* Dourado */
-            --secondary: #9e4755;     /* Vinho claro */
+            --primary: #722f37;
+            --accent: #c5a059;
+            --secondary: #9e4755;
             --text-main: #2c2c2c;
             --text-muted: #666666;
             --font-title: 'Playfair Display', serif;
@@ -32,14 +30,13 @@
             --wave-opacity: 0.4;
         }
 
-        /* TEMA 2: MODERNO (NOIR) */
         body.theme-modern {
             --theme-name: "Moderno";
             --bg-page: #f0f2f5;
             --card-bg: #ffffff;
-            --primary: #2c3e50;       /* Chumbo */
-            --accent: #34495e;        /* Azul Aço */
-            --secondary: #7f8c8d;     /* Cinza */
+            --primary: #2c3e50;
+            --accent: #34495e;
+            --secondary: #7f8c8d;
             --text-main: #1a1a1a;
             --text-muted: #7f8c8d;
             --font-title: 'Montserrat', sans-serif;
@@ -50,14 +47,13 @@
             --wave-opacity: 0.8;
         }
 
-        /* TEMA 3: RÚSTICO (TERROIR) */
         body.theme-rustic {
             --theme-name: "Rústico";
-            --bg-page: #e8e4d9;       /* Papel Kraft claro */
+            --bg-page: #e8e4d9;
             --card-bg: #fdfbf7;
-            --primary: #5d4037;       /* Marrom Terra */
-            --accent: #33691e;        /* Verde Oliva Escuro */
-            --secondary: #8d6e63;     /* Marrom claro */
+            --primary: #5d4037;
+            --accent: #33691e;
+            --secondary: #8d6e63;
             --text-main: #3e2723;
             --text-muted: #5d4037;
             --font-title: 'Cinzel', serif;
@@ -68,14 +64,13 @@
             --wave-opacity: 0.6;
         }
 
-        /* TEMA 4: ROSÉ (PROVENCE) */
         body.theme-rose {
             --theme-name: "Rosé";
-            --bg-page: #fff0f5;       /* Lavanda muito pálido */
+            --bg-page: #fff0f5;
             --card-bg: #ffffff;
-            --primary: #d81b60;       /* Pink Sofisticado */
-            --accent: #f48fb1;        /* Rosa claro */
-            --secondary: #ad1457;     /* Rosa escuro */
+            --primary: #d81b60;
+            --accent: #f48fb1;
+            --secondary: #ad1457;
             --text-main: #4a4a4a;
             --text-muted: #888888;
             --font-title: 'Playfair Display', serif;
@@ -86,14 +81,13 @@
             --wave-opacity: 0.3;
         }
 
-        /* TEMA 5: PREMIUM (GOLD) */
         body.theme-gold {
             --theme-name: "Premium";
-            --bg-page: #1a1a1a;       /* Fundo Escuro */
-            --card-bg: #fffcf5;       /* Creme rico */
-            --primary: #000000;       /* Preto absoluto */
-            --accent: #d4af37;        /* Ouro Metálico */
-            --secondary: #b8860b;     /* Ouro escuro */
+            --bg-page: #1a1a1a;
+            --card-bg: #fffcf5;
+            --primary: #000000;
+            --accent: #d4af37;
+            --secondary: #b8860b;
             --text-main: #111111;
             --text-muted: #555555;
             --font-title: 'Cinzel', serif;
@@ -104,14 +98,13 @@
             --wave-opacity: 0.5;
         }
 
-        /* TEMA 6: FRESCOR (VERDE) */
         body.theme-green {
             --theme-name: "Frescor";
-            --bg-page: #f1f8e9;       /* Verde menta pálido */
+            --bg-page: #f1f8e9;
             --card-bg: #ffffff;
-            --primary: #2e7d32;       /* Verde Floresta */
-            --accent: #8bc34a;        /* Verde Lima */
-            --secondary: #558b2f;     /* Oliva */
+            --primary: #2e7d32;
+            --accent: #8bc34a;
+            --secondary: #558b2f;
             --text-main: #1b5e20;
             --text-muted: #689f38;
             --font-title: 'Montserrat', sans-serif;
@@ -157,6 +150,59 @@
             transition: all 0.5s ease;
         }
 
+        /* =========================================
+           ESTILOS DO FILTRO (NOVO)
+           ========================================= */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 25px;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .filter-input, .filter-select {
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 0.95em;
+            color: var(--text-main);
+            background-color: var(--bg-page);
+            outline: none;
+            transition: border-color 0.3s;
+            min-width: 150px;
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            border-color: var(--accent);
+        }
+
+        .filter-input { flex: 2; }
+        
+        .filter-stats {
+            font-family: var(--font-title);
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Elementos Decorativos dos Cards */
         .card-wave-top {
             background-color: var(--primary);
             height: 15px;
@@ -240,7 +286,7 @@
             z-index: 2;
         }
 
-        /* CONTEÚDO */
+        /* CONTEÚDO CARD */
         .card-body {
             display: flex;
             flex-direction: row;
@@ -465,6 +511,10 @@
         @media print {
             body { background-color: white; padding: 0; }
             body.theme-gold { background-color: white !important; }
+            
+            /* Ocultar filtro e botão na impressão */
+            .no-print { display: none !important; }
+            
             .catalog-grid { display: block; }
             .wine-card { 
                 box-shadow: none; 
@@ -474,7 +524,6 @@
             }
             .photos { height: 350px; flex: 0 0 200px; }
             .photos img { max-height: 320px; filter: none; }
-            .no-print { display: none !important; }
             .bg-text-top { -webkit-print-color-adjust: exact; print-color-adjust: exact; opacity: 0.1 !important; }
             .card-wave-top, .card-top-solid, .strength-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .flag-box { border: 1px solid #000; }
@@ -489,6 +538,27 @@
     </div>
 
     <div class="catalog-grid">
+        
+        <div class="filter-container no-print">
+            <div class="filter-group">
+                <input type="text" id="searchInput" class="filter-input" placeholder="Buscar por Nome, Uva ou Região..." oninput="applyFilters()">
+                
+                <select id="countrySelect" class="filter-select" onchange="applyFilters()">
+                    <option value="">Todos os Países</option>
+                    </select>
+
+                <select id="strengthSelect" class="filter-select" onchange="applyFilters()">
+                    <option value="">Qualquer Força</option>
+                    <option value="1">1 - Leve/Suave</option>
+                    <option value="2">2 - Fresco</option>
+                    <option value="3">3 - Médio Corpo</option>
+                    <option value="4">4 - Encorpado</option>
+                    <option value="5">5 - Robusto</option>
+                </select>
+            </div>
+            <div class="filter-stats" id="filterStats">Carregando...</div>
+        </div>
+
         <div class="wine-card">
             <div class="card-top-solid"></div>
             <div class="card-wave-top"></div>
@@ -496,12 +566,12 @@
             
             <div class="header-card-body">
                 <svg class="header-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12.5523 2 13 2.44772 13 3V4.17071C14.1652 4.58254 15 5.69378 15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.69378 9.83481 4.58254 11 4.17071V3C11 2.44772 11.4477 2 12 2ZM17 9C18.1046 9 19 9.89543 19 11C19 12.1046 18.1046 13 17 13C16.8993 13 16.8004 12.9922 16.7039 12.9772C16.8929 12.3781 17 11.721 17 11.0256V11H17ZM7 9C7 11.0256 7.10714 12.3781 7.2961 12.9772C7.19962 12.9922 7.10069 13 7 13C5.89543 13 5 12.1046 5 11C5 9.89543 5.89543 9 7 9ZM12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11ZM17.2961 14.0228C17.1071 14.6219 17 15.9744 17 18C17 19.1046 16.1046 20 15 20C14.7176 20 14.4496 19.9413 14.2046 19.8353C14.5427 19.042 14.8166 18.0673 14.9392 17.009C14.9803 16.9995 15.0215 16.9942 15.0628 16.9902C15.0418 16.9537 15.021 16.9171 15.0006 16.8804C14.7766 16.9452 14.5422 16.9859 14.2961 17.0228C14.1071 17.6219 14 18.9744 14 21C14 22.1046 13.1046 23 12 23C10.8954 23 10 22.1046 10 21C10 18.9744 9.89286 17.6219 9.7039 17.0228C9.45781 16.9859 9.22342 16.9452 8.9994 16.8804C8.97898 16.9171 8.95825 16.9537 8.93724 16.9902C8.97854 16.9942 9.01968 16.9995 9.06077 17.009C9.18342 18.0673 9.45729 19.042 9.79538 19.8353C9.55042 19.9413 9.28245 20 9 20C7.89543 20 7 19.1046 7 18C7 15.9744 6.89286 14.6219 6.7039 14.0228C6.80038 14.0078 6.89931 14 7 14C7.02154 14 7.04297 14.0004 7.06428 14.0011C7.14361 14.7779 7.33083 15.626 7.57538 16.5147C7.82855 16.4526 8.09348 16.4116 8.36952 16.3934C8.4287 15.7077 8.65063 15.1189 9 14.6536V14.6364C9 14.4208 9.04467 14.2121 9.12903 14.0121C9.69708 13.6301 10.7423 13.3101 11.9676 13.0401C12.0423 13.3101 13.6971 13.6301 14.2651 14.0121C14.3495 14.2121 14.3942 14.4208 14.3942 14.6364V14.6536C14.7436 15.1189 14.9655 15.7077 15.0247 16.3934C15.3007 16.4116 15.5657 16.4526 15.8188 16.5147C16.0634 15.626 16.2506 14.7779 16.3299 14.0011C16.3512 14.0004 16.3727 14 16.3942 14C16.4949 14 16.5938 14.0078 16.6903 14.0228Z"/></svg>
-                <h1 class="main-title">Adega Pessoal</h1>
+                <h1 class="main-title">Adega Pessoal M&M</h1>
                 <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
             </div>
         </div>
 
-        <div id="app" style="display: contents;"></div>
+        <div id="wineListContainer" style="display: contents;"></div>
     </div>
 
     <script>
@@ -687,72 +757,121 @@
             }
         ];
 
-        const container = document.getElementById('app');
+        // 1. POVOAR FILTRO DE PAÍSES DINAMICAMENTE
+        function populateCountryFilter() {
+            const countrySet = new Set(vinhos.map(v => v.pais).sort());
+            const select = document.getElementById('countrySelect');
+            
+            countrySet.forEach(pais => {
+                const option = document.createElement('option');
+                option.value = pais;
+                option.textContent = pais;
+                select.appendChild(option);
+            });
+        }
 
-        // GERAÇÃO DOS CARDS
-        vinhos.forEach(vinho => {
-            const card = document.createElement('div');
-            card.className = 'wine-card';
-            const flagSVG = flags[vinho.pais] || '';
-            const widthPercentage = (vinho.forca / 5) * 100;
+        // 2. FUNÇÃO PRINCIPAL DE RENDERIZAÇÃO
+        function renderCatalog(listToRender) {
+            const container = document.getElementById('wineListContainer');
+            container.innerHTML = ''; // Limpa antes de renderizar
 
-            card.innerHTML = `
-                <div class="card-top-solid"></div>
-                <div class="card-wave-top"></div>
-                
-                <div class="bg-text-top">${vinho.nome}</div>
+            // Atualiza estatísticas
+            const stats = document.getElementById('filterStats');
+            stats.textContent = `Mostrando ${listToRender.length} de ${vinhos.length} vinhos`;
 
-                <div class="card-body">
-                    <div class="photos">
-                        <img src="${vinho.imgFrente}" alt="Frente" loading="lazy" decoding="async" onerror="this.style.display='none'">
-                        <img src="${vinho.imgVerso}" alt="Verso" loading="lazy" decoding="async" onerror="this.style.display='none'">
-                    </div>
+            if (listToRender.length === 0) {
+                container.innerHTML = '<div style="padding:40px; text-align:center; font-style:italic; grid-column: 1/-1;">Nenhum vinho encontrado com estes filtros.</div>';
+                return;
+            }
+
+            listToRender.forEach(vinho => {
+                const card = document.createElement('div');
+                card.className = 'wine-card';
+                const flagSVG = flags[vinho.pais] || '';
+                const widthPercentage = (vinho.forca / 5) * 100;
+
+                card.innerHTML = `
+                    <div class="card-top-solid"></div>
+                    <div class="card-wave-top"></div>
                     
-                    <div class="info">
-                        <div class="wine-header">
-                            <div class="flag-wrapper">
-                                <div class="flag-box">${flagSVG}</div>
-                                <div class="country-name">${vinho.pais}</div>
-                            </div>
-                            <div class="wine-titles">
-                                <h2 class="wine-name">${vinho.nome}</h2>
-                                <div class="wine-region">${vinho.regiao}</div>
-                            </div>
+                    <div class="bg-text-top">${vinho.nome}</div>
+
+                    <div class="card-body">
+                        <div class="photos">
+                            <img src="${vinho.imgFrente}" alt="Frente" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                            <img src="${vinho.imgVerso}" alt="Verso" loading="lazy" decoding="async" onerror="this.style.display='none'">
                         </div>
                         
-                        <div class="poetic-desc">"${vinho.poesia}"</div>
+                        <div class="info">
+                            <div class="wine-header">
+                                <div class="flag-wrapper">
+                                    <div class="flag-box">${flagSVG}</div>
+                                    <div class="country-name">${vinho.pais}</div>
+                                </div>
+                                <div class="wine-titles">
+                                    <h2 class="wine-name">${vinho.nome}</h2>
+                                    <div class="wine-region">${vinho.regiao}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="poetic-desc">"${vinho.poesia}"</div>
 
-                        <div class="tech-grid">
-                            <div class="tech-item">
-                                ${iconGrapes}
-                                <span><span class="label">Uvas:</span> ${vinho.uvas}</span>
+                            <div class="tech-grid">
+                                <div class="tech-item">
+                                    ${iconGrapes}
+                                    <span><span class="label">Uvas:</span> ${vinho.uvas}</span>
+                                </div>
+                                <div class="tech-item">
+                                    ${iconCalendar}
+                                    <span><span class="label">Safra:</span> ${vinho.safra}</span>
+                                </div>
+                                <div class="tech-item">
+                                    ${iconDrop}
+                                    <span><span class="label">Álcool:</span> ${vinho.abv}</span>
+                                </div>
                             </div>
-                            <div class="tech-item">
-                                ${iconCalendar}
-                                <span><span class="label">Safra:</span> ${vinho.safra}</span>
-                            </div>
-                            <div class="tech-item">
-                                ${iconDrop}
-                                <span><span class="label">Álcool:</span> ${vinho.abv}</span>
-                            </div>
-                        </div>
 
-                        <div class="strength-wrapper">
-                            <div class="strength-label">
-                                <span>Corpo & Estrutura</span>
-                                <span>${vinho.forca}/5</span>
-                            </div>
-                            <div class="strength-track">
-                                <div class="strength-fill" style="width: ${widthPercentage}%"></div>
+                            <div class="strength-wrapper">
+                                <div class="strength-label">
+                                    <span>Corpo & Estrutura</span>
+                                    <span>${vinho.forca}/5</span>
+                                </div>
+                                <div class="strength-track">
+                                    <div class="strength-fill" style="width: ${widthPercentage}%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
-            container.appendChild(card);
-        });
+                `;
+                container.appendChild(card);
+            });
+        }
 
-        // LÓGICA DO BOTÃO DE TEMAS COM PERSISTÊNCIA
+        // 3. LÓGICA DE FILTRAGEM
+        function applyFilters() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCountry = document.getElementById('countrySelect').value;
+            const selectedStrength = document.getElementById('strengthSelect').value;
+
+            const filteredList = vinhos.filter(vinho => {
+                // Filtro Texto (Nome, Uva ou Região)
+                const matchesText = vinho.nome.toLowerCase().includes(searchText) || 
+                                    vinho.uvas.toLowerCase().includes(searchText) ||
+                                    vinho.regiao.toLowerCase().includes(searchText);
+                
+                // Filtro País
+                const matchesCountry = selectedCountry === "" || vinho.pais === selectedCountry;
+
+                // Filtro Força
+                const matchesStrength = selectedStrength === "" || vinho.forca.toString() === selectedStrength;
+
+                return matchesText && matchesCountry && matchesStrength;
+            });
+
+            renderCatalog(filteredList);
+        }
+
+        // 4. LÓGICA DE TEMAS (Mantida)
         const themes = [
             { class: '', name: 'Clássico' },
             { class: 'theme-modern', name: 'Moderno' },
@@ -762,33 +881,31 @@
             { class: 'theme-green', name: 'Frescor' }
         ];
         
-        // Carregar tema salvo
         let currentThemeIndex = 0;
         const savedThemeIndex = localStorage.getItem('wineCatalogTheme');
         
         if (savedThemeIndex !== null) {
             currentThemeIndex = parseInt(savedThemeIndex, 10);
-            // Validação simples para evitar erro se mudar a qtde de temas no futuro
-            if (currentThemeIndex >= themes.length || isNaN(currentThemeIndex)) {
-                currentThemeIndex = 0;
-            }
+            if (currentThemeIndex >= themes.length || isNaN(currentThemeIndex)) currentThemeIndex = 0;
         }
 
-        // Função auxiliar para aplicar tema e atualizar texto
         function applyTheme() {
             document.body.className = themes[currentThemeIndex].class;
             const label = document.getElementById('theme-label');
             label.textContent = `${themes[currentThemeIndex].name} ${currentThemeIndex + 1}/${themes.length}`;
         }
 
-        // Aplicar na inicialização
-        applyTheme();
-
         function toggleTheme() {
             currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            localStorage.setItem('wineCatalogTheme', currentThemeIndex); // Salvar
+            localStorage.setItem('wineCatalogTheme', currentThemeIndex);
             applyTheme();
         }
+
+        // INICIALIZAÇÃO
+        applyTheme();
+        populateCountryFilter();
+        renderCatalog(vinhos);
+
     </script>
 </body>
 </html>
