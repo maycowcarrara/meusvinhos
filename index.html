@@ -26,52 +26,30 @@
 
         * { box-sizing: border-box; }
         body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
-        
-        /* Layout Grid */
         .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
 
         /* HEADER */
-        .header-card-body { 
-            padding: 30px 20px; text-align: center; background: var(--card-bg); 
-            border-radius: 12px; border: 1px solid var(--border-color); 
-            box-shadow: 0 5px 15px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 20px; 
-        }
+        .header-card-body { padding: 30px 20px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 20px; }
         .header-icon { width: 60px; height: 60px; fill: var(--primary); margin-bottom: 10px; }
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.5em; margin-top: 5px; }
 
-        /* FILTROS COMPACTOS */
+        /* FILTROS */
         .filter-section {
             max-width: 900px; margin: 0 auto 30px auto;
             background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color);
             padding: 8px 12px; box-shadow: 0 2px 8px var(--shadow-color);
             display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: nowrap;
-            overflow-x: auto; /* Permite scroll horizontal em telas muito pequenas */
+            overflow-x: auto;
         }
-        
         .filter-group { display: flex; gap: 6px; flex: 1; align-items: center; }
-        
-        .filter-input, .filter-select { 
-            padding: 5px 8px; border: 1px solid var(--border-color); background: var(--bg-page); 
-            border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
-            outline: none; height: 30px; 
-        }
+        .filter-input, .filter-select { padding: 5px 8px; border: 1px solid var(--border-color); background: var(--bg-page); border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; outline: none; height: 30px; }
         .filter-input { min-width: 100px; flex-grow: 1; }
-        .filter-select { min-width: 90px; }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
-
-        .action-btn { 
-            background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); 
-            width: 30px; height: 30px; border-radius: 4px; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; 
-        }
+        .action-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); width: 30px; height: 30px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
         .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .action-btn svg { width: 16px; height: 16px; fill: currentColor; }
-        
         .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; margin-left: auto; font-weight: bold; }
-
-        /* LOADING */
-        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
 
         /* WINE CARD */
         .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
@@ -80,22 +58,26 @@
         .bg-text-top { position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; font-family: var(--font-title); font-weight: 700; font-size: 6em; color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none; line-height: 1; z-index: 0; }
         
         .card-body { display: flex; flex-direction: row; padding: 30px; gap: 25px; position: relative; z-index: 2; }
-        .photos { flex: 0 0 200px; display: flex; gap: 8px; justify-content: center; align-items: center; }
-        .photos img { height: 320px; width: auto; max-width: 100px; filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.25)); object-fit: contain; cursor: zoom-in; border-radius: 4px; transition: transform 0.2s; }
-        .photos img:hover { transform: scale(1.02); }
+        .photos { flex: 0 0 200px; display: flex; gap: 8px; justify-content: center; align-items: center; transition: all 0.3s; }
+        .photos img { height: 320px; width: auto; max-width: 100px; filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.25)); object-fit: contain; cursor: zoom-in; border-radius: 4px; }
         .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         
+        /* ESTILO DE EXPORTAÇÃO (PDF MODE) */
+        body.pdf-exporting .photos { display: none !important; }
+        body.pdf-exporting .card-body { padding: 20px; }
+        body.pdf-exporting .wine-card { box-shadow: none; border: 1px solid #ccc; }
+        body.pdf-exporting .bg-text-top { font-size: 4em; opacity: 0.08; }
+
+        /* Typography */
         .wine-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
         .flag-box { width: 40px; height: 26px; border-radius: 3px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
         .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
         .wine-name { font-family: var(--font-title); font-size: 1.6em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
         .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1.5px; margin-top: 3px; }
         .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1em; line-height: 1.4; margin: 12px 0; padding-left: 12px; border-left: 3px solid var(--secondary); }
-        
         .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; background-color: rgba(0,0,0,0.03); padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em; }
         .tech-item { display: flex; align-items: center; gap: 5px; color: var(--text-main); }
         .tech-icon { width: 16px; height: 16px; fill: var(--primary); flex-shrink: 0; }
-        
         .rating-stars { color: #ddd; font-size: 1.3em; cursor: pointer; margin-bottom: 8px; }
         .rating-stars span.active { color: #f1c40f; }
         .strength-wrapper { margin-top: auto; }
@@ -114,8 +96,6 @@
         .modal-content { background: var(--card-bg); padding: 25px; width: 90%; max-width: 650px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
         
-        /* Gráficos */
-        .chart-section { margin-bottom: 20px; }
         .chart-row { margin-bottom: 8px; display: flex; align-items: center; font-size: 0.85em; }
         .chart-label-text { width: 110px; text-align: right; padding-right: 10px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .chart-bar-area { flex: 1; background: #eee; height: 16px; border-radius: 8px; overflow: hidden; position: relative; }
@@ -123,22 +103,22 @@
         .chart-count { position: absolute; right: 5px; top:0; line-height: 16px; font-size: 0.75em; color: #555; }
         .info-title { font-family: var(--font-title); color: var(--accent); font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; margin-top: 15px; }
 
-        /* LIGHTBOX (Corrigido) */
+        /* LOADING */
+        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
+
+        /* LIGHTBOX ZOOM */
         .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
         .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; touch-action: none; }
         .lightbox-content-wrapper:active { cursor: grabbing; }
         .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: none; }
         .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
-        .lb-btn:hover { background: rgba(255,255,255,0.4); }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
             .header-card-body { padding: 25px 10px; }
             h1.main-title { font-size: 2em; }
-            .filter-section { flex-wrap: wrap; justify-content: center; }
-            .filter-group { width: 100%; justify-content: center; }
             .card-body { flex-direction: column; padding: 20px; gap: 15px; }
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
@@ -151,7 +131,7 @@
             body { background: white; padding: 0; }
             .catalog-grid { display: block; }
             .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; page-break-inside: avoid; }
-            .photos img { filter: none; }
+            .photos { display: none !important; } /* Força remoção de imagem na impressão nativa */
             .bg-text-top { opacity: 0.05 !important; }
             .card-wave-top, .strength-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
@@ -159,7 +139,7 @@
 </head>
 <body class="">
 
-    <div id="exportLoading"><div style="font-size: 3em;">🍷</div><div style="margin-top:20px;">Gerando PDF (Ajustando Proporções)...</div></div>
+    <div id="exportLoading"><div style="font-size: 3em;">🍷</div><div style="margin-top:20px;">Gerando PDF (Texto)...</div></div>
 
     <div class="fab-container no-print">
         <div class="fab" onclick="openInfoModal()" title="Ajuda">?</div>
@@ -177,7 +157,7 @@
     </div>
 
     <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas</h2><div id="chartsContainer"></div></div></div>
-    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve/Suave) a 5 (Robusto/Estruturado).<br><strong>Taninos:</strong> Sensação de secura na boca (adstringência).</div></div></div>
+    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve/Suave) a 5 (Robusto/Estruturado).<br><strong>Taninos:</strong> Sensação de secura na boca.<br><strong>NV:</strong> Non-Vintage (Sem safra).</div></div></div>
 
     <div class="catalog-grid">
         <div class="header-card-body">
@@ -189,8 +169,8 @@
         <div id="filterSection" class="filter-section no-print">
             <div class="filter-group">
                 <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
-                <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">País</option></select>
-                <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safra</option></select>
+                <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Países</option></select>
+                <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safras</option></select>
                 <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
                 <select id="sortSelect" class="filter-select" onchange="applyFilters()">
                     <option value="nome">A-Z</option>
@@ -202,7 +182,7 @@
                 <button class="action-btn" onclick="clearFilters()" title="Limpar"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-                <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF (Corrigido)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
+                <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF (Texto)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
                 <span class="filter-stats" id="filterStats"></span>
             </div>
         </div>
@@ -352,13 +332,14 @@
             applyFilters();
         }
 
-        // EXPORT PDF CORRIGIDO (Aspect Ratio Real)
+        // EXPORT PDF (TEXT ONLY MODE)
         async function exportToPDF() {
             document.getElementById('exportLoading').style.display = 'flex';
+            document.body.classList.add('pdf-exporting'); // Ativa modo texto
             window.scrollTo(0,0);
             
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4'); // A4: 210mm x 297mm
+            const doc = new jsPDF('p', 'mm', 'a4');
             const pageWidth = 210; 
             const pageHeight = 297;
             const margin = 10;
@@ -367,68 +348,55 @@
             let yCursor = margin;
 
             for(let i=0; i<cards.length; i++) {
-                // Renderiza o card em alta resolução
                 const canvas = await html2canvas(cards[i], { scale: 2, useCORS: true });
                 const imgData = canvas.toDataURL('image/png');
                 
-                // Calcula proporção real para não esticar
-                const cardWidthPx = canvas.width;
-                const cardHeightPx = canvas.height;
-                const availableWidthMm = pageWidth - (margin * 2);
-                
-                // Regra de 3 para converter pixels em mm mantendo a proporção
-                const finalHeightMm = (cardHeightPx * availableWidthMm) / cardWidthPx;
+                const imgProps = doc.getImageProperties(imgData);
+                const pdfWidth = pageWidth - (margin * 2);
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-                // Se não couber na página atual, cria nova
-                if (yCursor + finalHeightMm > pageHeight - margin) {
+                if (yCursor + pdfHeight > pageHeight - margin) {
                     doc.addPage();
                     yCursor = margin;
                 }
 
-                doc.addImage(imgData, 'PNG', margin, yCursor, availableWidthMm, finalHeightMm);
-                yCursor += finalHeightMm + 5; // Espaço entre cards
+                doc.addImage(imgData, 'PNG', margin, yCursor, pdfWidth, pdfHeight);
+                yCursor += pdfHeight + 5;
             }
             doc.save('minha-adega.pdf');
+            document.body.classList.remove('pdf-exporting'); // Desativa modo texto
             document.getElementById('exportLoading').style.display = 'none';
         }
 
-        // DASHBOARD MELHORADO
+        // DASHBOARD (BI)
         function openDashboard() {
             const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
             let sortedCountries = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
             
-            // Top Grape
             const grapeCounts = {};
             vinhos.forEach(v => {
-                const uvas = v.uvas.split(','); // Divide se tiver mais de uma
-                uvas.forEach(u => {
-                    const uvaTrim = u.trim();
-                    grapeCounts[uvaTrim] = (grapeCounts[uvaTrim] || 0) + 1;
-                });
+                const uvas = v.uvas.split(','); 
+                uvas.forEach(u => { const uvaTrim = u.trim(); grapeCounts[uvaTrim] = (grapeCounts[uvaTrim] || 0) + 1; });
             });
-            const topGrape = Object.keys(grapeCounts).reduce((a, b) => grapeCounts[a] > grapeCounts[b] ? a : b);
+            let sortedGrapes = Object.keys(grapeCounts).sort((a,b) => grapeCounts[b] - grapeCounts[a]).slice(0, 5); // Top 5
 
             let html = `<div style="text-align:center; margin-bottom:25px; padding:15px; background:rgba(0,0,0,0.03); border-radius:8px;">
                             <div style="font-size:3em; font-weight:bold; color:var(--primary); font-family:var(--font-title)">${vinhos.length}</div>
                             <div style="text-transform:uppercase; font-size:0.8em; letter-spacing:1px; color:var(--text-muted)">Rótulos Totais</div>
-                            <div style="margin-top:10px; font-size:0.9em">Uva Destaque: <strong>${topGrape}</strong></div>
                         </div>`;
 
-            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Países</h3>';
+            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Top Países</h3>';
             sortedCountries.forEach(c => {
                 const pct = (counts[c] / vinhos.length) * 100;
                 html += `<div class="chart-row"><div class="chart-label-text">${c}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%"><span class="chart-count" style="color: white; padding-left:5px;">${counts[c]}</span></div></div></div>`;
             });
             html += '</div>';
-            
-            const forcaCounts = {1:0, 2:0, 3:0, 4:0, 5:0}; vinhos.forEach(v => forcaCounts[v.forca]++);
-            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Intensidade</h3>';
-            for(let i=1; i<=5; i++) {
-                if(forcaCounts[i] > 0) {
-                    const pct = (forcaCounts[i] / vinhos.length) * 100;
-                    html += `<div class="chart-row"><div class="chart-label-text">Nível ${i}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%; background:var(--accent)"></div><span class="chart-count">${forcaCounts[i]}</span></div></div>`;
-                }
-            }
+
+            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Top Uvas</h3>';
+            sortedGrapes.forEach(g => {
+                const pct = (grapeCounts[g] / vinhos.length) * 100; // Aproximado
+                html += `<div class="chart-row"><div class="chart-label-text">${g}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%; background:var(--secondary)"></div><span class="chart-count">${grapeCounts[g]}</span></div></div>`;
+            });
             html += '</div>';
 
             document.getElementById('chartsContainer').innerHTML = html;
@@ -438,7 +406,7 @@
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
 
-        // LIGHTBOX CORRIGIDO (Zoom, Pan & Scroll Lock)
+        // LIGHTBOX (Zoom + Pan + Scroll Lock)
         let currentScale = 1;
         let isDragging = false;
         let startX, startY, translateX = 0, translateY = 0;
@@ -452,13 +420,13 @@
         function openLightbox(src) {
             modal.style.display = 'flex';
             img.src = src;
-            document.body.style.overflow = 'hidden'; // Bloqueia scroll da página
+            document.body.style.overflow = 'hidden'; 
             resetZoom();
         }
 
         function closeLightbox() {
             modal.style.display = 'none';
-            document.body.style.overflow = ''; // Libera scroll
+            document.body.style.overflow = ''; 
         }
 
         function resetZoom() {
@@ -475,7 +443,6 @@
             updateTransform();
         }
 
-        // Mouse Drag (Pan)
         wrapper.addEventListener('mousedown', e => {
             if (currentScale > 1) {
                 isDragging = true;
@@ -494,7 +461,6 @@
             }
         });
 
-        // Touch Logic (Zoom Pinça & Pan)
         wrapper.addEventListener('touchstart', e => {
             if (e.touches.length === 2) {
                 initialPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
@@ -521,26 +487,22 @@
 
         wrapper.addEventListener('touchend', () => { isDragging = false; initialPinchDistance = null; });
 
-        // Wheel Zoom (Desktop)
         wrapper.addEventListener('wheel', e => {
-            e.preventDefault(); // Impede scroll da página
+            e.preventDefault(); 
             if (e.deltaY < 0) zoomManual(0.2);
             else zoomManual(-0.2);
         });
 
-        // Fechar ao clicar fora (Área escura)
         modal.addEventListener('click', e => {
             if (e.target === modal || e.target === wrapper) closeLightbox();
         });
-        // Não fechar ao clicar na imagem
         img.addEventListener('click', e => e.stopPropagation());
 
-        // ESC fecha tudo
         document.addEventListener('keydown', e => {
             if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }
         });
 
-        // Toggle Theme
+        // Theme
         const themes = [ { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' }, { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' } ];
         let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme') || 0);
         if(currentThemeIndex >= themes.length) currentThemeIndex = 0;
