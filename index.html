@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Adega Pessoal M&M - Mobile Edition</title>
+    <title>Adega Pessoal M&M</title>
     
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -30,7 +32,7 @@
             --wave-opacity: 0.4;
         }
 
-        /* OUTROS TEMAS (Mesma lógica das versões anteriores) */
+        /* OUTROS TEMAS */
         body.theme-modern { --bg-page: #f0f2f5; --card-bg: #ffffff; --primary: #2c3e50; --accent: #34495e; --secondary: #7f8c8d; --text-main: #1a1a1a; --text-muted: #7f8c8d; --font-title: 'Montserrat', sans-serif; --font-body: 'Open Sans', sans-serif; --font-script: 'Montserrat', sans-serif; --border-color: #dfe6e9; --shadow-color: rgba(0,0,0,0.1); --wave-opacity: 0.8; }
         body.theme-rustic { --bg-page: #e8e4d9; --card-bg: #fdfbf7; --primary: #5d4037; --accent: #33691e; --secondary: #8d6e63; --text-main: #3e2723; --text-muted: #5d4037; --font-title: 'Cinzel', serif; --font-body: 'Cormorant Garamond', serif; --font-script: 'Great Vibes', cursive; --border-color: #bcaaa4; --shadow-color: rgba(93,64,55,0.15); --wave-opacity: 0.6; }
         body.theme-rose { --bg-page: #fff0f5; --card-bg: #ffffff; --primary: #d81b60; --accent: #f48fb1; --secondary: #ad1457; --text-main: #4a4a4a; --text-muted: #888888; --font-title: 'Playfair Display', serif; --font-body: 'Open Sans', sans-serif; --font-script: 'Great Vibes', cursive; --border-color: #f8bbd0; --shadow-color: rgba(216,27,96,0.1); --wave-opacity: 0.3; }
@@ -42,294 +44,105 @@
            BASE
            ========================================= */
         * { box-sizing: border-box; }
-        
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-page);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px; /* Menos padding no mobile */
-            transition: background 0.5s ease;
-        }
-
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-            max-width: 900px; 
-            margin: 0 auto;
-        }
+        body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
+        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
 
         /* =========================================
-           CARD DO VINHO (ESTRUTURA RESPONSIVA)
+           CARD DO VINHO
            ========================================= */
-        .wine-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 10px 25px var(--shadow-color);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
-            page-break-inside: avoid;
-        }
-
-        /* Topo decorativo */
-        .card-wave-top {
-            background-color: var(--primary);
-            height: 15px;
-            width: 100%;
-            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E");
-            -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E");
-            mask-size: cover;
-            -webkit-mask-size: cover;
-            opacity: var(--wave-opacity);
-            position: absolute; top: 0; left: 0; z-index: 1;
-        }
-        .card-top-solid {
-            height: 10px; width: 100%; background-color: var(--primary);
-            position: absolute; top: 0; z-index: 0;
-        }
-
-        /* Marca d'água */
-        .bg-text-top {
-            position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%);
-            width: 100%; text-align: center;
-            font-family: var(--font-title); font-weight: 700; font-size: 6em;
-            color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none;
-            line-height: 1; z-index: 0;
-        }
-
-        /* Layout Flex Interno */
-        .card-body {
-            display: flex;
-            flex-direction: row; /* Padrão PC: Lado a Lado */
-            padding: 40px;
-            gap: 30px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Área das Fotos */
-        .photos {
-            flex: 0 0 240px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .photos img {
-            height: 350px;
-            width: auto;
-            max-width: 110px;
-            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
-            object-fit: contain;
-            cursor: zoom-in;
-            transition: transform 0.2s;
-            border-radius: 4px;
-        }
+        .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 10px 25px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); transition: transform 0.3s ease; page-break-inside: avoid; }
+        .card-wave-top { background-color: var(--primary); height: 15px; width: 100%; mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E"); -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E"); mask-size: cover; -webkit-mask-size: cover; opacity: var(--wave-opacity); position: absolute; top: 0; left: 0; z-index: 1; }
+        .card-top-solid { height: 10px; width: 100%; background-color: var(--primary); position: absolute; top: 0; z-index: 0; }
+        .bg-text-top { position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; font-family: var(--font-title); font-weight: 700; font-size: 6em; color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none; line-height: 1; z-index: 0; }
+        .card-body { display: flex; flex-direction: row; padding: 40px; gap: 30px; position: relative; z-index: 2; }
+        .photos { flex: 0 0 240px; display: flex; gap: 10px; justify-content: center; align-items: center; position: relative; }
+        .photos img { height: 350px; width: auto; max-width: 110px; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3)); object-fit: contain; cursor: zoom-in; transition: transform 0.2s; border-radius: 4px; }
         .photos img:hover { transform: scale(1.02); }
-
-        /* Área de Informações */
-        .info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .wine-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 10px;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 10px;
-        }
-
-        .flag-box {
-            width: 45px; height: 30px; border-radius: 4px; overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #ddd;
-            flex-shrink: 0;
-        }
+        .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .wine-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 10px; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
+        .flag-box { width: 45px; height: 30px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
         .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        .wine-name { 
-            font-family: var(--font-title); font-size: 1.8em; font-weight: 700; 
-            color: var(--primary); line-height: 1.1; margin: 0;
-        }
-        
-        .wine-region { 
-            color: var(--accent); font-weight: 700; text-transform: uppercase; 
-            font-size: 0.85em; letter-spacing: 1.5px; margin-top: 5px;
-        }
-
-        .poetic-desc {
-            font-family: var(--font-title); font-style: italic; color: var(--text-muted);
-            font-size: 1.05em; line-height: 1.5; margin: 15px 0;
-            padding-left: 15px; border-left: 3px solid var(--secondary);
-        }
-
-        /* GRID TÉCNICO */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
-            background-color: rgba(0,0,0,0.03);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-size: 0.9em;
-        }
+        .wine-name { font-family: var(--font-title); font-size: 1.8em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
+        .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1.5px; margin-top: 5px; }
+        .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1.05em; line-height: 1.5; margin: 15px 0; padding-left: 15px; border-left: 3px solid var(--secondary); }
+        .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; background-color: rgba(0,0,0,0.03); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9em; }
         .tech-item { display: flex; align-items: center; gap: 6px; color: var(--text-main); }
         .tech-icon { width: 18px; height: 18px; fill: var(--primary); flex-shrink: 0; }
         .label { font-weight: 700; color: var(--primary); margin-right: 2px; }
-
-        /* Rating & Força */
         .rating-stars { color: #ddd; font-size: 1.4em; cursor: pointer; margin-bottom: 10px; }
         .rating-stars span.active { color: #f1c40f; }
-
         .strength-wrapper { margin-top: auto; }
-        .strength-label { 
-            display: flex; justify-content: space-between; font-size: 0.75em; 
-            text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; font-weight: bold;
-        }
+        .strength-label { display: flex; justify-content: space-between; font-size: 0.75em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; font-weight: bold; }
         .strength-track { background: #e0e0e0; height: 8px; border-radius: 10px; overflow: hidden; }
         .strength-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; }
 
         /* =========================================
            HEADER & FILTROS
            ========================================= */
-        .header-card-body {
-            padding: 40px 20px;
-            text-align: center;
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 25px var(--shadow-color);
-            position: relative;
-            z-index: 2;
-        }
-
+        .header-card-body { padding: 40px 20px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px var(--shadow-color); position: relative; z-index: 2; }
         .header-icon { width: 80px; height: 80px; fill: var(--primary); margin-bottom: 20px; }
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 3em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.8em; margin-top: 5px; }
 
-        .filter-container {
-            display: flex; flex-wrap: wrap; gap: 10px;
-            justify-content: center; margin-top: 25px;
-            background: transparent;
-        }
+        /* Filtros atualizados */
+        .filter-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 25px; background: transparent; align-items: center; }
         
-        .filter-input, .filter-select {
-            padding: 10px;
-            border: 1px solid transparent; border-bottom: 2px solid var(--border-color);
-            background: rgba(255,255,255,0.6);
-            border-radius: 4px; font-family: var(--font-body);
-            color: var(--text-main); font-size: 0.95em;
-            flex: 1 1 140px; /* Flexível para mobile */
-        }
+        .filter-input, .filter-select { padding: 10px; border: 1px solid transparent; border-bottom: 2px solid var(--border-color); background: rgba(255,255,255,0.6); border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.95em; flex: 1 1 140px; outline: none; }
+        .filter-input:focus, .filter-select:focus { border-bottom-color: var(--primary); background-color: var(--card-bg); }
+        
+        .clear-btn { background: var(--secondary); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .clear-btn:hover { transform: scale(1.1); background: var(--primary); }
+
         .filter-stats { width: 100%; text-align: center; color: var(--text-muted); font-size: 0.8em; margin-top: 10px; text-transform: uppercase; }
 
-        /* =========================================
-           RESPONSIVIDADE (MEDIA QUERIES)
-           ========================================= */
         @media (max-width: 768px) {
             body { padding: 10px; }
             .catalog-grid { gap: 30px; }
-            
             .header-card-body { padding: 30px 15px; }
             h1.main-title { font-size: 2.2em; }
             p.main-subtitle { font-size: 1.5em; }
-
-            .card-body {
-                flex-direction: column; /* Pilha vertical no celular */
-                padding: 25px;
-                gap: 15px;
-            }
-
-            .photos {
-                flex: 0 0 auto;
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 10px;
-            }
-            .photos img { height: 250px; max-width: 45%; } /* Imagens menores para caber lado a lado */
-
+            .card-body { flex-direction: column; padding: 25px; gap: 15px; }
+            .photos { flex: 0 0 auto; width: 100%; justify-content: center; margin-bottom: 10px; }
+            .photos img { height: 250px; max-width: 45%; }
             .wine-name { font-size: 1.5em; }
-            .tech-grid { grid-template-columns: 1fr; } /* Grid vira lista no mobile */
-            
-            .bg-text-top { font-size: 4em; top: 20px; } /* Ajuste marca d'água */
+            .tech-grid { grid-template-columns: 1fr; }
+            .bg-text-top { font-size: 4em; top: 20px; }
         }
 
         /* =========================================
-           LIGHTBOX COM ZOOM
+           LIGHTBOX COM DRAG & ZOOM (Pan)
            ========================================= */
-        .lightbox {
-            display: none;
-            position: fixed; z-index: 10000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            justify-content: center; align-items: center;
-            flex-direction: column;
-        }
+        .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
+        .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; }
+        .lightbox-content-wrapper:active { cursor: grabbing; }
         
-        .lightbox-content-wrapper {
-            position: relative;
-            width: 90%; height: 80%;
-            display: flex; justify-content: center; align-items: center;
-            overflow: hidden;
-        }
-
-        .lightbox-img {
-            max-width: 100%; max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.2s ease;
-            cursor: grab;
-        }
-
-        .lightbox-controls {
-            margin-top: 20px;
-            display: flex; gap: 20px;
-            z-index: 10001;
-        }
-
-        .lb-btn {
-            background: rgba(255,255,255,0.2); color: white;
-            border: 1px solid white; padding: 10px 20px;
-            border-radius: 30px; cursor: pointer; font-size: 1.2em;
+        .lightbox-img { 
+            max-width: 90%; max-height: 90%; 
+            object-fit: contain; 
+            transform-origin: center center;
+            will-change: transform;
             user-select: none;
+            -webkit-user-drag: none;
         }
+
+        .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
+        .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
         .lb-btn:hover { background: rgba(255,255,255,0.4); }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
         /* FABs */
         .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
-        .fab {
-            width: 45px; height: 45px; border-radius: 50%;
-            background: var(--primary); color: white;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            border: 2px solid white; opacity: 0.4; transition: all 0.3s;
-            cursor: pointer;
-        }
+        .fab { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white; opacity: 0.4; transition: all 0.3s; cursor: pointer; }
         .fab:hover { opacity: 1; transform: scale(1.1); }
         .fab svg { width: 22px; height: 22px; fill: white; }
 
-        /* MODAL BI */
+        /* MODAL */
         .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
-        .modal-content {
-            background: var(--card-bg); margin: 15% auto; padding: 25px;
-            width: 90%; max-width: 500px; border-radius: 12px;
-            border: 1px solid var(--border-color); color: var(--text-main);
-        }
+        .modal-content { background: var(--card-bg); margin: 15% auto; padding: 25px; width: 90%; max-width: 500px; border-radius: 12px; border: 1px solid var(--border-color); color: var(--text-main); }
         .dashboard-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .stat-box { background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px; text-align: center; }
         .stat-value { font-size: 1.8em; color: var(--primary); font-weight: bold; font-family: var(--font-title); }
         
-        /* IMPRESSÃO */
         @media print {
             .no-print, .lightbox { display: none !important; }
             body { background: white; padding: 0; }
@@ -343,7 +156,7 @@
         }
     </style>
 </head>
-<body>
+<body class="">
 
     <div class="fab-container no-print">
         <div class="fab" onclick="openDashboard()" title="Dashboard"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
@@ -351,12 +164,12 @@
         <div class="fab" onclick="toggleTheme()" title="Temas"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg></div>
     </div>
 
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="lb-close">&times;</span>
-        <div class="lightbox-content-wrapper">
-            <img id="lightbox-img" class="lightbox-img" src="" onclick="event.stopPropagation()">
+    <div id="lightbox" class="lightbox">
+        <span class="lb-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content-wrapper" id="lb-wrapper">
+            <img id="lightbox-img" class="lightbox-img" src="">
         </div>
-        <div class="lightbox-controls" onclick="event.stopPropagation()">
+        <div class="lightbox-controls">
             <div class="lb-btn" onclick="zoomImage(-0.2)">-</div>
             <div class="lb-btn" onclick="zoomImage(0.2)">+</div>
         </div>
@@ -381,11 +194,12 @@
             <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
             
             <div class="filter-container no-print">
-                <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
+                <input type="text" id="searchInput" class="filter-input" placeholder="Buscar (nome, safra, uva...)" oninput="applyFilters()">
                 <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Países</option></select>
                 <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safras</option></select>
                 <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
                 <select id="strengthSelect" class="filter-select" onchange="applyFilters()"><option value="">Corpo</option><option value="1">1 - Suave</option><option value="3">3 - Médio</option><option value="5">5 - Robusto</option></select>
+                <button class="clear-btn" onclick="clearFilters()" title="Limpar Filtros">X</button>
                 <div class="filter-stats" id="filterStats"></div>
             </div>
         </div>
@@ -394,194 +208,34 @@
     </div>
 
     <script>
-        const flags = {
-            "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`,
-            "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`,
-            "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`,
-            "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`,
-            "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`,
-            "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`,
-            "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M240 250 A 200 200 0 0 0 550 200" stroke="#fff" stroke-width="15" fill="none"/></svg>`
-        };
-
-        const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,17.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
+        const flags = { "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`, "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`, "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`, "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`, "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`, "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`, "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M233,263 C233,263 294,213 460,230" stroke="#fff" stroke-width="12" fill="none"/></svg>` };
+        const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,16.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
         const iconDrop = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M12,2c-5.33,5.33-8,10.67-8,16c0,4.42,3.58,8,8,8s8-3.58,8-8C20,12.67,17.33,7.33,12,2z M12,24c-3.31,0-6-2.69-6-6c0-4,2-8,6-12c4,4,6,8,6,12C18,21.31,15.31,24,12,24z"/></svg>`;
         const iconCalendar = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`;
 
         const vinhos = [
-            {
-                nome: "Popolo Private Selection",
-                pais: "Portugal",
-                regiao: "Regional Alentejano",
-                uvas: "Syrah, Aragonez, Trincadeira, Touriga Nacional",
-                abv: "13,5%",
-                safra: "2023",
-                forca: 5,
-                poesia: "Um gigante gentil das planícies quentes do Alentejo. Este vinho traz o sol português engarrafado: potente, escuro e carregado de frutas maduras, como um abraço caloroso em dia de inverno.",
-                imgFrente: "images/20251202_111906.jpg", imgVerso: "images/20251202_111914.jpg"
-            },
-            {
-                nome: "Duque de Cazarra Roble",
-                pais: "Espanha",
-                regiao: "Utiel-Requena",
-                uvas: "Bobal, Tempranillo, Cabernet Sauvignon",
-                abv: "13,0%",
-                safra: "2022",
-                forca: 5,
-                poesia: "A essência da terra espanhola maturada em carvalho. 'Roble' denota sua passagem pela madeira, conferindo-lhe uma espinha dorsal firme e notas de baunilha que dançam com a rusticidade da uva Bobal.",
-                imgFrente: "images/20251202_112052.jpg", imgVerso: "images/20251202_112058.jpg"
-            },
-            {
-                nome: "La Tirana",
-                pais: "Chile",
-                regiao: "Valle Central",
-                uvas: "Carmenere",
-                abv: "13,5%",
-                safra: "2024",
-                forca: 4,
-                poesia: "A casta perdida de Bordeaux que encontrou sua alma nos Andes. Marcante por suas notas de especiarias e pimentão doce, é um vinho aveludado que conta a história do terroir chileno em cada gole.",
-                imgFrente: "images/20251202_111934.jpg", imgVerso: "images/20251202_111940.jpg"
-            },
-            {
-                nome: "Casal da Torre",
-                pais: "Portugal",
-                regiao: "Douro DOC",
-                uvas: "Touriga Franca, Tinta Roriz, Tinto Cão",
-                abv: "13,0%",
-                safra: "2023",
-                forca: 4,
-                poesia: "Filho das encostas íngremes e do solo de xisto do Douro. Um vinho sério e mineral, onde a elegância tenta domar a força bruta das uvas que nascem na região vinícola mais antiga do mundo.",
-                imgFrente: "images/20251202_111706.jpg", imgVerso: "images/20251202_111714.jpg"
-            },
-            {
-                nome: "Montis Anima",
-                pais: "Argentina",
-                regiao: "Mendoza",
-                uvas: "Malbec",
-                abv: "13,0%",
-                safra: "2024",
-                forca: 4,
-                poesia: "'A Alma da Montanha'. Um Malbec de altitude que equilibra a doçura natural da ameixa madura com o frescor do ar dos Andes. Sedoso, violeta e profundamente satisfatório.",
-                imgFrente: "images/20251202_112148.jpg", imgVerso: "images/20251202_112205.jpg"
-            },
-            {
-                nome: "Encostas do Outeiro",
-                pais: "Portugal",
-                regiao: "Regional Lisboa",
-                uvas: "Syrah, Caladoc, Aragonez",
-                abv: "13,0%",
-                safra: "2022",
-                forca: 4,
-                poesia: "Um sopro do Atlântico. Cultivado sob a influência da brisa oceânica de Lisboa, é um vinho que une a estrutura da Syrah com uma frescura salina vibrante, perfeito para a gastronomia.",
-                imgFrente: "images/20251202_112124.jpg", imgVerso: "images/20251202_112131.jpg"
-            },
-            {
-                nome: "Le Gourmandin",
-                pais: "França",
-                regiao: "Vin de France",
-                uvas: "Blend Tinto Fino",
-                abv: "13,0%",
-                safra: "2023",
-                forca: 3,
-                poesia: "O cavalheiro francês descomplicado. Como um bistrô parisiense, não exige formalidades: entrega equilíbrio, fruta honesta e aquele 'je ne sais quoi' que convida sempre à próxima taça.",
-                imgFrente: "images/20251202_112246.jpg", imgVerso: "images/20251202_112252.jpg"
-            },
-            {
-                nome: "Beco Torto",
-                pais: "Portugal",
-                regiao: "Regional Lisboa",
-                uvas: "Blend Regional",
-                abv: "13,0%",
-                safra: "2022",
-                forca: 3,
-                poesia: "Assim como as ruelas sinuosas de Lisboa, este vinho é uma descoberta charmosa. Frutado, macio e sem arestas, é feito para conversas longas e descomplicadas entre amigos.",
-                imgFrente: "images/20251202_112027.jpg", imgVerso: "images/20251202_112034.jpg"
-            },
-             {
-                nome: "Emarè Sangiovese",
-                pais: "Itália",
-                regiao: "Rubicone IGT",
-                uvas: "Sangiovese",
-                abv: "12,5%",
-                safra: "2024",
-                forca: 3,
-                poesia: "A alma rústica da Itália. Com a acidez típica da Sangiovese que 'limpa' o paladar, traz notas de cereja ácida e terra molhada. Um vinho que implora por um prato de massa ao sugo.",
-                imgFrente: "images/20251202_111845.jpg", imgVerso: "images/20251202_111852.jpg"
-            },
-            {
-                nome: "Emarè Montepulciano",
-                pais: "Itália",
-                regiao: "D'Abruzzo DOC",
-                uvas: "Montepulciano",
-                abv: "12,5%",
-                safra: "2024",
-                forca: 3,
-                poesia: "Escuro como a noite em Abruzzo, mas vibrante no paladar. Um tinto gastronômico, com taninos presentes e um final levemente amargo que é a assinatura de autenticidade italiana.",
-                imgFrente: "images/20251202_111820.jpg", imgVerso: "images/20251202_111832.jpg"
-            },
-            {
-                nome: "Vivalti Rosé",
-                pais: "Brasil",
-                regiao: "São Joaquim - SC",
-                uvas: "Sangiovese, Touriga Nacional",
-                abv: "12,5%",
-                safra: "2023",
-                forca: 2,
-                poesia: "O frescor das montanhas catarinenses. Um rosé de altitude, pálido e elegante, que captura o frio da serra em notas de frutas vermelhas frescas e acidez crocante.",
-                imgFrente: "images/20251202_112003.jpg", imgVerso: "images/20251202_112008.jpg"
-            },
-            {
-                nome: "Tozetti Casca Dura",
-                pais: "Brasil",
-                regiao: "Bituruna - PR",
-                uvas: "Casca Dura",
-                abv: "12,5%",
-                safra: "2025",
-                forca: 2,
-                poesia: "Uma relíquia viva da imigração italiana no Paraná. A uva Casca Dura, resistente e rara, entrega um vinho branco com personalidade única, história e a resiliência de Bituruna.",
-                imgFrente: "images/20251202_111754.jpg", imgVerso: "images/20251202_111804.jpg"
-            },
-             {
-                nome: "Duque de Cazarra (Vendimia)",
-                pais: "Espanha",
-                regiao: "Tierra de Castilla",
-                uvas: "Tempranillo",
-                abv: "12,5%",
-                safra: "2022",
-                forca: 3,
-                poesia: "A juventude vibrante da Espanha. Sem a maquiagem da madeira, a uva Tempranillo se mostra nua e crua: fruta vermelha explosiva, alegre e direta ao ponto.",
-                imgFrente: "images/20251202_112223.jpg", imgVerso: "images/20251202_112229.jpg"
-            },
-            {
-                nome: "Sanber Bordô Suave",
-                pais: "Brasil",
-                regiao: "Bituruna - PR",
-                uvas: "Bordô",
-                abv: "11,0%",
-                safra: "NV",
-                forca: 1,
-                poesia: "O sabor da memória. Um vinho de cor violeta profunda que remete às festas de família. Doce, intenso e despretensioso, é o conforto de casa em forma líquida.",
-                imgFrente: "images/20251202_111735.jpg", imgVerso: "images/20251202_111735.jpg" 
-            },
-            {
-                nome: "Bituruna Niágara Suave",
-                pais: "Brasil",
-                regiao: "Bituruna - PR",
-                uvas: "Niágara",
-                abv: "10,7%",
-                safra: "NV",
-                forca: 1,
-                poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil, é a simplicidade doce de uma tarde de verão.",
-                imgFrente: "images/20251202_111725.jpg", imgVerso: "images/20251202_111725.jpg"
-            }
+            { nome: "Popolo Private Selection", pais: "Portugal", regiao: "Regional Alentejano", uvas: "Syrah, Aragonez, Trincadeira, Touriga Nacional", abv: "13,5%", safra: "2023", forca: 5, poesia: "Um gigante gentil das planícies quentes do Alentejo. Este vinho traz o sol português engarrafado: potente, escuro e carregado de frutas maduras.", imgFrente: "images/20251202_111906.jpg", imgVerso: "images/20251202_111914.jpg" },
+            { nome: "Duque de Cazarra Roble", pais: "Espanha", regiao: "Utiel-Requena", uvas: "Bobal, Tempranillo, Cabernet Sauvignon", abv: "13,0%", safra: "2022", forca: 5, poesia: "A essência da terra espanhola maturada em carvalho. 'Roble' denota sua passagem pela madeira, conferindo firmeza e notas de baunilha.", imgFrente: "images/20251202_112052.jpg", imgVerso: "images/20251202_112058.jpg" },
+            { nome: "La Tirana", pais: "Chile", regiao: "Valle Central", uvas: "Carmenere", abv: "13,5%", safra: "2024", forca: 4, poesia: "A casta perdida de Bordeaux que encontrou sua alma nos Andes. Marcante por suas notas de especiarias e pimentão doce.", imgFrente: "images/20251202_111934.jpg", imgVerso: "images/20251202_111940.jpg" },
+            { nome: "Casal da Torre", pais: "Portugal", regiao: "Douro DOC", uvas: "Touriga Franca, Tinta Roriz, Tinto Cão", abv: "13,0%", safra: "2023", forca: 4, poesia: "Filho das encostas íngremes e do solo de xisto do Douro. Um vinho sério e mineral, onde a elegância tenta domar a força bruta.", imgFrente: "images/20251202_111706.jpg", imgVerso: "images/20251202_111714.jpg" },
+            { nome: "Montis Anima", pais: "Argentina", regiao: "Mendoza", uvas: "Malbec", abv: "13,0%", safra: "2024", forca: 4, poesia: "'A Alma da Montanha'. Um Malbec de altitude que equilibra a doçura natural da ameixa madura com o frescor do ar dos Andes.", imgFrente: "images/20251202_112148.jpg", imgVerso: "images/20251202_112205.jpg" },
+            { nome: "Encostas do Outeiro", pais: "Portugal", regiao: "Regional Lisboa", uvas: "Syrah, Caladoc, Aragonez", abv: "13,0%", safra: "2022", forca: 4, poesia: "Um sopro do Atlântico. Cultivado sob a influência da brisa oceânica de Lisboa, une estrutura da Syrah com frescura salina.", imgFrente: "images/20251202_112124.jpg", imgVerso: "images/20251202_112131.jpg" },
+            { nome: "Le Gourmandin", pais: "França", regiao: "Vin de France", uvas: "Blend Tinto Fino", abv: "13,0%", safra: "2023", forca: 3, poesia: "O cavalheiro francês descomplicado. Como um bistrô parisiense, não exige formalidades: entrega equilíbrio e fruta honesta.", imgFrente: "images/20251202_112246.jpg", imgVerso: "images/20251202_112252.jpg" },
+            { nome: "Beco Torto", pais: "Portugal", regiao: "Regional Lisboa", uvas: "Blend Regional", abv: "13,0%", safra: "2022", forca: 3, poesia: "Assim como as ruelas sinuosas de Lisboa, este vinho é uma descoberta charmosa. Frutado, macio e sem arestas.", imgFrente: "images/20251202_112027.jpg", imgVerso: "images/20251202_112034.jpg" },
+            { nome: "Emarè Sangiovese", pais: "Itália", regiao: "Rubicone IGT", uvas: "Sangiovese", abv: "12,5%", safra: "2024", forca: 3, poesia: "A alma rústica da Itália. Com a acidez típica da Sangiovese que 'limpa' o paladar, traz notas de cereja ácida e terra molhada.", imgFrente: "images/20251202_111845.jpg", imgVerso: "images/20251202_111852.jpg" },
+            { nome: "Emarè Montepulciano", pais: "Itália", regiao: "D'Abruzzo DOC", uvas: "Montepulciano", abv: "12,5%", safra: "2024", forca: 3, poesia: "Escuro como a noite em Abruzzo, mas vibrante no paladar. Um tinto gastronômico, com taninos presentes e final levemente amargo.", imgFrente: "images/20251202_111820.jpg", imgVerso: "images/20251202_111832.jpg" },
+            { nome: "Vivalti Rosé", pais: "Brasil", regiao: "São Joaquim - SC", uvas: "Sangiovese, Touriga Nacional", abv: "12,5%", safra: "2023", forca: 2, poesia: "O frescor das montanhas catarinenses. Um rosé de altitude, pálido e elegante, que captura o frio da serra em frutas vermelhas.", imgFrente: "images/20251202_112003.jpg", imgVerso: "images/20251202_112008.jpg" },
+            { nome: "Tozetti Casca Dura", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Casca Dura", abv: "12,5%", safra: "2025", forca: 2, poesia: "Uma relíquia viva da imigração italiana no Paraná. A uva Casca Dura, resistente e rara, entrega um vinho branco com personalidade única.", imgFrente: "images/20251202_111754.jpg", imgVerso: "images/20251202_111804.jpg" },
+            { nome: "Duque de Cazarra (Vendimia)", pais: "Espanha", regiao: "Tierra de Castilla", uvas: "Tempranillo", abv: "12,5%", safra: "2022", forca: 3, poesia: "A juventude vibrante da Espanha. Sem a maquiagem da madeira, a uva Tempranillo se mostra nua e crua: fruta vermelha explosiva.", imgFrente: "images/20251202_112223.jpg", imgVerso: "images/20251202_112229.jpg" },
+            { nome: "Sanber Bordô Suave", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Bordô", abv: "11,0%", safra: "NV", forca: 1, poesia: "O sabor da memória. Um vinho de cor violeta profunda que remete às festas de família. Doce, intenso e despretensioso.", imgFrente: "images/20251202_111735.jpg", imgVerso: "images/20251202_111735.jpg" },
+            { nome: "Bituruna Niágara Suave", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Niágara", abv: "10,7%", safra: "NV", forca: 1, poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil.", imgFrente: "images/20251202_111725.jpg", imgVerso: "images/20251202_111725.jpg" }
         ];
 
-        // SETUP
         function populateFilters() {
             const countries = new Set(vinhos.map(v => v.pais).sort());
             const years = new Set(vinhos.map(v => v.safra).sort());
             const abvs = new Set(vinhos.map(v => v.abv).sort());
-
+            
             const cSelect = document.getElementById('countrySelect');
             const ySelect = document.getElementById('yearSelect');
             const aSelect = document.getElementById('abvSelect');
@@ -591,18 +245,16 @@
             abvs.forEach(val => aSelect.innerHTML += `<option value="${val}">${val}</option>`);
         }
 
-        // RATING
         function getRating(wineName) { return parseInt(localStorage.getItem(`rating_${wineName}`) || 0); }
         function setRating(wineName, rating) {
             localStorage.setItem(`rating_${wineName}`, rating);
             applyFilters();
         }
 
-        // RENDERIZAÇÃO
         function renderCatalog(listToRender) {
             const container = document.getElementById('wineListContainer');
             container.innerHTML = ''; 
-            document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} rótulos`;
+            document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} de ${vinhos.length} rótulos`;
 
             listToRender.forEach(vinho => {
                 const card = document.createElement('div');
@@ -628,25 +280,18 @@
                             <img src="${vinho.imgFrente}" alt="Frente" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
                             <img src="${vinho.imgVerso}" alt="Verso" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
                         </div>
-                        
                         <div class="info">
                             <div class="wine-header">
                                 <div class="flag-box">${flagSVG}</div>
-                                <div>
-                                    <h2 class="wine-name">${vinho.nome}</h2>
-                                    <div class="wine-region">${vinho.regiao}</div>
-                                </div>
+                                <div><h2 class="wine-name">${vinho.nome}</h2><div class="wine-region">${vinho.regiao}</div></div>
                             </div>
-                            
                             ${starsHTML}
                             <div class="poetic-desc">"${vinho.poesia}"</div>
-
                             <div class="tech-grid">
                                 <div class="tech-item">${iconGrapes}<span>${vinho.uvas}</span></div>
                                 <div class="tech-item">${iconCalendar}<span>Safra: ${vinho.safra}</span></div>
                                 <div class="tech-item">${iconDrop}<span>Vol: ${vinho.abv}</span></div>
                             </div>
-
                             <div class="strength-wrapper">
                                 <div class="strength-label"><span>Corpo</span> <span>${vinho.forca}/5</span></div>
                                 <div class="strength-track"><div class="strength-fill" style="width: ${widthPercentage}%"></div></div>
@@ -658,7 +303,7 @@
             });
         }
 
-        // FILTROS
+        // --- FILTROS & BUSCA GLOBAL ---
         function applyFilters() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const countryVal = document.getElementById('countrySelect').value;
@@ -667,7 +312,10 @@
             const strengthVal = document.getElementById('strengthSelect').value;
 
             const filtered = vinhos.filter(v => {
-                const matchText = v.nome.toLowerCase().includes(searchText) || v.uvas.toLowerCase().includes(searchText);
+                // Busca global: junta tudo em uma string só para verificar
+                const allData = (v.nome + " " + v.pais + " " + v.regiao + " " + v.uvas + " " + v.safra + " " + v.abv).toLowerCase();
+                const matchText = allData.includes(searchText);
+                
                 const matchCountry = countryVal === "" || v.pais === countryVal;
                 const matchYear = yearVal === "" || v.safra === yearVal;
                 const matchAbv = abvVal === "" || v.abv === abvVal;
@@ -677,14 +325,19 @@
             renderCatalog(filtered);
         }
 
-        // TEMAS
-        const themes = [
-            { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' },
-            { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' }
-        ];
+        function clearFilters() {
+            document.getElementById('searchInput').value = "";
+            document.getElementById('countrySelect').value = "";
+            document.getElementById('yearSelect').value = "";
+            document.getElementById('abvSelect').value = "";
+            document.getElementById('strengthSelect').value = "";
+            applyFilters();
+        }
+
+        // --- TEMAS ---
+        const themes = [ { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' }, { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' } ];
         let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme') || 0);
         if(currentThemeIndex >= themes.length) currentThemeIndex = 0;
-
         function applyTheme() { document.body.className = themes[currentThemeIndex].class; }
         function toggleTheme() {
             currentThemeIndex = (currentThemeIndex + 1) % themes.length;
@@ -692,19 +345,18 @@
             applyTheme();
         }
 
-        // BI DASHBOARD
+        // --- DASHBOARD ---
         function openDashboard() {
             document.getElementById('kpi-total').innerText = vinhos.length;
             let totalAbv = 0; vinhos.forEach(v => totalAbv += parseFloat(v.abv.replace(',','.')));
             document.getElementById('kpi-abv').innerText = (totalAbv / vinhos.length).toFixed(1) + '%';
             const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
-            document.getElementById('kpi-country').innerText = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            const topCountry = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            document.getElementById('kpi-country').innerText = topCountry;
             document.getElementById('kpi-strong').innerText = vinhos.filter(v => v.forca >= 4).length;
             document.getElementById('biModal').style.display = "block";
         }
         function closeDashboard() { document.getElementById('biModal').style.display = "none"; }
-
-        // SOMMELIER
         function randomWine() {
             const wine = vinhos[Math.floor(Math.random() * vinhos.length)];
             alert(`Sorteado: ${wine.nome}\n${wine.uvas}`);
@@ -712,34 +364,84 @@
             applyFilters();
         }
 
-        // LIGHTBOX ZOOM LOGIC
+        // --- LIGHTBOX COM PAN & ZOOM (Drag Logic) ---
         let currentScale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
         const img = document.getElementById('lightbox-img');
         const modal = document.getElementById('lightbox');
+        const wrapper = document.getElementById('lb-wrapper');
 
         function openLightbox(src) {
             modal.style.display = 'flex';
             img.src = src;
-            currentScale = 1;
-            img.style.transform = `scale(${currentScale})`;
+            resetZoom();
         }
 
-        function closeLightbox() {
-            modal.style.display = 'none';
+        function closeLightbox() { modal.style.display = 'none'; }
+
+        function resetZoom() {
+            currentScale = 1; translateX = 0; translateY = 0;
+            updateTransform();
         }
 
         function zoomImage(factor) {
             currentScale += factor;
             if (currentScale < 0.5) currentScale = 0.5;
-            if (currentScale > 3) currentScale = 3;
-            img.style.transform = `scale(${currentScale})`;
+            if (currentScale > 4) currentScale = 4;
+            updateTransform();
         }
 
-        // Mouse wheel zoom
-        img.addEventListener('wheel', function(e) {
+        function updateTransform() {
+            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+        }
+
+        // Drag Events (Mouse)
+        wrapper.addEventListener('mousedown', e => {
+            if(currentScale <= 1) return; // Só arrasta se tiver zoom
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            wrapper.style.cursor = 'grabbing';
+            e.preventDefault(); // Evita seleção de imagem
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            wrapper.style.cursor = 'grab';
+        });
+
+        window.addEventListener('mousemove', e => {
+            if (!isDragging) return;
             e.preventDefault();
-            if (e.deltaY < 0) zoomImage(0.1);
-            else zoomImage(-0.1);
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateTransform();
+        });
+
+        // Drag Events (Touch/Celular)
+        wrapper.addEventListener('touchstart', e => {
+            if(currentScale <= 1) return;
+            isDragging = true;
+            startX = e.touches[0].clientX - translateX;
+            startY = e.touches[0].clientY - translateY;
+        });
+
+        wrapper.addEventListener('touchend', () => { isDragging = false; });
+
+        wrapper.addEventListener('touchmove', e => {
+            if (!isDragging) return;
+            e.preventDefault(); // Importante para não rolar a página
+            translateX = e.touches[0].clientX - startX;
+            translateY = e.touches[0].clientY - startY;
+            updateTransform();
+        });
+
+        // Mouse wheel zoom
+        wrapper.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) zoomImage(0.2);
+            else zoomImage(-0.2);
         });
 
         // INIT
