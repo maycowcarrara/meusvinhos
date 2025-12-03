@@ -1,559 +1,789 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Adega Pessoal M&M</title>
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍇</text></svg>">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>Catálogo de Vinhos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
-        /* TEMAS */
-        :root { --theme-name:"Clássico"; --bg-page:#f4f1ea; --card-bg:#ffffff; --primary:#722f37; --accent:#c5a059; --secondary:#9e4755; --text-main:#2c2c2c; --text-muted:#666666; --font-title:'Playfair Display',serif; --font-body:'Lato',sans-serif; --font-script:'Great Vibes',cursive; --border-color:#e0d8c3; --shadow-color:rgba(114,47,55,0.1); --wave-opacity:0.4; }
-        body.theme-modern { --bg-page:#f0f2f5; --card-bg:#ffffff; --primary:#2c3e50; --accent:#34495e; --secondary:#7f8c8d; --text-main:#1a1a1a; --text-muted:#7f8c8d; --font-title:'Montserrat',sans-serif; --font-body:'Open Sans',sans-serif; --font-script:'Montserrat',sans-serif; --border-color:#dfe6e9; --shadow-color:rgba(0,0,0,0.1); --wave-opacity:0.8; }
-        body.theme-rustic { --bg-page:#e8e4d9; --card-bg:#fdfbf7; --primary:#5d4037; --accent:#33691e; --secondary:#8d6e63; --text-main:#3e2723; --text-muted:#5d4037; --font-title:'Cinzel',serif; --font-body:'Cormorant Garamond',serif; --font-script:'Great Vibes',cursive; --border-color:#bcaaa4; --shadow-color:rgba(93,64,55,0.15); --wave-opacity:0.6; }
-        body.theme-rose { --bg-page:#fff0f5; --card-bg:#ffffff; --primary:#d81b60; --accent:#f48fb1; --secondary:#ad1457; --text-main:#4a4a4a; --text-muted:#888888; --font-title:'Playfair Display',serif; --font-body:'Open Sans',sans-serif; --font-script:'Great Vibes',cursive; --border-color:#f8bbd0; --shadow-color:rgba(216,27,96,0.1); --wave-opacity:0.3; }
-        body.theme-gold { --bg-page:#1a1a1a; --card-bg:#fffcf5; --primary:#000000; --accent:#d4af37; --secondary:#b8860b; --text-main:#111111; --text-muted:#555555; --font-title:'Cinzel',serif; --font-body:'Lato',sans-serif; --font-script:'Cormorant Garamond',serif; --border-color:#d4af37; --shadow-color:rgba(212,175,55,0.2); --wave-opacity:0.5; }
-        body.theme-green { --bg-page:#f1f8e9; --card-bg:#ffffff; --primary:#2e7d32; --accent:#8bc34a; --secondary:#558b2f; --text-main:#1b5e20; --text-muted:#689f38; --font-title:'Montserrat',sans-serif; --font-body:'Lato',sans-serif; --font-script:'Great Vibes',cursive; --border-color:#c5e1a5; --shadow-color:rgba(46,125,50,0.1); --wave-opacity:0.4; }
-        body.theme-superman { --theme-name:"Kal-El"; --bg-page:#f0f8ff; --card-bg:#ffffff; --primary:#003D7C; --accent:#AC0D0D; --secondary:#F2B900; --text-main:#00274c; --text-muted:#5c7c99; --font-title:'Orbitron',sans-serif; --font-body:'Montserrat',sans-serif; --font-script:'Orbitron',sans-serif; --border-color:#89CFF0; --shadow-color:rgba(0,61,124,0.2); --wave-opacity:0.2; }
-
-        * { box-sizing: border-box; }
-        body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
-        
-        /* Layout Grid */
-        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
-
-        /* HEADER */
-        .header-card-body { 
-            padding: 30px 20px; text-align: center; background: var(--card-bg); 
-            border-radius: 12px; border: 1px solid var(--border-color); 
-            box-shadow: 0 5px 15px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 20px; 
+        /* ------------------------
+       RESET BÁSICO
+    ------------------------- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .header-icon { width: 60px; height: 60px; fill: var(--primary); margin-bottom: 10px; }
-        h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
-        p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.5em; margin-top: 5px; }
 
-        /* FILTROS COMPACTOS */
-        .filter-section {
-            max-width: 900px; margin: 0 auto 30px auto;
-            background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color);
-            padding: 8px 12px; box-shadow: 0 2px 8px var(--shadow-color);
-            display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: nowrap;
-            overflow-x: auto; /* Permite scroll horizontal em telas muito pequenas */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, sans-serif;
+            background: #f4f4f6;
+            color: #222;
+            line-height: 1.4;
         }
-        
-        .filter-group { display: flex; gap: 6px; flex: 1; align-items: center; }
-        
-        .filter-input, .filter-select { 
-            padding: 5px 8px; border: 1px solid var(--border-color); background: var(--bg-page); 
-            border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
-            outline: none; height: 30px; 
+
+        /* ------------------------
+       LAYOUT GERAL
+    ------------------------- */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
         }
-        .filter-input { min-width: 100px; flex-grow: 1; }
-        .filter-select { min-width: 90px; }
-        .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
 
-        .action-btn { 
-            background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); 
-            width: 30px; height: 30px; border-radius: 4px; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; 
+        /* ------------------------
+       BARRA DE TAREFAS (TOPO)
+       - espaçamento reduzido
+    ------------------------- */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 6px 10px;
+            /* espaçamento menor */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
-        .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .action-btn svg { width: 16px; height: 16px; fill: currentColor; }
-        
-        .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; margin-left: auto; font-weight: bold; }
 
-        /* LOADING */
-        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
+        .toolbar-left,
+        .toolbar-right {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            /* menos espaço entre componentes */
+        }
 
-        /* WINE CARD */
-        .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
-        .card-wave-top { background-color: var(--primary); height: 15px; width: 100%; mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E"); mask-size: cover; opacity: var(--wave-opacity); position: absolute; top: 0; left: 0; z-index: 1; }
-        .card-top-solid { height: 10px; width: 100%; background-color: var(--primary); position: absolute; top: 0; z-index: 0; }
-        .bg-text-top { position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; font-family: var(--font-title); font-weight: 700; font-size: 6em; color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none; line-height: 1; z-index: 0; }
-        
-        .card-body { display: flex; flex-direction: row; padding: 30px; gap: 25px; position: relative; z-index: 2; }
-        .photos { flex: 0 0 200px; display: flex; gap: 8px; justify-content: center; align-items: center; }
-        .photos img { height: 320px; width: auto; max-width: 100px; filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.25)); object-fit: contain; cursor: zoom-in; border-radius: 4px; transition: transform 0.2s; }
-        .photos img:hover { transform: scale(1.02); }
-        .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        
-        .wine-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
-        .flag-box { width: 40px; height: 26px; border-radius: 3px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
-        .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .wine-name { font-family: var(--font-title); font-size: 1.6em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
-        .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1.5px; margin-top: 3px; }
-        .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1em; line-height: 1.4; margin: 12px 0; padding-left: 12px; border-left: 3px solid var(--secondary); }
-        
-        .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; background-color: rgba(0,0,0,0.03); padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em; }
-        .tech-item { display: flex; align-items: center; gap: 5px; color: var(--text-main); }
-        .tech-icon { width: 16px; height: 16px; fill: var(--primary); flex-shrink: 0; }
-        
-        .rating-stars { color: #ddd; font-size: 1.3em; cursor: pointer; margin-bottom: 8px; }
-        .rating-stars span.active { color: #f1c40f; }
-        .strength-wrapper { margin-top: auto; }
-        .strength-label { display: flex; justify-content: space-between; font-size: 0.7em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; font-weight: bold; }
-        .strength-track { background: #e0e0e0; height: 6px; border-radius: 10px; overflow: hidden; }
-        .strength-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; }
+        .toolbar button,
+        .toolbar select,
+        .toolbar input {
+            border-radius: 999px;
+            border: 1px solid #ddd;
+            padding: 4px 10px;
+            /* altura menor */
+            font-size: 12px;
+            /* fonte menor */
+            background: #fafafa;
+            cursor: pointer;
+        }
 
-        /* FABs */
-        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
-        .fab { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white; opacity: 0.6; transition: all 0.3s; cursor: pointer; }
-        .fab:hover { opacity: 1; transform: scale(1.1); }
-        .fab svg { width: 22px; height: 22px; fill: white; }
+        .toolbar button.primary {
+            background: linear-gradient(135deg, #7b2ff7, #f107a3);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+        }
 
-        /* MODALS */
-        .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { background: var(--card-bg); padding: 25px; width: 90%; max-width: 650px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
-        
-        /* Gráficos */
-        .chart-section { margin-bottom: 20px; }
-        .chart-row { margin-bottom: 8px; display: flex; align-items: center; font-size: 0.85em; }
-        .chart-label-text { width: 110px; text-align: right; padding-right: 10px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .chart-bar-area { flex: 1; background: #eee; height: 16px; border-radius: 8px; overflow: hidden; position: relative; }
-        .chart-bar-fill { height: 100%; background: var(--primary); display: flex; align-items: center; padding-left: 5px; color: white; font-size: 0.7em; white-space: nowrap; }
-        .chart-count { position: absolute; right: 5px; top:0; line-height: 16px; font-size: 0.75em; color: #555; }
-        .info-title { font-family: var(--font-title); color: var(--accent); font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; margin-top: 15px; }
+        .toolbar button.icon-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-        /* LIGHTBOX (Corrigido) */
-        .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
-        .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; touch-action: none; }
-        .lightbox-content-wrapper:active { cursor: grabbing; }
-        .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: none; }
-        .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
-        .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
-        .lb-btn:hover { background: rgba(255,255,255,0.4); }
-        .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
+        .toolbar-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: #555;
+            margin-right: 4px;
+        }
 
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .header-card-body { padding: 25px 10px; }
-            h1.main-title { font-size: 2em; }
-            .filter-section { flex-wrap: wrap; justify-content: center; }
-            .filter-group { width: 100%; justify-content: center; }
-            .card-body { flex-direction: column; padding: 20px; gap: 15px; }
-            .photos { width: 100%; flex: auto; margin-bottom: 15px; }
-            .photos img { height: 250px; }
-            .tech-grid { grid-template-columns: 1fr; }
-            .filter-input, .filter-select { flex: 1 1 100%; }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toolbar-left,
+            .toolbar-right {
+                justify-content: space-between;
+            }
         }
 
+        /* ------------------------
+       GRID DOS VINHOS
+    ------------------------- */
+        .wines-grid {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 1024px) {
+            .wines-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .wines-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .wines-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ------------------------
+       CARD DO VINHO
+       - imagem sem esticar
+    ------------------------- */
+        .wine-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .wine-image-wrapper {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            /* proporção fixa em tela e PDF */
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wine-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* NÃO estica a imagem */
+            object-position: center;
+            display: block;
+        }
+
+        .wine-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 4px;
+        }
+
+        .wine-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .wine-meta {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .wine-notes {
+            margin-top: 4px;
+            padding: 6px;
+            border-radius: 8px;
+            background: #faf7ff;
+            font-size: 11px;
+        }
+
+        /* ------------------------
+       MODAL GUIA RÁPIDO
+       - visual mais bonito
+       - mais informações
+    ------------------------- */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal {
+            background: radial-gradient(circle at top left, #fdf2ff, #ffffff);
+            border-radius: 18px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 22px 55px rgba(15, 23, 42, 0.35);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 16px 20px 8px 20px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .modal-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-title-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(129, 140, 248, 0.1);
+            color: #4f46e5;
+            font-weight: 500;
+        }
+
+        .modal-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .modal-close-btn {
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            padding: 4px 10px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #4b5563;
+        }
+
+        .modal-close-btn span.icon {
+            font-size: 13px;
+        }
+
+        .modal-body {
+            padding: 14px 20px 16px 20px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #6b21a8;
+            margin-bottom: 4px;
+        }
+
+        .modal-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+            color: #374151;
+        }
+
+        .modal-step {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 8px 10px;
+            border: 1px solid rgba(209, 213, 219, 0.7);
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-step-number {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: #fff;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .modal-step-content-title {
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .modal-step-content-text {
+            font-size: 11px;
+            color: #4b5563;
+        }
+
+        .modal-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .modal-highlight-card {
+            border-radius: 14px;
+            padding: 8px 10px;
+            background: linear-gradient(135deg, #0f172a, #4c1d95);
+            color: #e5e7eb;
+        }
+
+        .modal-highlight-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .modal-highlight-text {
+            font-size: 11px;
+        }
+
+        .modal-pill-list {
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .modal-pill {
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.7);
+            font-size: 10px;
+        }
+
+        .modal-shortcuts {
+            border-radius: 12px;
+            padding: 8px 10px;
+            background: rgba(250, 250, 251, 0.95);
+            border: 1px dashed rgba(148, 163, 184, 0.95);
+            font-size: 11px;
+            color: #4b5563;
+        }
+
+        .modal-shortcuts-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .kbd {
+            border-radius: 6px;
+            padding: 2px 6px;
+            background: #111827;
+            color: #f9fafb;
+            font-size: 10px;
+            font-family: system-ui, sans-serif;
+            border: 1px solid rgba(55, 65, 81, 0.8);
+        }
+
+        .modal-footer {
+            padding: 10px 16px;
+            background: rgba(248, 250, 252, 0.95);
+            border-top: 1px solid rgba(148, 163, 184, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .modal-footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .modal-footer-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .badge {
+            border-radius: 999px;
+            padding: 2px 8px;
+            background: rgba(129, 140, 248, 0.1);
+            color: #4f46e5;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .modal-footer-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .btn-ghost {
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            padding: 4px 8px;
+            background: #ffffff;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #4b5563;
+        }
+
+        .btn-solid {
+            border-radius: 999px;
+            border: none;
+            padding: 4px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            box-shadow: 0 8px 18px rgba(109, 40, 217, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-solid span.icon {
+            font-size: 13px;
+        }
+
+        /* ------------------------
+       ESTILOS DE IMPRESSÃO / PDF
+       - foca em preservar proporção
+       - remove sombras e cores fortes
+    ------------------------- */
         @media print {
-            .no-print, .fab-container, .lightbox, .modal, .filter-section { display: none !important; }
-            body { background: white; padding: 0; }
-            .catalog-grid { display: block; }
-            .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; page-break-inside: avoid; }
-            .photos img { filter: none; }
-            .bg-text-top { opacity: 0.05 !important; }
-            .card-wave-top, .strength-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            body {
+                background: #ffffff;
+            }
+
+            .toolbar,
+            .modal-backdrop {
+                display: none !important;
+            }
+
+            .page-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 8px;
+            }
+
+            .wines-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .wine-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 6px;
+            }
+
+            .wine-image-wrapper {
+                aspect-ratio: 3 / 4;
+                background: #ffffff;
+            }
+
+            .wine-image-wrapper img {
+                object-fit: contain;
+            }
+
+            .wine-notes {
+                background: #ffffff;
+            }
         }
     </style>
 </head>
-<body class="">
 
-    <div id="exportLoading"><div style="font-size: 3em;">🍷</div><div style="margin-top:20px;">Gerando PDF (Ajustando Proporções)...</div></div>
+<body>
+    <div class="page-container">
 
-    <div class="fab-container no-print">
-        <div class="fab" onclick="openInfoModal()" title="Ajuda">?</div>
-        <div class="fab" onclick="openDashboard()" title="Estatísticas"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
-        <div class="fab" onclick="toggleTheme()" title="Temas"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg></div>
-    </div>
-
-    <div id="lightbox" class="lightbox">
-        <span class="lb-close" onclick="closeLightbox()">&times;</span>
-        <div class="lightbox-content-wrapper" id="lb-wrapper"><img id="lightbox-img" class="lightbox-img" src=""></div>
-        <div class="lightbox-controls">
-            <div class="lb-btn" onclick="zoomManual(-0.2)">-</div>
-            <div class="lb-btn" onclick="zoomManual(0.2)">+</div>
-        </div>
-    </div>
-
-    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas</h2><div id="chartsContainer"></div></div></div>
-    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve/Suave) a 5 (Robusto/Estruturado).<br><strong>Taninos:</strong> Sensação de secura na boca (adstringência).</div></div></div>
-
-    <div class="catalog-grid">
-        <div class="header-card-body">
-            <svg class="header-icon" viewBox="0 0 24 24"><path d="M12 2C12.55 2 13 2.45 13 3V4.17C14.17 4.58 15 5.69 15 7C15 8.66 13.66 10 12 10C10.34 10 9 8.66 9 7C9 5.69 9.83 4.58 11 4.17V3C11 2.45 11.45 2 12 2M17 9C18.1 9 19 9.9 19 11C19 12.1 18.1 13 17 13C16.9 13 16.8 13 16.7 12.98C16.89 12.38 17 11.72 17 11.03V11H17M7 9C7 11.03 7.11 12.38 7.3 12.98C7.2 13 7.1 13 7 13C5.9 13 5 12.1 5 11C5 9.9 5.9 9 7 9M12 11C13.66 11 15 12.34 15 14C15 15.66 13.66 17 12 17C10.34 17 9 15.66 9 14C9 12.34 10.34 11 12 11M17.3 14.02C17.11 14.62 17 15.97 17 18C17 19.1 16.1 20 15 20C14.72 20 14.45 19.94 14.2 19.84C14.54 19.04 14.82 18.07 14.94 17.01C14.98 17 15.02 16.99 15.06 16.99C15.04 16.95 15.02 16.92 15 16.88C14.78 16.95 14.54 16.99 14.3 17.02C14.11 17.62 14 18.97 14 21C14 22.1 13.1 23 12 23C10.9 23 10 22.1 10 21C10 18.97 9.89 17.62 9.7 17.02C9.46 16.99 9.22 16.95 9 16.88C8.98 16.92 8.96 16.95 8.94 16.99C8.98 16.99 9.02 17 9.06 17.01C9.18 18.07 9.46 19.04 9.8 19.84C9.55 19.94 9.28 20 9 20C7.9 20 7 19.1 7 18C7 15.97 6.89 14.62 6.7 14.02C6.8 14.01 6.9 14 7 14C7.02 14 7.04 14 7.06 14C7.14 14.78 7.33 15.63 7.58 16.51C7.83 16.45 8.09 16.41 8.37 16.39C8.43 15.71 8.65 15.12 9 14.65V14.64C9 14.42 9.04 14.21 9.13 14.01C9.7 13.63 10.74 13.31 11.97 13.04C12.04 13.31 13.7 13.63 14.27 14.01C14.35 14.21 14.39 14.42 14.39 14.64V14.65C14.74 15.12 14.97 15.71 15.02 16.39C15.3 16.41 15.57 16.45 15.82 16.51C16.06 15.63 16.25 14.78 16.33 14C16.35 14 16.37 14 16.39 14C16.49 14 16.59 14.01 16.69 14.02Z"/></svg>
-            <h1 class="main-title">Adega Pessoal M&M</h1>
-            <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
-        </div>
-
-        <div id="filterSection" class="filter-section no-print">
-            <div class="filter-group">
-                <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
-                <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">País</option></select>
-                <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safra</option></select>
-                <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
-                <select id="sortSelect" class="filter-select" onchange="applyFilters()">
-                    <option value="nome">A-Z</option>
-                    <option value="forcaDesc">Força +</option>
-                    <option value="forcaAsc">Força -</option>
-                    <option value="safraDesc">Safra Nova</option>
-                    <option value="safraAsc">Safra Antiga</option>
+        <!-- TOOLBAR / BARRA DE TAREFAS -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <span class="toolbar-label">Catálogo de vinhos</span>
+                <button type="button" class="icon-btn primary" onclick="window.print()">
+                    <span>📄</span>
+                    <span>Exportar em PDF</span>
+                </button>
+                <button type="button" class="icon-btn" onclick="openQuickGuide()">
+                    <span>❓</span>
+                    <span>Guia rápido</span>
+                </button>
+            </div>
+            <div class="toolbar-right">
+                <span class="toolbar-label">Filtros</span>
+                <select>
+                    <option>Todos os países</option>
+                    <option>Brasil</option>
+                    <option>Argentina</option>
+                    <option>Chile</option>
+                    <option>França</option>
+                    <option>Itália</option>
                 </select>
-                <button class="action-btn" onclick="clearFilters()" title="Limpar"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px;">
-                <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF (Corrigido)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
-                <span class="filter-stats" id="filterStats"></span>
+                <select>
+                    <option>Todos os estilos</option>
+                    <option>Tinto</option>
+                    <option>Branco</option>
+                    <option>Rosé</option>
+                    <option>Espumante</option>
+                </select>
+                <input type="search" placeholder="Pesquisar por nome..." />
             </div>
         </div>
 
-        <div id="wineListContainer" style="display: contents;"></div>
+        <!-- GRID DOS VINHOS -->
+        <div class="wines-grid">
+            <!--
+        EXEMPLO DE CARD.
+        Substitua / ajuste os cards com os seus dados reais.
+      -->
+            <div class="wine-card">
+                <div class="wine-image-wrapper">
+                    <img src="imagens/vinho-exemplo-1.jpg" alt="Vinho Exemplo 1" />
+                </div>
+                <div class="wine-info">
+                    <div class="wine-name">Vinho Exemplo 1</div>
+                    <div class="wine-meta">Tinto · 2020 · Argentina</div>
+                    <div class="wine-meta">Uva: Malbec · Teor alcoólico: 13,5%</div>
+                    <div class="wine-notes">
+                        Notas de frutas vermelhas maduras, toque de baunilha e taninos macios.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wine-card">
+                <div class="wine-image-wrapper">
+                    <img src="imagens/vinho-exemplo-2.jpg" alt="Vinho Exemplo 2" />
+                </div>
+                <div class="wine-info">
+                    <div class="wine-name">Vinho Exemplo 2</div>
+                    <div class="wine-meta">Branco · 2021 · Chile</div>
+                    <div class="wine-meta">Uva: Sauvignon Blanc · Teor alcoólico: 12%</div>
+                    <div class="wine-notes">
+                        Aromas cítricos, boa acidez e final refrescante.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copie / cole este bloco para cada vinho -->
+        </div>
     </div>
 
-    <script>
-        const flags = { "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`, "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`, "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`, "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`, "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`, "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`, "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M240 250 A 200 200 0 0 0 550 200" stroke="#fff" stroke-width="15" fill="none"/></svg>` };
-        const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,17.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
-        const iconDrop = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M12,2c-5.33,5.33-8,10.67-8,16c0,4.42,3.58,8,8,8s8-3.58,8-8C20,12.67,17.33,7.33,12,2z M12,24c-3.31,0-6-2.69-6-6c0-4,2-8,6-12c4,4,6,8,6,12C18,21.31,15.31,24,12,24z"/></svg>`;
-        const iconCalendar = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`;
+    <!-- MODAL GUIA RÁPIDO -->
+    <div class="modal-backdrop" id="quickGuideModal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="quickGuideTitle">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-title" id="quickGuideTitle">
+                        Guia rápido do catálogo
+                        <span class="modal-title-badge">Versão 1.0</span>
+                    </div>
+                    <div class="modal-subtitle">
+                        Dicas rápidas para navegar, filtrar e exportar seu catálogo de vinhos em qualquer dispositivo.
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closeQuickGuide()">
+                    <span class="icon">✕</span>
+                    <span>Fechar</span>
+                </button>
+            </div>
 
-        const vinhos = [
-            { nome: "Popolo Private Selection", pais: "Portugal", regiao: "Regional Alentejano", uvas: "Syrah, Aragonez, Trincadeira, Touriga Nacional", abv: "13,5%", safra: "2023", forca: 5, poesia: "Um gigante gentil das planícies quentes do Alentejo. Este vinho traz o sol português engarrafado: potente, escuro e carregado de frutas maduras.", imgFrente: "images/20251202_111906.jpg", imgVerso: "images/20251202_111914.jpg" },
-            { nome: "Duque de Cazarra Roble", pais: "Espanha", regiao: "Utiel-Requena", uvas: "Bobal, Tempranillo, Cabernet Sauvignon", abv: "13,0%", safra: "2022", forca: 5, poesia: "A essência da terra espanhola maturada em carvalho. 'Roble' denota sua passagem pela madeira, conferindo firmeza e notas de baunilha.", imgFrente: "images/20251202_112052.jpg", imgVerso: "images/20251202_112058.jpg" },
-            { nome: "La Tirana", pais: "Chile", regiao: "Valle Central", uvas: "Carmenere", abv: "13,5%", safra: "2024", forca: 4, poesia: "A casta perdida de Bordeaux que encontrou sua alma nos Andes. Marcante por suas notas de especiarias e pimentão doce.", imgFrente: "images/20251202_111934.jpg", imgVerso: "images/20251202_111940.jpg" },
-            { nome: "Casal da Torre", pais: "Portugal", regiao: "Douro DOC", uvas: "Touriga Franca, Tinta Roriz, Tinto Cão", abv: "13,0%", safra: "2023", forca: 4, poesia: "Filho das encostas íngremes e do solo de xisto do Douro. Um vinho sério e mineral, onde a elegância tenta domar a força bruta.", imgFrente: "images/20251202_111706.jpg", imgVerso: "images/20251202_111714.jpg" },
-            { nome: "Montis Anima", pais: "Argentina", regiao: "Mendoza", uvas: "Malbec", abv: "13,0%", safra: "2024", forca: 4, poesia: "'A Alma da Montanha'. Um Malbec de altitude que equilibra a doçura natural da ameixa madura com o frescor do ar dos Andes.", imgFrente: "images/20251202_112148.jpg", imgVerso: "images/20251202_112205.jpg" },
-            { nome: "Encostas do Outeiro", pais: "Portugal", regiao: "Regional Lisboa", uvas: "Syrah, Caladoc, Aragonez", abv: "13,0%", safra: "2022", forca: 4, poesia: "Um sopro do Atlântico. Cultivado sob a influência da brisa oceânica de Lisboa, une estrutura da Syrah com frescura salina.", imgFrente: "images/20251202_112124.jpg", imgVerso: "images/20251202_112131.jpg" },
-            { nome: "Le Gourmandin", pais: "França", regiao: "Vin de France", uvas: "Blend Tinto Fino", abv: "13,0%", safra: "2023", forca: 3, poesia: "O cavalheiro francês descomplicado. Como um bistrô parisiense, não exige formalidades: entrega equilíbrio e fruta honesta.", imgFrente: "images/20251202_112246.jpg", imgVerso: "images/20251202_112252.jpg" },
-            { nome: "Beco Torto", pais: "Portugal", regiao: "Regional Lisboa", uvas: "Blend Regional", abv: "13,0%", safra: "2022", forca: 3, poesia: "Assim como as ruelas sinuosas de Lisboa, este vinho é uma descoberta charmosa. Frutado, macio e sem arestas.", imgFrente: "images/20251202_112027.jpg", imgVerso: "images/20251202_112034.jpg" },
-            { nome: "Emarè Sangiovese", pais: "Itália", regiao: "Rubicone IGT", uvas: "Sangiovese", abv: "12,5%", safra: "2024", forca: 3, poesia: "A alma rústica da Itália. Com a acidez típica da Sangiovese que 'limpa' o paladar, traz notas de cereja ácida e terra molhada.", imgFrente: "images/20251202_111845.jpg", imgVerso: "images/20251202_111852.jpg" },
-            { nome: "Emarè Montepulciano", pais: "Itália", regiao: "D'Abruzzo DOC", uvas: "Montepulciano", abv: "12,5%", safra: "2024", forca: 3, poesia: "Escuro como a noite em Abruzzo, mas vibrante no paladar. Um tinto gastronômico, com taninos presentes e final levemente amargo.", imgFrente: "images/20251202_111820.jpg", imgVerso: "images/20251202_111832.jpg" },
-            { nome: "Vivalti Rosé", pais: "Brasil", regiao: "São Joaquim - SC", uvas: "Sangiovese, Touriga Nacional", abv: "12,5%", safra: "2023", forca: 2, poesia: "O frescor das montanhas catarinenses. Um rosé de altitude, pálido e elegante, que captura o frio da serra em frutas vermelhas.", imgFrente: "images/20251202_112003.jpg", imgVerso: "images/20251202_112008.jpg" },
-            { nome: "Tozetti Casca Dura", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Casca Dura", abv: "12,5%", safra: "2025", forca: 2, poesia: "Uma relíquia viva da imigração italiana no Paraná. A uva Casca Dura, resistente e rara, entrega um vinho branco com personalidade única.", imgFrente: "images/20251202_111754.jpg", imgVerso: "images/20251202_111804.jpg" },
-            { nome: "Duque de Cazarra (Vendimia)", pais: "Espanha", regiao: "Tierra de Castilla", uvas: "Tempranillo", abv: "12,5%", safra: "2022", forca: 3, poesia: "A juventude vibrante da Espanha. Sem a maquiagem da madeira, a uva Tempranillo se mostra nua e crua: fruta vermelha explosiva.", imgFrente: "images/20251202_112223.jpg", imgVerso: "images/20251202_112229.jpg" },
-            { nome: "Sanber Bordô Suave", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Bordô", abv: "11,0%", safra: "NV", forca: 1, poesia: "O sabor da memória. Um vinho de cor violeta profunda que remete às festas de família. Doce, intenso e despretensioso.", imgFrente: "images/20251202_111735.jpg", imgVerso: "images/20251202_111735.jpg" },
-            { nome: "Bituruna Niágara Suave", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Niágara", abv: "10,7%", safra: "NV", forca: 1, poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil.", imgFrente: "images/20251202_111725.jpg", imgVerso: "images/20251202_111725.jpg" }
-        ];
-
-        function populateFilters() {
-            const countries = new Set(vinhos.map(v => v.pais).sort());
-            const years = new Set(vinhos.map(v => v.safra).sort());
-            const abvs = new Set(vinhos.map(v => v.abv).sort());
-            
-            const cSelect = document.getElementById('countrySelect');
-            const ySelect = document.getElementById('yearSelect');
-            const aSelect = document.getElementById('abvSelect');
-
-            countries.forEach(val => cSelect.innerHTML += `<option value="${val}">${val}</option>`);
-            years.forEach(val => ySelect.innerHTML += `<option value="${val}">${val}</option>`);
-            abvs.forEach(val => aSelect.innerHTML += `<option value="${val}">${val}</option>`);
-        }
-
-        function getRating(wineName) { return parseInt(localStorage.getItem(`rating_${wineName}`) || 0); }
-        function setRating(wineName, rating) { localStorage.setItem(`rating_${wineName}`, rating); applyFilters(); }
-
-        function renderCatalog(listToRender) {
-            const container = document.getElementById('wineListContainer');
-            container.innerHTML = ''; 
-            document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} rótulos`;
-
-            if(listToRender.length === 0) {
-                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">Nenhum vinho encontrado.</div>';
-                return;
-            }
-
-            listToRender.forEach(vinho => {
-                const card = document.createElement('div');
-                card.className = 'wine-card';
-                const flagSVG = flags[vinho.pais] || '';
-                const widthPercentage = (vinho.forca / 5) * 100;
-                const userRating = getRating(vinho.nome);
-
-                let starsHTML = '<div class="rating-stars no-print">';
-                for(let i=1; i<=5; i++) {
-                    const activeClass = i <= userRating ? 'active' : '';
-                    starsHTML += `<span class="${activeClass}" onclick="setRating('${vinho.nome}', ${i})">★</span>`;
-                }
-                starsHTML += '</div>';
-
-                card.innerHTML = `
-                    <div class="card-top-solid"></div>
-                    <div class="card-wave-top"></div>
-                    <div class="bg-text-top">${vinho.nome}</div>
-
-                    <div class="card-body">
-                        <div class="photos">
-                            <img src="${vinho.imgFrente}" alt="Frente" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
-                            <img src="${vinho.imgVerso}" alt="Verso" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+            <div class="modal-body">
+                <!-- COLUNA ESQUERDA: PASSO A PASSO -->
+                <div>
+                    <div class="modal-section-title">Como usar</div>
+                    <div class="modal-steps">
+                        <div class="modal-step">
+                            <div class="modal-step-number">1</div>
+                            <div>
+                                <div class="modal-step-content-title">Navegação por cards</div>
+                                <div class="modal-step-content-text">
+                                    Cada vinho aparece em um card com foto, país, safra, uva e notas de degustação.
+                                    Clique no card (desktop) ou toque nele (celular) se quiser destacar ou anotar algo.
+                                </div>
+                            </div>
                         </div>
-                        <div class="info">
-                            <div class="wine-header">
-                                <div class="flag-box">${flagSVG}</div>
-                                <div><h2 class="wine-name">${vinho.nome}</h2><div class="wine-region">${vinho.regiao}</div></div>
+
+                        <div class="modal-step">
+                            <div class="modal-step-number">2</div>
+                            <div>
+                                <div class="modal-step-content-title">Filtros rápidos</div>
+                                <div class="modal-step-content-text">
+                                    Use os filtros de país e estilo na barra superior para reduzir a lista.
+                                    A busca por nome permite localizar um rótulo específico em segundos.
+                                </div>
                             </div>
-                            ${starsHTML}
-                            <div class="poetic-desc">"${vinho.poesia}"</div>
-                            <div class="tech-grid">
-                                <div class="tech-item">${iconGrapes}<span>${vinho.uvas}</span></div>
-                                <div class="tech-item">${iconCalendar}<span>Safra: ${vinho.safra}</span></div>
-                                <div class="tech-item">${iconDrop}<span>Vol: ${vinho.abv}</span></div>
+                        </div>
+
+                        <div class="modal-step">
+                            <div class="modal-step-number">3</div>
+                            <div>
+                                <div class="modal-step-content-title">Exportar para PDF</div>
+                                <div class="modal-step-content-text">
+                                    Clique em “Exportar em PDF” para gerar um arquivo pronto para enviar ou imprimir.
+                                    As imagens são mantidas na proporção correta, evitando distorções em relatórios e
+                                    apresentações.
+                                </div>
                             </div>
-                            <div class="strength-wrapper">
-                                <div class="strength-label"><span>Corpo</span> <span>${vinho.forca}/5</span></div>
-                                <div class="strength-track"><div class="strength-fill" style="width: ${widthPercentage}%"></div></div>
+                        </div>
+
+                        <div class="modal-step">
+                            <div class="modal-step-number">4</div>
+                            <div>
+                                <div class="modal-step-content-title">Uso em desktop e celular</div>
+                                <div class="modal-step-content-text">
+                                    O layout se adapta automaticamente: em telas grandes os vinhos aparecem em várias
+                                    colunas,
+                                    e em telas menores a leitura fica confortável em uma ou duas colunas.
+                                </div>
                             </div>
                         </div>
                     </div>
-                `;
-                container.appendChild(card);
-            });
+                </div>
+
+                <!-- COLUNA DIREITA: DESTAQUES E ATALHOS -->
+                <div>
+                    <div class="modal-section-title">Destaques</div>
+                    <div class="modal-highlights">
+                        <div class="modal-highlight-card">
+                            <div class="modal-highlight-title">Visual limpo e consistente</div>
+                            <div class="modal-highlight-text">
+                                Cards padronizados facilitam a comparação de rótulos e a organização da sua coleção,
+                                tanto na tela quanto no PDF.
+                            </div>
+                            <div class="modal-pill-list">
+                                <span class="modal-pill">Sem imagens esticadas</span>
+                                <span class="modal-pill">Focado em leitura</span>
+                                <span class="modal-pill">Pronto para impressão</span>
+                            </div>
+                        </div>
+
+                        <div class="modal-highlight-card" style="background: linear-gradient(135deg,#1e293b,#7e22ce);">
+                            <div class="modal-highlight-title">Bom para apresentações</div>
+                            <div class="modal-highlight-text">
+                                Ideal para levar para degustações guiadas, reuniões com clientes ou estudos de rótulos,
+                                com um padrão visual profissional.
+                            </div>
+                            <div class="modal-pill-list">
+                                <span class="modal-pill">Restaurantes</span>
+                                <span class="modal-pill">Importadoras</span>
+                                <span class="modal-pill">Coleções pessoais</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section-title" style="margin-top: 10px;">Atalhos úteis</div>
+                    <div class="modal-shortcuts">
+                        <div>Alguns atalhos para agilizar o uso no desktop:</div>
+                        <div class="modal-shortcuts-row">
+                            <span class="kbd">Ctrl</span><span>+</span><span class="kbd">P</span>
+                            <span>Imprimir / salvar em PDF</span>
+                        </div>
+                        <div class="modal-shortcuts-row">
+                            <span class="kbd">Ctrl</span><span>+</span><span class="kbd">F</span>
+                            <span>Buscar por texto na página</span>
+                        </div>
+                        <div class="modal-shortcuts-row">
+                            <span class="kbd">Ctrl</span><span>+</span><span class="kbd">+</span>
+                            <span class="kbd">Ctrl</span><span>+</span><span class="kbd">-</span>
+                            <span>Ajustar zoom da visualização</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="modal-footer-left">
+                    <div>Quer ajustar algo no layout?</div>
+                    <div class="modal-footer-badges">
+                        <span class="badge">Responsivo</span>
+                        <span class="badge">PDF amigável</span>
+                        <span class="badge">Focado em catálogo</span>
+                    </div>
+                </div>
+                <div class="modal-footer-right">
+                    <button type="button" class="btn-ghost" onclick="closeQuickGuide()">
+                        Ver catálogo
+                    </button>
+                    <button type="button" class="btn-solid" onclick="window.print()">
+                        <span class="icon">📄</span>
+                        <span>Exportar agora</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openQuickGuide() {
+            const modal = document.getElementById("quickGuideModal");
+            if (!modal) return;
+            modal.classList.add("open");
+            modal.setAttribute("aria-hidden", "false");
         }
 
-        // LÓGICA DE FILTRO & SORT
-        function applyFilters() {
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const countryVal = document.getElementById('countrySelect').value;
-            const yearVal = document.getElementById('yearSelect').value;
-            const abvVal = document.getElementById('abvSelect').value;
-            const sortVal = document.getElementById('sortSelect').value;
-
-            let filtered = vinhos.filter(v => {
-                const allData = (v.nome + " " + v.pais + " " + v.regiao + " " + v.uvas + " " + v.safra + " " + v.abv).toLowerCase();
-                const matchText = allData.includes(searchText);
-                const matchCountry = countryVal === "" || v.pais === countryVal;
-                const matchYear = yearVal === "" || v.safra === yearVal;
-                const matchAbv = abvVal === "" || v.abv === abvVal;
-                return matchText && matchCountry && matchYear && matchAbv;
-            });
-
-            filtered.sort((a,b) => {
-                const parseAbv = str => parseFloat(str.replace(',','.').replace('%',''));
-                const parseSafra = str => str === 'NV' ? 0 : parseInt(str);
-
-                switch(sortVal) {
-                    case 'nome': return a.nome.localeCompare(b.nome);
-                    case 'forcaDesc': return b.forca - a.forca;
-                    case 'forcaAsc': return a.forca - b.forca;
-                    case 'safraDesc': return parseSafra(b.safra) - parseSafra(a.safra);
-                    case 'safraAsc': return parseSafra(a.safra) - parseSafra(b.safra);
-                    case 'abvDesc': return parseAbv(b.abv) - parseAbv(a.abv);
-                    default: return 0;
-                }
-            });
-
-            renderCatalog(filtered);
+        function closeQuickGuide() {
+            const modal = document.getElementById("quickGuideModal");
+            if (!modal) return;
+            modal.classList.remove("open");
+            modal.setAttribute("aria-hidden", "true");
         }
 
-        function clearFilters() {
-            document.getElementById('searchInput').value = "";
-            document.getElementById('countrySelect').value = "";
-            document.getElementById('yearSelect').value = "";
-            document.getElementById('abvSelect').value = "";
-            document.getElementById('sortSelect').value = "nome";
-            applyFilters();
-        }
-
-        // EXPORT PDF CORRIGIDO (Aspect Ratio Real)
-        async function exportToPDF() {
-            document.getElementById('exportLoading').style.display = 'flex';
-            window.scrollTo(0,0);
-            
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4'); // A4: 210mm x 297mm
-            const pageWidth = 210; 
-            const pageHeight = 297;
-            const margin = 10;
-            const cards = document.querySelectorAll('#wineListContainer .wine-card');
-            
-            let yCursor = margin;
-
-            for(let i=0; i<cards.length; i++) {
-                // Renderiza o card em alta resolução
-                const canvas = await html2canvas(cards[i], { scale: 2, useCORS: true });
-                const imgData = canvas.toDataURL('image/png');
-                
-                // Calcula proporção real para não esticar
-                const cardWidthPx = canvas.width;
-                const cardHeightPx = canvas.height;
-                const availableWidthMm = pageWidth - (margin * 2);
-                
-                // Regra de 3 para converter pixels em mm mantendo a proporção
-                const finalHeightMm = (cardHeightPx * availableWidthMm) / cardWidthPx;
-
-                // Se não couber na página atual, cria nova
-                if (yCursor + finalHeightMm > pageHeight - margin) {
-                    doc.addPage();
-                    yCursor = margin;
-                }
-
-                doc.addImage(imgData, 'PNG', margin, yCursor, availableWidthMm, finalHeightMm);
-                yCursor += finalHeightMm + 5; // Espaço entre cards
-            }
-            doc.save('minha-adega.pdf');
-            document.getElementById('exportLoading').style.display = 'none';
-        }
-
-        // DASHBOARD MELHORADO
-        function openDashboard() {
-            const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
-            let sortedCountries = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
-            
-            // Top Grape
-            const grapeCounts = {};
-            vinhos.forEach(v => {
-                const uvas = v.uvas.split(','); // Divide se tiver mais de uma
-                uvas.forEach(u => {
-                    const uvaTrim = u.trim();
-                    grapeCounts[uvaTrim] = (grapeCounts[uvaTrim] || 0) + 1;
-                });
-            });
-            const topGrape = Object.keys(grapeCounts).reduce((a, b) => grapeCounts[a] > grapeCounts[b] ? a : b);
-
-            let html = `<div style="text-align:center; margin-bottom:25px; padding:15px; background:rgba(0,0,0,0.03); border-radius:8px;">
-                            <div style="font-size:3em; font-weight:bold; color:var(--primary); font-family:var(--font-title)">${vinhos.length}</div>
-                            <div style="text-transform:uppercase; font-size:0.8em; letter-spacing:1px; color:var(--text-muted)">Rótulos Totais</div>
-                            <div style="margin-top:10px; font-size:0.9em">Uva Destaque: <strong>${topGrape}</strong></div>
-                        </div>`;
-
-            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Países</h3>';
-            sortedCountries.forEach(c => {
-                const pct = (counts[c] / vinhos.length) * 100;
-                html += `<div class="chart-row"><div class="chart-label-text">${c}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%"><span class="chart-count" style="color: white; padding-left:5px;">${counts[c]}</span></div></div></div>`;
-            });
-            html += '</div>';
-            
-            const forcaCounts = {1:0, 2:0, 3:0, 4:0, 5:0}; vinhos.forEach(v => forcaCounts[v.forca]++);
-            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Intensidade</h3>';
-            for(let i=1; i<=5; i++) {
-                if(forcaCounts[i] > 0) {
-                    const pct = (forcaCounts[i] / vinhos.length) * 100;
-                    html += `<div class="chart-row"><div class="chart-label-text">Nível ${i}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%; background:var(--accent)"></div><span class="chart-count">${forcaCounts[i]}</span></div></div>`;
-                }
-            }
-            html += '</div>';
-
-            document.getElementById('chartsContainer').innerHTML = html;
-            document.getElementById('biModal').style.display = "flex";
-        }
-
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
-        function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
-
-        // LIGHTBOX CORRIGIDO (Zoom, Pan & Scroll Lock)
-        let currentScale = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
-        let initialPinchDistance = null;
-        let initialScale = 1;
-
-        const img = document.getElementById('lightbox-img');
-        const modal = document.getElementById('lightbox');
-        const wrapper = document.getElementById('lb-wrapper');
-
-        function openLightbox(src) {
-            modal.style.display = 'flex';
-            img.src = src;
-            document.body.style.overflow = 'hidden'; // Bloqueia scroll da página
-            resetZoom();
-        }
-
-        function closeLightbox() {
-            modal.style.display = 'none';
-            document.body.style.overflow = ''; // Libera scroll
-        }
-
-        function resetZoom() {
-            currentScale = 1; translateX = 0; translateY = 0;
-            updateTransform();
-        }
-
-        function updateTransform() {
-            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
-        }
-
-        function zoomManual(d) {
-            currentScale = Math.max(1, Math.min(4, currentScale + d));
-            updateTransform();
-        }
-
-        // Mouse Drag (Pan)
-        wrapper.addEventListener('mousedown', e => {
-            if (currentScale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                e.preventDefault();
-            }
-        });
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', e => {
-            if (isDragging) {
-                e.preventDefault();
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
+        // Fecha o modal com ESC
+        document.addEventListener("keydown", (ev) => {
+            if (ev.key === "Escape") {
+                closeQuickGuide();
             }
         });
 
-        // Touch Logic (Zoom Pinça & Pan)
-        wrapper.addEventListener('touchstart', e => {
-            if (e.touches.length === 2) {
-                initialPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                initialScale = currentScale;
-            } else if (e.touches.length === 1 && currentScale > 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
+        // Fecha clicando fora do modal
+        document.addEventListener("click", (ev) => {
+            const backdrop = document.getElementById("quickGuideModal");
+            if (!backdrop) return;
+            if (ev.target === backdrop) {
+                closeQuickGuide();
             }
         });
-
-        wrapper.addEventListener('touchmove', e => {
-            e.preventDefault();
-            if (e.touches.length === 2 && initialPinchDistance) {
-                const dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                currentScale = Math.max(1, Math.min(4, initialScale * (dist / initialPinchDistance)));
-                updateTransform();
-            } else if (isDragging && e.touches.length === 1) {
-                translateX = e.touches[0].clientX - startX;
-                translateY = e.touches[0].clientY - startY;
-                updateTransform();
-            }
-        });
-
-        wrapper.addEventListener('touchend', () => { isDragging = false; initialPinchDistance = null; });
-
-        // Wheel Zoom (Desktop)
-        wrapper.addEventListener('wheel', e => {
-            e.preventDefault(); // Impede scroll da página
-            if (e.deltaY < 0) zoomManual(0.2);
-            else zoomManual(-0.2);
-        });
-
-        // Fechar ao clicar fora (Área escura)
-        modal.addEventListener('click', e => {
-            if (e.target === modal || e.target === wrapper) closeLightbox();
-        });
-        // Não fechar ao clicar na imagem
-        img.addEventListener('click', e => e.stopPropagation());
-
-        // ESC fecha tudo
-        document.addEventListener('keydown', e => {
-            if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }
-        });
-
-        // Toggle Theme
-        const themes = [ { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' }, { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' } ];
-        let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme') || 0);
-        if(currentThemeIndex >= themes.length) currentThemeIndex = 0;
-        function toggleTheme() {
-            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            localStorage.setItem('wineCatalogTheme', currentThemeIndex);
-            document.body.className = themes[currentThemeIndex].class;
-        }
-        document.body.className = themes[currentThemeIndex].class;
-
-        // Init
-        populateFilters();
-        renderCatalog(vinhos);
     </script>
 </body>
+
 </html>
