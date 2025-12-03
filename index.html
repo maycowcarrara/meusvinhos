@@ -26,47 +26,61 @@
         * { box-sizing: border-box; }
         body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
         
-        /* LAYOUT CONTAINER */
-        .app-container { max-width: 900px; margin: 0 auto; padding: 20px; }
-
-        /* HEADER */
-        .header-card-body { 
-            padding: 25px 20px; text-align: center; background: var(--card-bg); 
-            border-radius: 12px 12px 0 0; border: 1px solid var(--border-color); border-bottom: none;
-            position: relative; z-index: 2; 
+        /* HEADER CONTAINER (Unifica Título e Filtro) */
+        .header-container {
+            max-width: 900px; margin: 0 auto 30px auto;
+            background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            display: flex; flex-direction: column;
+            overflow: hidden; /* Garante bordas arredondadas */
         }
-        .header-icon { width: 50px; height: 50px; fill: var(--primary); margin-bottom: 10px; }
-        h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
-        p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.4em; margin-top: 5px; }
 
-        /* FILTROS COMPACTOS */
-        .filter-section {
-            background: var(--bg-page);
-            border: 1px solid var(--border-color); border-top: 1px dashed var(--border-color);
-            border-radius: 0 0 12px 12px;
-            padding: 10px 15px; box-shadow: 0 5px 15px var(--shadow-color);
-            display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+        .header-title-area {
+            padding: 30px 20px 20px 20px; text-align: center;
+            border-bottom: 1px solid var(--border-color);
         }
         
-        .filter-input, .filter-select { 
-            padding: 6px 10px; border: 1px solid var(--border-color); background: #fff; 
-            border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
-            outline: none; height: 32px; flex: 1; min-width: 110px; max-width: 160px;
+        .header-icon { width: 50px; height: 50px; fill: var(--primary); margin-bottom: 5px; }
+        h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.2em; margin: 0; line-height: 1; }
+        p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.4em; margin-top: 5px; }
+
+        /* FILTROS (Barra Contínua) */
+        .filter-strip {
+            background: #f9f9f9; /* Ligeiramente diferente para destacar */
+            padding: 10px 15px;
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            flex-wrap: nowrap; /* PROIBIDO QUEBRAR LINHA NO DESKTOP */
+            overflow-x: auto; /* Scroll horizontal se necessário */
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch; /* Smooth scroll iOS */
+            scrollbar-width: none; /* Firefox hide scroll */
         }
+        .filter-strip::-webkit-scrollbar { display: none; } /* Chrome hide scroll */
+
+        .filter-group { display: flex; gap: 8px; align-items: center; flex: 1; }
+        
+        .filter-input, .filter-select { 
+            padding: 6px 10px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
+            outline: none; height: 32px; 
+            /* Tamanhos fixos para não estourar */
+            width: auto; min-width: 100px;
+        }
+        .filter-input { flex-grow: 1; min-width: 140px; }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
 
         .action-btn { 
-            background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); 
+            background: #fff; color: var(--text-muted); border: 1px solid #ccc; 
             width: 32px; height: 32px; border-radius: 4px; cursor: pointer; 
             display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; 
         }
         .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .action-btn svg { width: 16px; height: 16px; fill: currentColor; }
         
-        .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; font-weight: bold; margin-left: 5px; }
+        .filter-stats { font-size: 0.75em; color: var(--text-muted); font-weight: bold; padding-left: 10px; border-left: 1px solid #ddd; }
 
         /* GRID */
-        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
+        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
 
         /* WINE CARD */
         .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
@@ -87,40 +101,16 @@
         .wine-name { font-family: var(--font-title); font-size: 1.6em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
         .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1.5px; margin-top: 3px; }
         .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1em; line-height: 1.4; margin: 12px 0; padding-left: 12px; border-left: 3px solid var(--secondary); }
-        
         .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; background-color: rgba(0,0,0,0.03); padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em; }
         .tech-item { display: flex; align-items: center; gap: 5px; color: var(--text-main); }
         .tech-icon { width: 16px; height: 16px; fill: var(--primary); flex-shrink: 0; }
-        
         .rating-stars { color: #ddd; font-size: 1.3em; cursor: pointer; margin-bottom: 8px; }
         .rating-stars span.active { color: #f1c40f; }
-
-        /* BARRA DE FORÇA (CORPO) MELHORADA */
         .strength-wrapper { margin-top: auto; }
-        .strength-label { display: flex; justify-content: space-between; font-size: 0.75em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
-        .strength-track { 
-            background: #f0f0f0; 
-            height: 14px; /* Mais grossa */
-            border-radius: 7px; 
-            overflow: hidden; 
-            border: 1px solid #e0e0e0;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .strength-fill { 
-            height: 100%; 
-            border-radius: 7px; 
-            background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%); 
-            width: 0%; 
-            position: relative;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Textura listrada suave */
-        .strength-fill::after {
-            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
-            background-size: 14px 14px;
-        }
+        .strength-label { display: flex; justify-content: space-between; font-size: 0.7em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; font-weight: bold; }
+        .strength-track { background: #e0e0e0; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .strength-fill { height: 100%; border-radius: 7px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; position: relative; }
+        .strength-fill::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent); background-size: 14px 14px; }
 
         /* FABs */
         .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
@@ -145,12 +135,12 @@
         .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; touch-action: none; }
         .lightbox-content-wrapper:active { cursor: grabbing; }
         .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: auto; transition: transform 0.1s linear; }
-        .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
+        .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; pointer-events: auto; }
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
-        /* MODO PDF */
-        body.pdf-exporting .photos, body.pdf-exporting .card-wave-top, body.pdf-exporting .bg-text-top, body.pdf-exporting .fab-container, body.pdf-exporting .filter-section { display: none !important; }
+        /* MODO PDF EXPORT */
+        body.pdf-exporting .photos, body.pdf-exporting .card-wave-top, body.pdf-exporting .bg-text-top, body.pdf-exporting .fab-container, body.pdf-exporting .header-container { display: none !important; }
         body.pdf-exporting .wine-card { box-shadow: none; border: 1px solid #333; margin-bottom: 20px; page-break-inside: avoid; background: #fff; color: #000; }
         body.pdf-exporting .card-body { padding: 15px; }
         body.pdf-exporting .wine-name { color: #000; }
@@ -158,19 +148,16 @@
         #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
 
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .header-card-body { padding: 25px 10px; }
-            h1.main-title { font-size: 2em; }
+            .header-container { margin-bottom: 20px; }
             .card-body { flex-direction: column; padding: 20px; gap: 15px; }
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
             .tech-grid { grid-template-columns: 1fr; }
-            .filter-input, .filter-select { width: 100%; max-width: none; }
-            .filter-section { flex-wrap: wrap; }
+            .filter-strip { flex-wrap: nowrap; justify-content: flex-start; }
         }
 
         @media print {
-            .no-print, .fab-container, .lightbox, .modal, .filter-section { display: none !important; }
+            .no-print, .fab-container, .lightbox, .modal, .filter-strip { display: none !important; }
             body { background: white; padding: 0; }
             .catalog-grid { display: block; }
             .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; page-break-inside: avoid; }
@@ -203,35 +190,32 @@
     <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve/Suave) a 5 (Robusto/Estruturado).<br><strong>Taninos:</strong> Sensação de secura na boca.<br><strong>NV:</strong> Non-Vintage (Sem safra).</div></div></div>
 
     <div class="app-container">
-        <div class="header-section">
-            <div class="header-card-body">
+        <div class="header-container">
+            <div class="header-title-area">
                 <svg class="header-icon" viewBox="0 0 24 24"><path d="M12 2C12.55 2 13 2.45 13 3V4.17C14.17 4.58 15 5.69 15 7C15 8.66 13.66 10 12 10C10.34 10 9 8.66 9 7C9 5.69 9.83 4.58 11 4.17V3C11 2.45 11.45 2 12 2M17 9C18.1 9 19 9.9 19 11C19 12.1 18.1 13 17 13C16.9 13 16.8 13 16.7 12.98C16.89 12.38 17 11.72 17 11.03V11H17M7 9C7 11.03 7.11 12.38 7.3 12.98C7.2 13 7.1 13 7 13C5.9 13 5 12.1 5 11C5 9.9 5.9 9 7 9M12 11C13.66 11 15 12.34 15 14C15 15.66 13.66 17 12 17C10.34 17 9 15.66 9 14C9 12.34 10.34 11 12 11M17.3 14.02C17.11 14.62 17 15.97 17 18C17 19.1 16.1 20 15 20C14.72 20 14.45 19.94 14.2 19.84C14.54 19.04 14.82 18.07 14.94 17.01C14.98 17 15.02 16.99 15.06 16.99C15.04 16.95 15.02 16.92 15 16.88C14.78 16.95 14.54 16.99 14.3 17.02C14.11 17.62 14 18.97 14 21C14 22.1 13.1 23 12 23C10.9 23 10 22.1 10 21C10 18.97 9.89 17.62 9.7 17.02C9.46 16.99 9.22 16.95 9 16.88C8.98 16.92 8.96 16.95 8.94 16.99C8.98 16.99 9.02 17 9.06 17.01C9.18 18.07 9.46 19.04 9.8 19.84C9.55 19.94 9.28 20 9 20C7.9 20 7 19.1 7 18C7 15.97 6.89 14.62 6.7 14.02C6.8 14.01 6.9 14 7 14C7.02 14 7.04 14 7.06 14C7.14 14.78 7.33 15.63 7.58 16.51C7.83 16.45 8.09 16.41 8.37 16.39C8.43 15.71 8.65 15.12 9 14.65V14.64C9 14.42 9.04 14.21 9.13 14.01C9.7 13.63 10.74 13.31 11.97 13.04C12.04 13.31 13.7 13.63 14.27 14.01C14.35 14.21 14.39 14.42 14.39 14.64V14.65C14.74 15.12 14.97 15.71 15.02 16.39C15.3 16.41 15.57 16.45 15.82 16.51C16.06 15.63 16.25 14.78 16.33 14C16.35 14 16.37 14 16.39 14C16.49 14 16.59 14.01 16.69 14.02Z"/></svg>
                 <h1 class="main-title">Adega Pessoal M&M</h1>
                 <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
             </div>
-
-            <div id="filterSection" class="filter-section no-print">
+            
+            <div class="filter-strip no-print">
                 <div class="filter-group">
                     <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
-                    <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Países</option></select>
-                    <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safras</option></select>
+                    <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">País</option></select>
+                    <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safra</option></select>
                     <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
                     <select id="sortSelect" class="filter-select" onchange="applyFilters()">
                         <option value="nome">A-Z</option>
-                        <option value="nomeDesc">Z-A</option>
-                        <option value="forcaDesc">Corpo (+)</option>
-                        <option value="forcaAsc">Corpo (-)</option>
-                        <option value="safraDesc">Safra (+ Nova)</option>
-                        <option value="safraAsc">Safra (+ Antiga)</option>
-                        <option value="abvDesc">Álcool (+)</option>
-                        <option value="abvAsc">Álcool (-)</option>
+                        <option value="forcaDesc">Força +</option>
+                        <option value="forcaAsc">Força -</option>
+                        <option value="safraDesc">Safra Nova</option>
+                        <option value="safraAsc">Safra Antiga</option>
                     </select>
-                    <button class="action-btn" onclick="clearFilters()" title="Limpar">&#10005;</button>
                 </div>
-                <div style="display:flex; align-items:center; gap:10px;">
+                <div style="display:flex; align-items:center; gap:5px;">
+                    <button class="action-btn" onclick="clearFilters()" title="Limpar"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
                     <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF (Texto)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
-                    <span class="filter-stats" id="filterStats"></span>
                 </div>
+                <span class="filter-stats" id="filterStats"></span>
             </div>
         </div>
 
@@ -359,13 +343,11 @@
 
                 switch(sortVal) {
                     case 'nome': return a.nome.localeCompare(b.nome);
-                    case 'nomeDesc': return b.nome.localeCompare(a.nome);
                     case 'forcaDesc': return b.forca - a.forca;
                     case 'forcaAsc': return a.forca - b.forca;
                     case 'safraDesc': return parseSafra(b.safra) - parseSafra(a.safra);
                     case 'safraAsc': return parseSafra(a.safra) - parseSafra(b.safra);
                     case 'abvDesc': return parseAbv(b.abv) - parseAbv(a.abv);
-                    case 'abvAsc': return parseAbv(a.abv) - parseAbv(b.abv);
                     default: return 0;
                 }
             });
@@ -456,7 +438,7 @@
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
 
-        // LIGHTBOX (Zoom + Pan + Scroll Lock)
+        // LIGHTBOX FIX (Zoom + Pan + Scroll Lock + Click Fix)
         let currentScale = 1;
         let isDragging = false;
         let startX, startY, translateX = 0, translateY = 0;
@@ -493,7 +475,7 @@
             updateTransform();
         }
 
-        // Drag Mouse
+        // Mouse Drag
         wrapper.addEventListener('mousedown', e => {
             if (currentScale > 1) {
                 isDragging = true;
@@ -512,7 +494,7 @@
             }
         });
 
-        // Touch
+        // Touch Logic
         wrapper.addEventListener('touchstart', e => {
             if (e.touches.length === 2) {
                 initialPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
@@ -545,10 +527,13 @@
             else zoomManual(-0.2);
         });
 
+        // Prevent closing on image click
+        img.addEventListener('click', e => e.stopPropagation());
+        
+        // Close only on background click
         modal.addEventListener('click', e => {
             if (e.target === modal || e.target === wrapper) closeLightbox();
         });
-        img.addEventListener('click', e => e.stopPropagation());
 
         document.addEventListener('keydown', e => {
             if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }
