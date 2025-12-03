@@ -15,68 +15,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* ==================== TEMAS ==================== */
-        :root {
-            --theme-name: "Clássico";
-            --bg-page: #f4f1ea; --card-bg: #ffffff;
-            --primary: #722f37; --accent: #c5a059; --secondary: #9e4755;
-            --text-main: #2c2c2c; --text-muted: #666666;
-            --font-title: 'Playfair Display', serif; --font-body: 'Lato', sans-serif; --font-script: 'Great Vibes', cursive;
-            --border-color: #e0d8c3; --shadow-color: rgba(114, 47, 55, 0.1); --wave-opacity: 0.4;
-        }
-        /* (Outros temas omitidos para brevidade, mas funcionam se copiados da versão anterior. O JS lida com eles) */
-        body.theme-modern { --bg-page: #f0f2f5; --card-bg: #ffffff; --primary: #2c3e50; --accent: #34495e; --secondary: #7f8c8d; --text-main: #1a1a1a; --text-muted: #7f8c8d; --font-title: 'Montserrat', sans-serif; --font-body: 'Open Sans', sans-serif; --font-script: 'Montserrat', sans-serif; --border-color: #dfe6e9; --shadow-color: rgba(0,0,0,0.1); --wave-opacity: 0.8; }
-        body.theme-rustic { --bg-page: #e8e4d9; --card-bg: #fdfbf7; --primary: #5d4037; --accent: #33691e; --secondary: #8d6e63; --text-main: #3e2723; --text-muted: #5d4037; --font-title: 'Cinzel', serif; --font-body: 'Cormorant Garamond', serif; --font-script: 'Great Vibes', cursive; --border-color: #bcaaa4; --shadow-color: rgba(93,64,55,0.15); --wave-opacity: 0.6; }
-        
-        /* ==================== BASE ==================== */
+        /* TEMAS */
+        :root { --theme-name:"Clássico"; --bg-page:#f4f1ea; --card-bg:#ffffff; --primary:#722f37; --accent:#c5a059; --secondary:#9e4755; --text-main:#2c2c2c; --text-muted:#666666; --font-title:'Playfair Display',serif; --font-body:'Lato',sans-serif; --font-script:'Great Vibes',cursive; --border-color:#e0d8c3; --shadow-color:rgba(114,47,55,0.1); --wave-opacity:0.4; }
+        body.theme-modern { --bg-page:#f0f2f5; --card-bg:#ffffff; --primary:#2c3e50; --accent:#34495e; --secondary:#7f8c8d; --text-main:#1a1a1a; --text-muted:#7f8c8d; --font-title:'Montserrat',sans-serif; --font-body:'Open Sans',sans-serif; --font-script:'Montserrat',sans-serif; --border-color:#dfe6e9; --shadow-color:rgba(0,0,0,0.1); --wave-opacity:0.8; }
+        body.theme-rustic { --bg-page:#e8e4d9; --card-bg:#fdfbf7; --primary:#5d4037; --accent:#33691e; --secondary:#8d6e63; --text-main:#3e2723; --text-muted:#5d4037; --font-title:'Cinzel',serif; --font-body:'Cormorant Garamond',serif; --font-script:'Great Vibes',cursive; --border-color:#bcaaa4; --shadow-color:rgba(93,64,55,0.15); --wave-opacity:0.6; }
+        body.theme-rose { --bg-page:#fff0f5; --card-bg:#ffffff; --primary:#d81b60; --accent:#f48fb1; --secondary:#ad1457; --text-main:#4a4a4a; --text-muted:#888888; --font-title:'Playfair Display',serif; --font-body:'Open Sans',sans-serif; --font-script:'Great Vibes',cursive; --border-color:#f8bbd0; --shadow-color:rgba(216,27,96,0.1); --wave-opacity:0.3; }
+        body.theme-gold { --bg-page:#1a1a1a; --card-bg:#fffcf5; --primary:#000000; --accent:#d4af37; --secondary:#b8860b; --text-main:#111111; --text-muted:#555555; --font-title:'Cinzel',serif; --font-body:'Lato',sans-serif; --font-script:'Cormorant Garamond',serif; --border-color:#d4af37; --shadow-color:rgba(212,175,55,0.2); --wave-opacity:0.5; }
+        body.theme-green { --bg-page:#f1f8e9; --card-bg:#ffffff; --primary:#2e7d32; --accent:#8bc34a; --secondary:#558b2f; --text-main:#1b5e20; --text-muted:#689f38; --font-title:'Montserrat',sans-serif; --font-body:'Lato',sans-serif; --font-script:'Great Vibes',cursive; --border-color:#c5e1a5; --shadow-color:rgba(46,125,50,0.1); --wave-opacity:0.4; }
+        body.theme-superman { --theme-name:"Kal-El"; --bg-page:#f0f8ff; --card-bg:#ffffff; --primary:#003D7C; --accent:#AC0D0D; --secondary:#F2B900; --text-main:#00274c; --text-muted:#5c7c99; --font-title:'Orbitron',sans-serif; --font-body:'Montserrat',sans-serif; --font-script:'Orbitron',sans-serif; --border-color:#89CFF0; --shadow-color:rgba(0,61,124,0.2); --wave-opacity:0.2; }
+
         * { box-sizing: border-box; }
         body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
         .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
 
         /* HEADER */
-        .header-card-body { padding: 40px 20px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 20px; }
+        .header-card-body { padding: 40px 20px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 30px; }
         .header-icon { width: 80px; height: 80px; fill: var(--primary); margin-bottom: 10px; }
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 3em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.8em; margin-top: 5px; }
 
-        /* ==================== FILTROS COLAPSÁVEIS ==================== */
-        .filter-toggle-btn {
-            background: transparent; border: 1px solid var(--primary); color: var(--primary);
-            padding: 8px 15px; border-radius: 20px; cursor: pointer; margin-top: 15px;
-            font-size: 0.9em; font-weight: bold; transition: all 0.3s;
-            display: inline-flex; align-items: center; gap: 5px;
+        /* BARRA DE FILTROS SEPARADA */
+        .filter-section {
+            max-width: 900px; margin: 0 auto 40px auto;
+            background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);
+            padding: 15px; box-shadow: 0 5px 15px var(--shadow-color);
+            transition: all 0.3s;
         }
-        .filter-toggle-btn:hover { background: var(--primary); color: white; }
         
-        /* Container que abre/fecha */
-        .filter-wrapper {
-            max-height: 1000px; /* Valor alto para animar */
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            opacity: 1;
+        .filter-toggle-header {
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; padding: 0 10px;
+            font-family: var(--font-title); color: var(--primary); font-weight: bold;
         }
-        .filter-wrapper.collapsed {
-            max-height: 0;
-            opacity: 0;
-            margin: 0;
+        
+        .filter-content {
+            max-height: 1000px; overflow: hidden; transition: max-height 0.5s ease, opacity 0.5s ease;
+            opacity: 1; margin-top: 15px;
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;
         }
+        
+        .filter-section.collapsed .filter-content { max-height: 0; opacity: 0; margin-top: 0; }
+        .filter-section.collapsed { padding-bottom: 15px; }
 
-        .filter-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; background: transparent; align-items: center; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
-        
-        .filter-input, .filter-select { padding: 8px 12px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.7); border-radius: 20px; font-family: var(--font-body); color: var(--text-main); font-size: 0.9em; flex: 1 1 auto; outline: none; min-width: 140px; max-width: 220px; }
-        
-        /* Botões de Ação na barra */
-        .action-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 1.1em; flex-shrink: 0; }
-        .action-btn:hover { background: var(--primary); color: white; transform: scale(1.1); border-color: var(--primary); }
+        .filter-input, .filter-select { padding: 10px; border: 1px solid var(--border-color); background: var(--bg-page); border-radius: 6px; font-family: var(--font-body); color: var(--text-main); font-size: 0.9em; flex: 1 1 auto; outline: none; min-width: 130px; }
+        .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
+
+        .action-group { display: flex; gap: 10px; align-items: center; }
+        .action-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+        .action-btn:hover { background: var(--primary); color: white; transform: scale(1.1); }
         .action-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
         .filter-stats { width: 100%; text-align: center; color: var(--text-muted); font-size: 0.8em; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* LOADING */
-        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
-
-        /* ==================== CARD ==================== */
-        .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 10px 25px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 0; page-break-inside: avoid; }
+        /* WINE CARD */
+        .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 10px 25px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
         .card-wave-top { background-color: var(--primary); height: 15px; width: 100%; mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E"); mask-size: cover; opacity: var(--wave-opacity); position: absolute; top: 0; left: 0; z-index: 1; }
         .card-top-solid { height: 10px; width: 100%; background-color: var(--primary); position: absolute; top: 0; z-index: 0; }
         .bg-text-top { position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; font-family: var(--font-title); font-weight: 700; font-size: 6em; color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none; line-height: 1; z-index: 0; }
@@ -85,15 +77,18 @@
         .photos { flex: 0 0 240px; display: flex; gap: 10px; justify-content: center; align-items: center; }
         .photos img { height: 350px; width: auto; max-width: 110px; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3)); object-fit: contain; cursor: zoom-in; border-radius: 4px; }
         .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        
         .wine-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 10px; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
         .flag-box { width: 45px; height: 30px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
         .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
         .wine-name { font-family: var(--font-title); font-size: 1.8em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
         .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1.5px; margin-top: 5px; }
         .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1.05em; line-height: 1.5; margin: 15px 0; padding-left: 15px; border-left: 3px solid var(--secondary); }
+        
         .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; background-color: rgba(0,0,0,0.03); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9em; }
         .tech-item { display: flex; align-items: center; gap: 6px; color: var(--text-main); }
         .tech-icon { width: 18px; height: 18px; fill: var(--primary); flex-shrink: 0; }
+        
         .rating-stars { color: #ddd; font-size: 1.4em; cursor: pointer; margin-bottom: 10px; }
         .rating-stars span.active { color: #f1c40f; }
         .strength-wrapper { margin-top: auto; }
@@ -101,28 +96,35 @@
         .strength-track { background: #e0e0e0; height: 8px; border-radius: 10px; overflow: hidden; }
         .strength-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; }
 
-        /* UTILS */
-        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
-        .fab { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white; opacity: 0.5; transition: all 0.3s; cursor: pointer; }
-        .fab:hover { opacity: 1; transform: scale(1.1); }
-        .fab svg { width: 22px; height: 22px; fill: white; }
-        
-        .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { background: var(--card-bg); padding: 30px; width: 90%; max-width: 600px; border-radius: 12px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
-        
-        .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
-        .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; }
-        .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; transform-origin: center center; will-change: transform; user-select: none; }
+        /* LOADING */
+        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
+
+        /* LIGHTBOX ZOOM */
+        .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); touch-action: none; justify-content: center; align-items: center; }
+        .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; transition: transform 0.1s; user-select: none; }
         .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
+        /* FABs */
+        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+        .fab { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white; opacity: 0.5; transition: all 0.3s; cursor: pointer; }
+        .fab:hover { opacity: 1; transform: scale(1.1); }
+        .fab svg { width: 22px; height: 22px; fill: white; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--card-bg); padding: 30px; width: 90%; max-width: 600px; border-radius: 12px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
         .chart-row { margin-bottom: 10px; }
         .chart-bar-bg { background: #eee; height: 10px; border-radius: 5px; overflow: hidden; }
         .chart-bar-fill { height: 100%; background: var(--primary); }
+        .info-title { font-family: var(--font-title); color: var(--accent); font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; margin-top: 15px; }
 
         @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header-card-body { padding: 25px 10px; margin-bottom: 15px; }
             .card-body { flex-direction: column; padding: 20px; gap: 15px; }
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
@@ -133,6 +135,8 @@
         @media print {
             .no-print, .fab-container, .lightbox, .modal { display: none !important; }
             body { background: white; padding: 0; }
+            .catalog-grid { display: block; }
+            .filter-section { display: none; }
             .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; }
             .photos img { filter: none; }
             .bg-text-top { opacity: 0.05 !important; }
@@ -140,7 +144,7 @@
         }
     </style>
 </head>
-<body>
+<body class="">
 
     <div id="exportLoading">
         <div style="font-size: 3em;">🍷</div>
@@ -150,6 +154,7 @@
     <div class="fab-container no-print">
         <div class="fab" onclick="openInfoModal()" title="Ajuda">?</div>
         <div class="fab" onclick="openDashboard()" title="Dashboard"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+        <div class="fab" onclick="randomWine()" title="Sorteio"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div>
         <div class="fab" onclick="toggleTheme()" title="Temas"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg></div>
     </div>
 
@@ -157,40 +162,38 @@
         <span class="lb-close" onclick="closeLightbox()">&times;</span>
         <div class="lightbox-content-wrapper" id="lb-wrapper"><img id="lightbox-img" class="lightbox-img" src=""></div>
         <div class="lightbox-controls">
-            <div class="lb-btn" onclick="zoomImage(-0.2)">-</div>
-            <div class="lb-btn" onclick="zoomImage(0.2)">+</div>
+            <div class="lb-btn" onclick="zoomManual(0.2)">+</div>
+            <div class="lb-btn" onclick="zoomManual(-0.2)">-</div>
         </div>
     </div>
 
     <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas</h2><div id="chartsContainer"></div></div></div>
-    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve) a 5 (Robusto).<br><strong>Taninos:</strong> Sensação de secura na boca.<br><strong>Safra:</strong> Ano da colheita das uvas.</div></div></div>
+    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-title">Escala de Corpo</div><p style="font-size:0.9em">1: Leve/Suave<br>3: Médio/Gastronômico<br>5: Robusto/Estruturado</p><div class="info-title">Uvas</div><p style="font-size:0.9em">Cabernet: Tânica<br>Malbec: Frutada<br>Carmenere: Especiarias</p></div></div>
 
     <div class="catalog-grid">
         <div class="header-card-body">
             <svg class="header-icon" viewBox="0 0 24 24"><path d="M12 2C12.55 2 13 2.45 13 3V4.17C14.17 4.58 15 5.69 15 7C15 8.66 13.66 10 12 10C10.34 10 9 8.66 9 7C9 5.69 9.83 4.58 11 4.17V3C11 2.45 11.45 2 12 2M17 9C18.1 9 19 9.9 19 11C19 12.1 18.1 13 17 13C16.9 13 16.8 13 16.7 12.98C16.89 12.38 17 11.72 17 11.03V11H17M7 9C7 11.03 7.11 12.38 7.3 12.98C7.2 13 7.1 13 7 13C5.9 13 5 12.1 5 11C5 9.9 5.9 9 7 9M12 11C13.66 11 15 12.34 15 14C15 15.66 13.66 17 12 17C10.34 17 9 15.66 9 14C9 12.34 10.34 11 12 11M17.3 14.02C17.11 14.62 17 15.97 17 18C17 19.1 16.1 20 15 20C14.72 20 14.45 19.94 14.2 19.84C14.54 19.04 14.82 18.07 14.94 17.01C14.98 17 15.02 16.99 15.06 16.99C15.04 16.95 15.02 16.92 15 16.88C14.78 16.95 14.54 16.99 14.3 17.02C14.11 17.62 14 18.97 14 21C14 22.1 13.1 23 12 23C10.9 23 10 22.1 10 21C10 18.97 9.89 17.62 9.7 17.02C9.46 16.99 9.22 16.95 9 16.88C8.98 16.92 8.96 16.95 8.94 16.99C8.98 16.99 9.02 17 9.06 17.01C9.18 18.07 9.46 19.04 9.8 19.84C9.55 19.94 9.28 20 9 20C7.9 20 7 19.1 7 18C7 15.97 6.89 14.62 6.7 14.02C6.8 14.01 6.9 14 7 14C7.02 14 7.04 14 7.06 14C7.14 14.78 7.33 15.63 7.58 16.51C7.83 16.45 8.09 16.41 8.37 16.39C8.43 15.71 8.65 15.12 9 14.65V14.64C9 14.42 9.04 14.21 9.13 14.01C9.7 13.63 10.74 13.31 11.97 13.04C12.04 13.31 13.7 13.63 14.27 14.01C14.35 14.21 14.39 14.42 14.39 14.64V14.65C14.74 15.12 14.97 15.71 15.02 16.39C15.3 16.41 15.57 16.45 15.82 16.51C16.06 15.63 16.25 14.78 16.33 14C16.35 14 16.37 14 16.39 14C16.49 14 16.59 14.01 16.69 14.02Z"/></svg>
             <h1 class="main-title">Adega Pessoal M&M</h1>
             <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
-            
-            <button class="filter-toggle-btn no-print" onclick="toggleFilterPanel()">
-                <span id="filterArrow">▼</span> Filtros e Ferramentas
-            </button>
+        </div>
 
-            <div id="filterWrapper" class="filter-wrapper no-print">
-                <div class="filter-container">
-                    <input type="text" id="searchInput" class="filter-input" placeholder="Buscar (Nome, Safra, País...)" oninput="applyFilters()">
-                    <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Todos os Países</option></select>
-                    
-                    <select id="sortSelect" class="filter-select" onchange="applyFilters()">
-                        <option value="nome">Nome (A-Z)</option>
-                        <option value="forcaDesc">Força (Maior → Menor)</option>
-                        <option value="forcaAsc">Força (Menor → Maior)</option>
-                        <option value="safraDesc">Safra (Nova → Antiga)</option>
-                        <option value="safraAsc">Safra (Antiga → Nova)</option>
-                        <option value="abvDesc">Álcool (Maior → Menor)</option>
-                        <option value="abvAsc">Álcool (Menor → Maior)</option>
-                    </select>
-
-                    <button class="action-btn" onclick="clearFilters()" title="Limpar Filtros"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+        <div id="filterSection" class="filter-section no-print">
+            <div class="filter-toggle-header" onclick="toggleFilterPanel()">
+                <span>Filtros e Ferramentas</span>
+                <span id="filterArrow">▼</span>
+            </div>
+            <div id="filterContent" class="filter-content">
+                <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
+                <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Países</option></select>
+                <select id="sortSelect" class="filter-select" onchange="applyFilters()">
+                    <option value="nome">Nome (A-Z)</option>
+                    <option value="forcaDesc">Força (Maior)</option>
+                    <option value="forcaAsc">Força (Menor)</option>
+                    <option value="safraDesc">Safra (Nova)</option>
+                    <option value="safraAsc">Safra (Antiga)</option>
+                </select>
+                <div class="action-group">
+                    <button class="action-btn" onclick="clearFilters()" title="Limpar"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
                     <button class="action-btn" onclick="exportToPDF()" title="PDF"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
                     <button class="action-btn" onclick="exportToImage()" title="Imagem"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></button>
                 </div>
@@ -233,210 +236,135 @@
         }
 
         function getRating(wineName) { return parseInt(localStorage.getItem(`rating_${wineName}`) || 0); }
-        function setRating(wineName, rating) {
-            localStorage.setItem(`rating_${wineName}`, rating);
-            applyFilters(); // Re-render
-        }
+        function setRating(wineName, rating) { localStorage.setItem(`rating_${wineName}`, rating); applyFilters(); }
 
         function renderCatalog(listToRender) {
             const container = document.getElementById('wineListContainer');
-            container.innerHTML = ''; 
-            document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} de ${vinhos.length} rótulos`;
-
-            if(listToRender.length === 0) {
-                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">Nenhum vinho encontrado.</div>';
-                return;
-            }
-
+            container.innerHTML = ''; document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} rótulos`;
+            if(listToRender.length===0) { container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:#999;">Nenhum vinho encontrado.</div>'; return; }
             listToRender.forEach(vinho => {
-                const card = document.createElement('div');
-                card.className = 'wine-card';
-                const flagSVG = flags[vinho.pais] || '';
-                const widthPercentage = (vinho.forca / 5) * 100;
-                const userRating = getRating(vinho.nome);
-
-                let starsHTML = '<div class="rating-stars no-print">';
-                for(let i=1; i<=5; i++) {
-                    const activeClass = i <= userRating ? 'active' : '';
-                    starsHTML += `<span class="${activeClass}" onclick="setRating('${vinho.nome}', ${i})">★</span>`;
-                }
-                starsHTML += '</div>';
-
-                card.innerHTML = `
-                    <div class="card-top-solid"></div>
-                    <div class="card-wave-top"></div>
-                    <div class="bg-text-top">${vinho.nome}</div>
-
-                    <div class="card-body">
-                        <div class="photos">
-                            <img src="${vinho.imgFrente}" alt="Frente" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
-                            <img src="${vinho.imgVerso}" alt="Verso" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
-                        </div>
-                        <div class="info">
-                            <div class="wine-header">
-                                <div class="flag-box">${flagSVG}</div>
-                                <div><h2 class="wine-name">${vinho.nome}</h2><div class="wine-region">${vinho.regiao}</div></div>
-                            </div>
-                            ${starsHTML}
-                            <div class="poetic-desc">"${vinho.poesia}"</div>
-                            <div class="tech-grid">
-                                <div class="tech-item">${iconGrapes}<span>${vinho.uvas}</span></div>
-                                <div class="tech-item">${iconCalendar}<span>Safra: ${vinho.safra}</span></div>
-                                <div class="tech-item">${iconDrop}<span>Vol: ${vinho.abv}</span></div>
-                            </div>
-                            <div class="strength-wrapper">
-                                <div class="strength-label"><span>Corpo</span> <span>${vinho.forca}/5</span></div>
-                                <div class="strength-track"><div class="strength-fill" style="width: ${widthPercentage}%"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                const card=document.createElement('div'); card.className='wine-card';
+                const userRating=getRating(vinho.nome);
+                let starsHTML='<div class="rating-stars no-print">';
+                for(let i=1;i<=5;i++) starsHTML+=`<span class="${i<=userRating?'active':''}" onclick="setRating('${vinho.nome}',${i})">★</span>`;
+                starsHTML+='</div>';
+                card.innerHTML=`<div class="card-top-solid"></div><div class="card-wave-top"></div><div class="bg-text-top">${vinho.nome}</div><div class="card-body"><div class="photos"><img src="${vinho.imgFrente}" onclick="openLightbox(this.src)" onerror="this.style.display='none'"><img src="${vinho.imgVerso}" onclick="openLightbox(this.src)" onerror="this.style.display='none'"></div><div class="info"><div class="wine-header"><div class="flag-box">${flags[vinho.pais]}</div><div><h2 class="wine-name">${vinho.nome}</h2><div class="wine-region">${vinho.regiao}</div></div></div>${starsHTML}<div class="poetic-desc">"${vinho.poesia}"</div><div class="tech-grid"><div class="tech-item">${iconGrapes}<span>${vinho.uvas}</span></div><div class="tech-item">${iconCalendar}<span>Safra: ${vinho.safra}</span></div><div class="tech-item">${iconDrop}<span>Vol: ${vinho.abv}</span></div></div><div class="strength-wrapper"><div class="strength-label"><span>Corpo</span> <span>${vinho.forca}/5</span></div><div class="strength-track"><div class="strength-fill" style="width:${(vinho.forca/5)*100}%"></div></div></div></div></div>`;
                 container.appendChild(card);
             });
         }
 
-        // LÓGICA DE FILTRO & SORT BIDIRECIONAL
         function applyFilters() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const countryVal = document.getElementById('countrySelect').value;
             const sortVal = document.getElementById('sortSelect').value;
-
             let filtered = vinhos.filter(v => {
                 const allData = (v.nome + " " + v.pais + " " + v.regiao + " " + v.uvas + " " + v.safra + " " + v.abv).toLowerCase();
-                const matchText = allData.includes(searchText);
-                const matchCountry = countryVal === "" || v.pais === countryVal;
-                return matchText && matchCountry;
+                return allData.includes(searchText) && (countryVal === "" || v.pais === countryVal);
             });
-
-            // Sorting bidirecional
             filtered.sort((a,b) => {
-                const parseAbv = str => parseFloat(str.replace(',','.'));
-                const parseSafra = str => str === 'NV' ? 0 : parseInt(str);
-
-                switch(sortVal) {
-                    case 'nome': return a.nome.localeCompare(b.nome);
-                    case 'forcaDesc': return b.forca - a.forca;
-                    case 'forcaAsc': return a.forca - b.forca;
-                    case 'safraDesc': return parseSafra(b.safra) - parseSafra(a.safra);
-                    case 'safraAsc': return parseSafra(a.safra) - parseSafra(b.safra);
-                    case 'abvDesc': return parseAbv(b.abv) - parseAbv(a.abv);
-                    case 'abvAsc': return parseAbv(a.abv) - parseAbv(b.abv);
-                    default: return 0;
-                }
+                if(sortVal==='nome') return a.nome.localeCompare(b.nome);
+                if(sortVal==='forcaDesc') return b.forca - a.forca;
+                if(sortVal==='forcaAsc') return a.forca - b.forca;
+                if(sortVal==='safraDesc') return (b.safra==='NV'?0:parseInt(b.safra))-(a.safra==='NV'?0:parseInt(a.safra));
+                if(sortVal==='safraAsc') return (a.safra==='NV'?0:parseInt(a.safra))-(b.safra==='NV'?0:parseInt(b.safra));
+                return 0;
             });
-
             renderCatalog(filtered);
         }
 
-        function clearFilters() {
-            document.getElementById('searchInput').value = "";
-            document.getElementById('countrySelect').value = "";
-            document.getElementById('sortSelect').value = "nome";
-            applyFilters();
-        }
-
         function toggleFilterPanel() {
-            const wrapper = document.getElementById('filterWrapper');
-            const arrow = document.getElementById('filterArrow');
-            if (wrapper.classList.contains('collapsed')) {
-                wrapper.classList.remove('collapsed');
-                arrow.textContent = '▼';
-            } else {
-                wrapper.classList.add('collapsed');
-                arrow.textContent = '▶';
-            }
+            const s = document.getElementById('filterSection');
+            s.classList.toggle('collapsed');
+            document.getElementById('filterArrow').textContent = s.classList.contains('collapsed') ? '▶' : '▼';
         }
+        function clearFilters() { document.getElementById('searchInput').value=""; document.getElementById('countrySelect').value=""; applyFilters(); }
 
-        // EXPORT PDF (Proporção Fixa)
         async function exportToPDF() {
-            document.getElementById('exportLoading').style.display = 'flex';
+            document.getElementById('exportLoading').style.display='flex';
             window.scrollTo(0,0);
-            
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
-            const pageWidth = 210; 
-            const pageHeight = 297;
+            const { jsPDF } = window.jspdf; const doc = new jsPDF('p','mm','a4');
             const cards = document.querySelectorAll('#wineListContainer .wine-card');
-            
-            let yCursor = 10;
-
+            let y=10;
             for(let i=0; i<cards.length; i++) {
-                const canvas = await html2canvas(cards[i], { scale: 2, useCORS: true });
+                const canvas = await html2canvas(cards[i], {scale:2, useCORS:true});
                 const imgData = canvas.toDataURL('image/png');
-                
-                // Calcular proporção para caber na largura A4 (com margem)
                 const imgProps = doc.getImageProperties(imgData);
-                const margin = 10;
-                const availableWidth = pageWidth - (margin * 2);
-                const imgHeight = (imgProps.height * availableWidth) / imgProps.width;
-
-                // Verificar se cabe na página atual
-                if (yCursor + imgHeight > pageHeight - 10) {
-                    doc.addPage();
-                    yCursor = 10;
-                }
-
-                doc.addImage(imgData, 'PNG', margin, yCursor, availableWidth, imgHeight);
-                yCursor += imgHeight + 10; // Espaço entre cards
+                const pdfWidth = 190;
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width; // Keep aspect ratio
+                if(y + pdfHeight > 280) { doc.addPage(); y=10; }
+                doc.addImage(imgData, 'PNG', 10, y, pdfWidth, pdfHeight);
+                y += pdfHeight + 10;
             }
-            doc.save('minha-adega.pdf');
-            document.getElementById('exportLoading').style.display = 'none';
+            doc.save('adega.pdf');
+            document.getElementById('exportLoading').style.display='none';
         }
 
-        // EXPORT IMAGEM (Snapshot Completo)
         async function exportToImage() {
-            document.getElementById('exportLoading').style.display = 'flex';
-            window.scrollTo(0,0); // Reset scroll prevents blank canvas
-            
+            document.getElementById('exportLoading').style.display='flex';
+            window.scrollTo(0,0);
+            await new Promise(r => setTimeout(r, 500)); // Delay to render
             const element = document.getElementById('wineListContainer');
-            // Hack para capturar altura total mesmo se tiver scroll
-            const originalHeight = element.style.height;
-            element.style.height = element.scrollHeight + "px";
-
-            const canvas = await html2canvas(element, { 
-                scale: 1.5, 
-                useCORS: true,
-                backgroundColor: null 
-            });
-            
-            element.style.height = originalHeight; // Restore
-
+            const canvas = await html2canvas(element, {scale:1.5, useCORS:true, allowTaint:true, backgroundColor:'#ffffff'});
             const link = document.createElement('a');
-            link.download = 'adega-snapshot.png';
+            link.download = 'adega.png';
             link.href = canvas.toDataURL();
             link.click();
-            document.getElementById('exportLoading').style.display = 'none';
+            document.getElementById('exportLoading').style.display='none';
         }
 
-        // MODALS & HELPERS
-        function openDashboard() { 
-            document.getElementById('biModal').style.display = "flex"; 
-            // ... (Logic remains same as v17 for stats) ...
-            const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
-            let html = '<div style="margin-bottom:20px"><strong>Países</strong>';
-            for(let c in counts) html += `<div class="chart-row"><div class="chart-label"><span>${c}</span><span>${counts[c]}</span></div><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${(counts[c]/vinhos.length)*100}%"></div></div></div>`;
-            html += '</div>';
-            document.getElementById('chartsContainer').innerHTML = html;
-        }
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
-        function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
-        function randomWine() { const w = vinhos[Math.floor(Math.random()*vinhos.length)]; alert("Sorteado: "+w.nome); document.getElementById('searchInput').value=w.nome; applyFilters(); }
+        // LIGHTBOX TOUCH ZOOM FIX
+        let scale=1, startDist=0, modalImg=document.getElementById('lightbox-img');
+        let posX=0, posY=0, lastPosX=0, lastPosY=0, isDragging=false;
 
-        // Lightbox & Pan/Zoom (Mesma lógica V16/17)
-        // ... (Mantido igual para brevidade, funciona perfeitamente) ...
-        let currentScale = 1; let isDragging = false; let startX, startY, translateX=0, translateY=0;
-        const img = document.getElementById('lightbox-img'); const modal = document.getElementById('lightbox'); const wrapper = document.getElementById('lb-wrapper');
-        function openLightbox(src) { modal.style.display = 'flex'; img.src = src; currentScale=1; translateX=0; translateY=0; updateTransform(); }
-        function closeLightbox() { modal.style.display = 'none'; }
-        function zoomImage(factor) { currentScale += factor; if(currentScale<0.5)currentScale=0.5; if(currentScale>4)currentScale=4; updateTransform(); }
-        function updateTransform() { img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`; }
-        wrapper.addEventListener('mousedown', e => { if(currentScale<=1)return; isDragging=true; startX=e.clientX-translateX; startY=e.clientY-translateY; wrapper.style.cursor='grabbing'; e.preventDefault(); });
-        window.addEventListener('mouseup', () => { isDragging=false; wrapper.style.cursor='grab'; });
-        window.addEventListener('mousemove', e => { if(!isDragging)return; e.preventDefault(); translateX=e.clientX-startX; translateY=e.clientY-startY; updateTransform(); });
-        document.addEventListener('keydown', e => { if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); } });
-        document.getElementById('lightbox').onclick = e => { if(e.target===modal || e.target===wrapper) closeLightbox(); };
+        function openLightbox(src) { document.getElementById('lightbox').style.display='flex'; modalImg.src=src; scale=1; posX=0; posY=0; updateTransform(); }
+        function closeLightbox() { document.getElementById('lightbox').style.display='none'; }
+        function updateTransform() { modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`; }
+        function zoomManual(d) { scale = Math.max(0.5, Math.min(4, scale + d)); updateTransform(); }
+
+        modalImg.addEventListener('touchstart', e => {
+            if(e.touches.length === 2) {
+                startDist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+            } else if(e.touches.length === 1 && scale > 1) {
+                isDragging = true;
+                lastPosX = e.touches[0].pageX;
+                lastPosY = e.touches[0].pageY;
+            }
+        });
+
+        modalImg.addEventListener('touchmove', e => {
+            e.preventDefault();
+            if(e.touches.length === 2) {
+                const dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+                if(startDist > 0) {
+                    scale = Math.max(0.5, Math.min(4, scale * (dist / startDist)));
+                    updateTransform();
+                    startDist = dist;
+                }
+            } else if(isDragging && e.touches.length === 1) {
+                const dx = e.touches[0].pageX - lastPosX;
+                const dy = e.touches[0].pageY - lastPosY;
+                posX += dx; posY += dy;
+                lastPosX = e.touches[0].pageX;
+                lastPosY = e.touches[0].pageY;
+                updateTransform();
+            }
+        });
+
+        modalImg.addEventListener('touchend', () => { isDragging = false; });
+        document.getElementById('lightbox').onclick = e => { if(e.target.id === 'lightbox') closeLightbox(); };
+        document.addEventListener('keydown', e => { if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }});
 
         // INIT
+        function toggleTheme() {
+            const themes=['','theme-modern','theme-rustic','theme-rose','theme-gold','theme-green','theme-superman'];
+            let idx = (themes.indexOf(document.body.className) + 1) % themes.length;
+            document.body.className = themes[idx];
+        }
+        function openDashboard() { document.getElementById('biModal').style.display='flex'; }
+        function closeModal(id) { document.getElementById(id).style.display='none'; }
+        function openInfoModal() { document.getElementById('infoModal').style.display='flex'; }
+        function randomWine() { const w=vinhos[Math.floor(Math.random()*vinhos.length)]; alert("Sorteado: "+w.nome); document.getElementById('searchInput').value=w.nome; applyFilters(); }
+
         populateFilters();
         renderCatalog(vinhos);
     </script>
