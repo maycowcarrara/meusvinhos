@@ -25,31 +25,50 @@
         body.theme-superman { --theme-name:"Kal-El"; --bg-page:#f0f8ff; --card-bg:#ffffff; --primary:#003D7C; --accent:#AC0D0D; --secondary:#F2B900; --text-main:#00274c; --text-muted:#5c7c99; --font-title:'Orbitron',sans-serif; --font-body:'Montserrat',sans-serif; --font-script:'Orbitron',sans-serif; --border-color:#89CFF0; --shadow-color:rgba(0,61,124,0.2); --wave-opacity:0.2; }
 
         * { box-sizing: border-box; }
-        body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
+        body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 15px; transition: background 0.5s ease; }
         .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 900px; margin: 0 auto; }
 
         /* HEADER */
-        .header-card-body { padding: 30px 20px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 5px 15px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 20px; }
-        .header-icon { width: 60px; height: 60px; fill: var(--primary); margin-bottom: 10px; }
-        h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
-        p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.5em; margin-top: 5px; }
+        .header-card-body { 
+            padding: 25px 20px; text-align: center; background: var(--card-bg); 
+            border-radius: 12px; border: 1px solid var(--border-color); 
+            box-shadow: 0 5px 15px var(--shadow-color); position: relative; z-index: 2; margin-bottom: 10px; 
+        }
+        .header-icon { width: 50px; height: 50px; fill: var(--primary); margin-bottom: 5px; }
+        h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.2em; margin: 0; line-height: 1; }
+        p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.4em; margin-top: 5px; }
 
-        /* FILTROS */
+        /* FILTROS MINIMALISTAS (Sem box) */
         .filter-section {
             max-width: 900px; margin: 0 auto 30px auto;
-            background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border-color);
-            padding: 8px 12px; box-shadow: 0 2px 8px var(--shadow-color);
-            display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: nowrap;
-            overflow-x: auto;
+            padding: 5px 0; /* Sem background, sem borda */
+            display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
         }
-        .filter-group { display: flex; gap: 6px; flex: 1; align-items: center; }
-        .filter-input, .filter-select { padding: 5px 8px; border: 1px solid var(--border-color); background: var(--bg-page); border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; outline: none; height: 30px; }
-        .filter-input { min-width: 100px; flex-grow: 1; }
-        .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
-        .action-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); width: 30px; height: 30px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+        
+        .filter-group { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+        
+        .filter-input, .filter-select { 
+            padding: 6px 12px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.6); 
+            border-radius: 20px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
+            outline: none; height: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: all 0.2s;
+        }
+        .filter-input { min-width: 120px; }
+        .filter-select { min-width: 90px; }
+        .filter-input:focus, .filter-select:focus { border-color: var(--primary); background: #fff; }
+
+        .action-btn { 
+            background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); 
+            width: 32px; height: 32px; border-radius: 50%; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; 
+            background: rgba(255,255,255,0.6);
+        }
         .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .action-btn svg { width: 16px; height: 16px; fill: currentColor; }
-        .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; margin-left: auto; font-weight: bold; }
+        
+        .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; font-weight: bold; margin-left: 10px; }
+
+        /* LOADING */
+        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
 
         /* WINE CARD */
         .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
@@ -103,22 +122,23 @@
         .chart-count { position: absolute; right: 5px; top:0; line-height: 16px; font-size: 0.75em; color: #555; }
         .info-title { font-family: var(--font-title); color: var(--accent); font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; margin-top: 15px; }
 
-        /* LOADING */
-        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
-
-        /* LIGHTBOX ZOOM */
+        /* LIGHTBOX FIX (IMPORTANTE) */
         .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
+        /* pointer-events: auto garante que a imagem receba cliques para arrastar, mas não o clique do fechar */
         .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; touch-action: none; }
         .lightbox-content-wrapper:active { cursor: grabbing; }
-        .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: none; }
-        .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
+        .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: auto; }
+        .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; pointer-events: auto; }
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
+        .lb-btn:hover { background: rgba(255,255,255,0.4); }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
             .header-card-body { padding: 25px 10px; }
             h1.main-title { font-size: 2em; }
+            .filter-section { flex-wrap: wrap; justify-content: center; }
+            .filter-group { width: 100%; justify-content: center; }
             .card-body { flex-direction: column; padding: 20px; gap: 15px; }
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
@@ -131,7 +151,7 @@
             body { background: white; padding: 0; }
             .catalog-grid { display: block; }
             .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; page-break-inside: avoid; }
-            .photos { display: none !important; } /* Força remoção de imagem na impressão nativa */
+            .photos { display: none !important; } /* REMOVE FOTOS NO PDF */
             .bg-text-top { opacity: 0.05 !important; }
             .card-wave-top, .strength-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
