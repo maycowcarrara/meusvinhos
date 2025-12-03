@@ -26,12 +26,11 @@
         * { box-sizing: border-box; }
         body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
         
-        /* LAYOUT CONTAINER */
         .app-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
 
-        /* HEADER SECTION */
+        /* HEADER */
         .header-section { margin-bottom: 30px; }
-        
         .header-card-body { 
             padding: 25px 20px; text-align: center; background: var(--card-bg); 
             border-radius: 12px 12px 0 0; border: 1px solid var(--border-color); border-bottom: none;
@@ -41,30 +40,20 @@
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.4em; margin-top: 5px; }
 
-        /* FILTROS RESPONSIVOS (Híbrido) */
+        /* FILTROS COMPACTOS */
         .filter-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color); border-top: 1px dashed var(--border-color);
-            border-radius: 0 0 12px 12px; padding: 10px 15px; 
-            display: flex; align-items: center; gap: 8px;
-            /* Desktop: Linha única forçada */
-            flex-wrap: nowrap; 
-            overflow-x: auto; 
-            white-space: nowrap;
-            box-shadow: 0 5px 15px var(--shadow-color);
-            scrollbar-width: none; /* Firefox */
+            border-radius: 0 0 12px 12px; padding: 10px 15px; box-shadow: 0 5px 15px var(--shadow-color);
+            display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
         }
-        .filter-section::-webkit-scrollbar { display: none; } /* Chrome */
-
-        .filter-group { display: flex; gap: 6px; align-items: center; flex: 1; }
         
         .filter-input, .filter-select { 
             padding: 6px 10px; border: 1px solid var(--border-color); background: #fff; 
             border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
-            outline: none; height: 32px; min-width: 100px; 
+            outline: none; height: 32px; flex: 1; min-width: 110px; max-width: 160px;
         }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
-        .filter-input { min-width: 120px; flex-grow: 1; }
 
         .action-btn { 
             background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); 
@@ -76,21 +65,16 @@
         
         .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; font-weight: bold; margin-left: 5px; }
 
-        /* GRID */
-        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
-
         /* WINE CARD */
         .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
         .card-wave-top { background-color: var(--primary); height: 15px; width: 100%; mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E"); mask-size: cover; opacity: var(--wave-opacity); position: absolute; top: 0; left: 0; z-index: 1; }
         .card-top-solid { height: 10px; width: 100%; background-color: var(--primary); position: absolute; top: 0; z-index: 0; }
         .bg-text-top { position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; font-family: var(--font-title); font-weight: 700; font-size: 6em; color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none; line-height: 1; z-index: 0; }
-        
         .card-body { display: flex; flex-direction: row; padding: 30px; gap: 25px; position: relative; z-index: 2; }
         .photos { flex: 0 0 200px; display: flex; gap: 8px; justify-content: center; align-items: center; }
         .photos img { height: 320px; width: auto; max-width: 100px; filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.25)); object-fit: contain; cursor: zoom-in; border-radius: 4px; transition: transform 0.2s; }
         .photos img:hover { transform: scale(1.02); }
         .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        
         .wine-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
         .flag-box { width: 40px; height: 26px; border-radius: 3px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
         .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -116,13 +100,34 @@
 
         /* MODALS */
         .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { background: var(--card-bg); padding: 25px; width: 90%; max-width: 650px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
-        .chart-row { margin-bottom: 8px; display: flex; align-items: center; font-size: 0.85em; }
-        .chart-label-text { width: 110px; text-align: right; padding-right: 10px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .chart-bar-area { flex: 1; background: #eee; height: 16px; border-radius: 8px; overflow: hidden; position: relative; }
-        .chart-bar-fill { height: 100%; background: var(--primary); display: flex; align-items: center; padding-left: 5px; color: white; font-size: 0.7em; white-space: nowrap; }
-        .chart-count { position: absolute; right: 5px; top:0; line-height: 16px; font-size: 0.75em; color: #555; }
+        .modal-content { background: var(--card-bg); padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.8em; cursor: pointer; color: var(--text-muted); }
+        
+        /* ESTATÍSTICAS (BI) */
+        .bi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .kpi-card { background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
+        .kpi-val { font-size: 2em; font-weight: bold; color: var(--primary); font-family: var(--font-title); }
+        .kpi-lbl { font-size: 0.8em; text-transform: uppercase; color: var(--text-muted); }
+        
+        /* Gráfico Donut CSS */
+        .donut-container { display: flex; justify-content: center; align-items: center; margin: 20px 0; }
+        .donut-chart { position: relative; width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(var(--primary) 0% 0%); }
+        .donut-inner { position: absolute; width: 80px; height: 80px; background: var(--card-bg); border-radius: 50%; top: 20px; left: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9em; color: var(--text-muted); }
+        
+        .chart-legend { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; font-size: 0.85em; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
+
+        .bar-chart-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85em; }
+        .bar-label { width: 120px; text-align: right; padding-right: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .bar-track { flex: 1; background: #eee; height: 12px; border-radius: 6px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--secondary); border-radius: 6px; width: 0; transition: width 1s; }
+
+        /* GUIA RÁPIDO */
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .guide-card { background: rgba(0,0,0,0.02); padding: 15px; border-radius: 8px; border-left: 3px solid var(--accent); }
+        .guide-title { font-family: var(--font-title); color: var(--primary); font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .guide-text { font-size: 0.9em; line-height: 1.5; color: var(--text-muted); }
 
         /* LIGHTBOX */
         .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
@@ -133,43 +138,24 @@
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
-        /* MODO PDF */
+        /* MODO PDF EXPORT */
         body.pdf-exporting .photos, body.pdf-exporting .card-wave-top, body.pdf-exporting .bg-text-top, body.pdf-exporting .fab-container, body.pdf-exporting .filter-section { display: none !important; }
         body.pdf-exporting .wine-card { box-shadow: none; border: 1px solid #333; margin-bottom: 20px; page-break-inside: avoid; background: #fff; color: #000; }
         body.pdf-exporting .card-body { padding: 15px; }
         body.pdf-exporting .wine-name { color: #000; }
         #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
 
-        /* MEDIA QUERY (MOBILE) - AQUI ESTÁ O TRUQUE */
         @media (max-width: 768px) {
             body { padding: 10px; }
-            .app-container { padding: 0; }
-            .header-card-body { padding: 20px 10px; }
-            h1.main-title { font-size: 1.8em; }
-
-            /* Filtro Mobile: Multi-linha organizado */
-            .filter-section {
-                flex-wrap: wrap; /* Permite quebrar linha */
-                justify-content: center;
-                gap: 10px;
-                white-space: normal;
-            }
-            .filter-group { 
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap; /* Inputs tbm quebram */
-            }
-            .filter-input, .filter-select { 
-                flex: 1 1 45%; /* Ocupam 50% cada (2 por linha) */
-                max-width: none; 
-                height: 40px; /* Mais alto para dedo */
-            }
-            #searchInput { flex: 1 1 100%; } /* Busca ocupa 100% */
-
+            .header-card-body { padding: 25px 10px; }
+            h1.main-title { font-size: 2em; }
+            .filter-section { flex-wrap: wrap; justify-content: center; }
+            .filter-input, .filter-select { width: 100%; max-width: none; }
             .card-body { flex-direction: column; padding: 20px; gap: 15px; }
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
             .tech-grid { grid-template-columns: 1fr; }
+            .bi-grid, .guide-grid { grid-template-columns: 1fr; }
         }
 
         @media print {
@@ -188,7 +174,7 @@
     <div id="exportLoading"><div style="font-size: 3em;">🍷</div><div style="margin-top:20px;">Gerando PDF (Texto)...</div></div>
 
     <div class="fab-container no-print">
-        <div class="fab" onclick="openInfoModal()" title="Ajuda">?</div>
+        <div class="fab" onclick="openInfoModal()" title="Guia Rápido">?</div>
         <div class="fab" onclick="openDashboard()" title="Estatísticas"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
         <div class="fab" onclick="toggleTheme()" title="Temas"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg></div>
     </div>
@@ -202,8 +188,37 @@
         </div>
     </div>
 
-    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas da Adega</h2><div id="chartsContainer"></div></div></div>
-    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve) a 5 (Robusto).</div></div></div>
+    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary);font-family:var(--font-title)">Dashboard da Adega</h2><div id="biContent"></div></div></div>
+
+    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary);font-family:var(--font-title)">Guia do Iniciante</h2>
+        <div class="guide-grid">
+            <div class="guide-card">
+                <div class="guide-title">O Básico</div>
+                <div class="guide-text">
+                    <strong>Corpo:</strong> Peso do vinho na boca. Imagine a diferença entre água (leve) e leite (encorpado).<br>
+                    <strong>Tanino:</strong> Sensação de secura na gengiva, comum em tintos.<br>
+                    <strong>Acidez:</strong> Faz salivar. Essencial para vinhos brancos e gastronômicos.
+                </div>
+            </div>
+            <div class="guide-card">
+                <div class="guide-title">Temperatura de Serviço</div>
+                <div class="guide-text">
+                    🍷 <strong>Tintos:</strong> 16°C a 18°C (Levemente fresco).<br>
+                    🥂 <strong>Brancos/Rosés:</strong> 8°C a 12°C (Geladinho).<br>
+                    🍾 <strong>Espumantes:</strong> 6°C a 8°C (Bem gelado).
+                </div>
+            </div>
+            <div class="guide-card" style="grid-column: 1/-1;">
+                <div class="guide-title">Glossário de Uvas</div>
+                <div class="guide-text">
+                    <strong>Cabernet Sauvignon:</strong> A rainha dos tintos. Estruturada e tânica.<br>
+                    <strong>Malbec:</strong> Frutada, macia e doce no nariz.<br>
+                    <strong>Carmenere:</strong> Notas de pimentão e especiarias.<br>
+                    <strong>Chardonnay:</strong> Branca encorpada, muitas vezes amanteigada.
+                </div>
+            </div>
+        </div>
+    </div></div>
 
     <div class="app-container">
         <div class="header-section">
@@ -412,33 +427,54 @@
             const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
             let sortedCountries = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
             
-            const grapeCounts = {};
-            vinhos.forEach(v => {
-                const uvas = v.uvas.split(','); 
-                uvas.forEach(u => { const uvaTrim = u.trim(); grapeCounts[uvaTrim] = (grapeCounts[uvaTrim] || 0) + 1; });
+            let totalAbv = 0; vinhos.forEach(v => totalAbv += parseFloat(v.abv.replace(',','.')));
+            let avgAbv = (totalAbv / vinhos.length).toFixed(1);
+
+            // CSS Donut Chart Generator
+            let conicStr = "";
+            let currentDeg = 0;
+            // Pegar top 3 e agrupar resto
+            const top3 = sortedCountries.slice(0,3);
+            const othersCount = vinhos.length - top3.reduce((acc, c) => acc + counts[c], 0);
+            const colors = ['var(--primary)', 'var(--accent)', '#999', '#ccc'];
+            
+            top3.forEach((c, idx) => {
+                const deg = (counts[c] / vinhos.length) * 360;
+                conicStr += `${colors[idx]} ${currentDeg}deg ${currentDeg + deg}deg, `;
+                currentDeg += deg;
             });
+            if (othersCount > 0) conicStr += `${colors[3]} ${currentDeg}deg 360deg`;
+            else conicStr = conicStr.slice(0, -2); // remove last comma
+
+            let html = `
+                <div class="bi-grid">
+                    <div class="kpi-card"><div class="kpi-val">${vinhos.length}</div><div class="kpi-lbl">Rótulos</div></div>
+                    <div class="kpi-card"><div class="kpi-val">${avgAbv}%</div><div class="kpi-lbl">Álcool Médio</div></div>
+                </div>
+                
+                <h3 style="text-align:center; margin-bottom:5px; font-size:1em;">Países</h3>
+                <div class="donut-container">
+                    <div class="donut-chart" style="background: conic-gradient(${conicStr})">
+                        <div class="donut-inner">${top3[0]}</div>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    ${top3.map((c, i) => `<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div>${c} (${counts[c]})</div>`).join('')}
+                    ${othersCount > 0 ? `<div class="legend-item"><div class="legend-dot" style="background:${colors[3]}"></div>Outros (${othersCount})</div>` : ''}
+                </div>
+            `;
+
+            const grapeCounts = {};
+            vinhos.forEach(v => v.uvas.split(',').forEach(u => { const t = u.trim(); grapeCounts[t] = (grapeCounts[t] || 0) + 1; }));
             let sortedGrapes = Object.keys(grapeCounts).sort((a,b) => grapeCounts[b] - grapeCounts[a]).slice(0, 5);
 
-            let html = `<div style="text-align:center; margin-bottom:25px; padding:15px; background:rgba(0,0,0,0.03); border-radius:8px;">
-                            <div style="font-size:3em; font-weight:bold; color:var(--primary); font-family:var(--font-title)">${vinhos.length}</div>
-                            <div style="text-transform:uppercase; font-size:0.8em; letter-spacing:1px; color:var(--text-muted)">Rótulos Totais</div>
-                        </div>`;
-
-            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Top Países</h3>';
-            sortedCountries.forEach(c => {
-                const pct = (counts[c] / vinhos.length) * 100;
-                html += `<div class="chart-row"><div class="chart-label-text">${c}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%"><span class="chart-count" style="color: white; padding-left:5px;">${counts[c]}</span></div></div></div>`;
-            });
-            html += '</div>';
-
-            html += '<div class="chart-section"><h3 style="margin:0 0 10px 0; font-size:1em;">Top Uvas</h3>';
+            html += '<h3 style="margin:20px 0 10px 0; font-size:1em; border-top:1px solid #eee; padding-top:15px;">Top Uvas</h3>';
             sortedGrapes.forEach(g => {
-                const pct = (grapeCounts[g] / vinhos.length) * 100;
-                html += `<div class="chart-row"><div class="chart-label-text">${g}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%; background:var(--secondary)"></div><span class="chart-count">${grapeCounts[g]}</span></div></div>`;
+                const pct = (grapeCounts[g] / vinhos.length) * 100; // Relative to total wines
+                html += `<div class="bar-chart-row"><div class="bar-label">${g}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><div class="chart-count">${grapeCounts[g]}</div></div>`;
             });
-            html += '</div>';
 
-            document.getElementById('chartsContainer').innerHTML = html;
+            document.getElementById('biContent').innerHTML = html;
             document.getElementById('biModal').style.display = "flex";
         }
 
@@ -446,102 +482,44 @@
         function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
 
         // LIGHTBOX FIX
-        let currentScale = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
-        let initialPinchDistance = null;
-        let initialScale = 1;
-
+        let currentScale = 1; let isDragging = false; let startX, startY, translateX = 0, translateY = 0;
+        let initialPinchDistance = null; let initialScale = 1;
         const img = document.getElementById('lightbox-img');
         const modal = document.getElementById('lightbox');
         const wrapper = document.getElementById('lb-wrapper');
 
         function openLightbox(src) {
-            modal.style.display = 'flex';
-            img.src = src;
-            resetZoom();
-            document.body.style.overflow = 'hidden'; 
+            modal.style.display = 'flex'; img.src = src;
+            document.body.style.overflow = 'hidden'; resetZoom();
         }
-
         function closeLightbox() {
-            modal.style.display = 'none';
-            document.body.style.overflow = ''; 
+            modal.style.display = 'none'; document.body.style.overflow = '';
         }
+        function resetZoom() { currentScale = 1; translateX = 0; translateY = 0; updateTransform(); }
+        function updateTransform() { img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`; }
+        function zoomManual(d) { currentScale = Math.max(1, Math.min(4, currentScale + d)); updateTransform(); }
 
-        function resetZoom() {
-            currentScale = 1; translateX = 0; translateY = 0;
-            updateTransform();
-        }
-
-        function updateTransform() {
-            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
-        }
-
-        function zoomManual(d) {
-            currentScale = Math.max(1, Math.min(4, currentScale + d));
-            updateTransform();
-        }
-
-        wrapper.addEventListener('mousedown', e => {
-            if (currentScale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                e.preventDefault();
-            }
-        });
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', e => {
-            if (isDragging) {
-                e.preventDefault();
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
-            }
-        });
-
+        wrapper.addEventListener('mousedown', e => { if(currentScale>1) { isDragging=true; startX=e.clientX-translateX; startY=e.clientY-translateY; e.preventDefault(); }});
+        window.addEventListener('mouseup', () => isDragging=false);
+        window.addEventListener('mousemove', e => { if(isDragging) { e.preventDefault(); translateX=e.clientX-startX; translateY=e.clientY-startY; updateTransform(); }});
+        
         wrapper.addEventListener('touchstart', e => {
-            if (e.touches.length === 2) {
-                initialPinchDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                initialScale = currentScale;
-            } else if (e.touches.length === 1 && currentScale > 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
-            }
+            if(e.touches.length===2) { initialPinchDistance=Math.hypot(e.touches[0].pageX-e.touches[1].pageX, e.touches[0].pageY-e.touches[1].pageY); initialScale=currentScale; }
+            else if(e.touches.length===1 && currentScale>1) { isDragging=true; startX=e.touches[0].clientX-translateX; startY=e.touches[0].clientY-translateY; }
         });
-
         wrapper.addEventListener('touchmove', e => {
             e.preventDefault();
-            if (e.touches.length === 2 && initialPinchDistance) {
-                const dist = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
-                currentScale = Math.max(1, Math.min(4, initialScale * (dist / initialPinchDistance)));
-                updateTransform();
-            } else if (isDragging && e.touches.length === 1) {
-                translateX = e.touches[0].clientX - startX;
-                translateY = e.touches[0].clientY - startY;
-                updateTransform();
-            }
+            if(e.touches.length===2 && initialPinchDistance) { const dist=Math.hypot(e.touches[0].pageX-e.touches[1].pageX, e.touches[0].pageY-e.touches[1].pageY); currentScale=Math.max(1, Math.min(4, initialScale*(dist/initialPinchDistance))); updateTransform(); }
+            else if(isDragging && e.touches.length===1) { translateX=e.touches[0].clientX-startX; translateY=e.touches[0].clientY-startY; updateTransform(); }
         });
-
-        wrapper.addEventListener('touchend', () => { isDragging = false; initialPinchDistance = null; });
-
-        wrapper.addEventListener('wheel', e => {
-            e.preventDefault(); 
-            if (e.deltaY < 0) zoomManual(0.2);
-            else zoomManual(-0.2);
-        });
-
-        modal.addEventListener('click', e => {
-            if (e.target === modal || e.target === wrapper) closeLightbox();
-        });
+        wrapper.addEventListener('touchend', () => { isDragging=false; initialPinchDistance=null; });
+        wrapper.addEventListener('wheel', e => { e.preventDefault(); if(e.deltaY<0) zoomManual(0.2); else zoomManual(-0.2); });
+        
+        modal.addEventListener('click', e => { if(e.target===modal || e.target===wrapper) closeLightbox(); });
         img.addEventListener('click', e => e.stopPropagation());
+        document.addEventListener('keydown', e => { if(e.key==="Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }});
 
-        document.addEventListener('keydown', e => {
-            if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }
-        });
-
-        // Theme
+        // Toggle Theme
         const themes = [ { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' }, { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' } ];
         let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme') || 0);
         if(currentThemeIndex >= themes.length) currentThemeIndex = 0;
