@@ -24,13 +24,12 @@
         body.theme-superman { --theme-name:"Kal-El"; --bg-page:#f0f8ff; --card-bg:#ffffff; --primary:#003D7C; --accent:#AC0D0D; --secondary:#F2B900; --text-main:#00274c; --text-muted:#5c7c99; --font-title:'Orbitron',sans-serif; --font-body:'Montserrat',sans-serif; --font-script:'Orbitron',sans-serif; --border-color:#89CFF0; --shadow-color:rgba(0,61,124,0.2); --wave-opacity:0.2; }
 
         * { box-sizing: border-box; }
-        body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 0; transition: background 0.5s ease; }
+        body { font-family: var(--font-body); background-color: var(--bg-page); color: var(--text-main); margin: 0; padding: 20px; transition: background 0.5s ease; }
         
+        /* LAYOUT CONTAINER */
         .app-container { max-width: 900px; margin: 0 auto; padding: 20px; }
-        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
 
         /* HEADER */
-        .header-section { margin-bottom: 30px; }
         .header-card-body { 
             padding: 25px 20px; text-align: center; background: var(--card-bg); 
             border-radius: 12px 12px 0 0; border: 1px solid var(--border-color); border-bottom: none;
@@ -40,25 +39,19 @@
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.4em; margin-top: 5px; }
 
-        /* FILTROS (One-Line Forced) */
+        /* FILTROS COMPACTOS */
         .filter-section {
             background: var(--bg-page);
             border: 1px solid var(--border-color); border-top: 1px dashed var(--border-color);
-            border-radius: 0 0 12px 12px; padding: 8px 15px; 
-            display: flex; align-items: center; gap: 8px; 
-            overflow-x: auto; /* Scroll horizontal se faltar espaço */
-            white-space: nowrap; /* Força linha única */
-            box-shadow: 0 5px 15px var(--shadow-color);
-            scrollbar-width: none; /* Esconde scrollbar Firefox */
+            border-radius: 0 0 12px 12px;
+            padding: 10px 15px; box-shadow: 0 5px 15px var(--shadow-color);
+            display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
         }
-        .filter-section::-webkit-scrollbar { display: none; /* Esconde scrollbar Chrome */ }
-        
-        .filter-group { display: flex; gap: 6px; align-items: center; }
         
         .filter-input, .filter-select { 
             padding: 6px 10px; border: 1px solid var(--border-color); background: #fff; 
             border-radius: 4px; font-family: var(--font-body); color: var(--text-main); font-size: 0.85em; 
-            outline: none; height: 32px; min-width: 100px;
+            outline: none; height: 32px; flex: 1; min-width: 110px; max-width: 160px;
         }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
 
@@ -70,10 +63,10 @@
         .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .action-btn svg { width: 16px; height: 16px; fill: currentColor; }
         
-        .filter-stats { font-size: 0.75em; color: var(--text-muted); margin-left: auto; font-weight: bold; padding-left: 10px; }
+        .filter-stats { font-size: 0.75em; color: var(--text-muted); white-space: nowrap; font-weight: bold; margin-left: 5px; }
 
-        /* LOADING */
-        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
+        /* GRID */
+        .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
 
         /* WINE CARD */
         .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
@@ -94,15 +87,40 @@
         .wine-name { font-family: var(--font-title); font-size: 1.6em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
         .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1.5px; margin-top: 3px; }
         .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1em; line-height: 1.4; margin: 12px 0; padding-left: 12px; border-left: 3px solid var(--secondary); }
+        
         .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; background-color: rgba(0,0,0,0.03); padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em; }
         .tech-item { display: flex; align-items: center; gap: 5px; color: var(--text-main); }
         .tech-icon { width: 16px; height: 16px; fill: var(--primary); flex-shrink: 0; }
+        
         .rating-stars { color: #ddd; font-size: 1.3em; cursor: pointer; margin-bottom: 8px; }
         .rating-stars span.active { color: #f1c40f; }
+
+        /* BARRA DE FORÇA (CORPO) MELHORADA */
         .strength-wrapper { margin-top: auto; }
-        .strength-label { display: flex; justify-content: space-between; font-size: 0.7em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; font-weight: bold; }
-        .strength-track { background: #e0e0e0; height: 6px; border-radius: 10px; overflow: hidden; }
-        .strength-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; }
+        .strength-label { display: flex; justify-content: space-between; font-size: 0.75em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; font-weight: bold; letter-spacing: 1px; }
+        .strength-track { 
+            background: #f0f0f0; 
+            height: 14px; /* Mais grossa */
+            border-radius: 7px; 
+            overflow: hidden; 
+            border: 1px solid #e0e0e0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .strength-fill { 
+            height: 100%; 
+            border-radius: 7px; 
+            background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%); 
+            width: 0%; 
+            position: relative;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Textura listrada suave */
+        .strength-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+            background-size: 14px 14px;
+        }
 
         /* FABs */
         .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
@@ -122,21 +140,22 @@
         .chart-count { position: absolute; right: 5px; top:0; line-height: 16px; font-size: 0.75em; color: #555; }
         .info-title { font-family: var(--font-title); color: var(--accent); font-weight: bold; margin-bottom: 5px; border-bottom: 1px solid #eee; margin-top: 15px; }
 
-        /* LIGHTBOX (FIXED) */
+        /* LIGHTBOX */
         .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
         .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; touch-action: none; }
         .lightbox-content-wrapper:active { cursor: grabbing; }
-        /* pointer-events: auto permite que o clique na imagem seja detectado para stopPropagation */
         .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: auto; transition: transform 0.1s linear; }
         .lightbox-controls { position: absolute; bottom: 30px; display: flex; gap: 20px; z-index: 10001; }
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
-        /* MODO PDF (TEXTO PURO) */
+        /* MODO PDF */
         body.pdf-exporting .photos, body.pdf-exporting .card-wave-top, body.pdf-exporting .bg-text-top, body.pdf-exporting .fab-container, body.pdf-exporting .filter-section { display: none !important; }
         body.pdf-exporting .wine-card { box-shadow: none; border: 1px solid #333; margin-bottom: 20px; page-break-inside: avoid; background: #fff; color: #000; }
         body.pdf-exporting .card-body { padding: 15px; }
         body.pdf-exporting .wine-name { color: #000; }
+
+        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
@@ -146,7 +165,8 @@
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
             .tech-grid { grid-template-columns: 1fr; }
-            .filter-section { justify-content: flex-start; } /* No mobile scrolla da esquerda */
+            .filter-input, .filter-select { width: 100%; max-width: none; }
+            .filter-section { flex-wrap: wrap; }
         }
 
         @media print {
@@ -179,8 +199,8 @@
         </div>
     </div>
 
-    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas</h2><div id="chartsContainer"></div></div></div>
-    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Corpo:</strong> 1 (Leve) a 5 (Robusto).</div></div></div>
+    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas da Adega</h2><div id="chartsContainer"></div></div></div>
+    <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido</h2><div class="info-section"><strong>Escala de Corpo:</strong> 1 (Leve/Suave) a 5 (Robusto/Estruturado).<br><strong>Taninos:</strong> Sensação de secura na boca.<br><strong>NV:</strong> Non-Vintage (Sem safra).</div></div></div>
 
     <div class="app-container">
         <div class="header-section">
@@ -190,18 +210,28 @@
                 <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
             </div>
 
-            <div class="filter-section no-print">
-                <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
-                <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">País</option></select>
-                <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safra</option></select>
-                <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
-                <select id="sortSelect" class="filter-select" onchange="applyFilters()">
-                    <option value="nome">A-Z</option>
-                    <option value="forcaDesc">Força</option>
-                </select>
-                <button class="action-btn" onclick="clearFilters()" title="Limpar">&#10005;</button>
-                <button class="action-btn" onclick="exportToPDF()" title="PDF (Texto)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
-                <span class="filter-stats" id="filterStats"></span>
+            <div id="filterSection" class="filter-section no-print">
+                <div class="filter-group">
+                    <input type="text" id="searchInput" class="filter-input" placeholder="Buscar..." oninput="applyFilters()">
+                    <select id="countrySelect" class="filter-select" onchange="applyFilters()"><option value="">Países</option></select>
+                    <select id="yearSelect" class="filter-select" onchange="applyFilters()"><option value="">Safras</option></select>
+                    <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
+                    <select id="sortSelect" class="filter-select" onchange="applyFilters()">
+                        <option value="nome">A-Z</option>
+                        <option value="nomeDesc">Z-A</option>
+                        <option value="forcaDesc">Corpo (+)</option>
+                        <option value="forcaAsc">Corpo (-)</option>
+                        <option value="safraDesc">Safra (+ Nova)</option>
+                        <option value="safraAsc">Safra (+ Antiga)</option>
+                        <option value="abvDesc">Álcool (+)</option>
+                        <option value="abvAsc">Álcool (-)</option>
+                    </select>
+                    <button class="action-btn" onclick="clearFilters()" title="Limpar">&#10005;</button>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF (Texto)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
+                    <span class="filter-stats" id="filterStats"></span>
+                </div>
             </div>
         </div>
 
@@ -209,7 +239,6 @@
     </div>
 
     <script>
-        // DADOS (Mantidos)
         const flags = { "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`, "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`, "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`, "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`, "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`, "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`, "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M240 250 A 200 200 0 0 0 550 200" stroke="#fff" stroke-width="15" fill="none"/></svg>` };
         const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,17.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
         const iconDrop = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M12,2c-5.33,5.33-8,10.67-8,16c0,4.42,3.58,8,8,8s8-3.58,8-8C20,12.67,17.33,7.33,12,2z M12,24c-3.31,0-6-2.69-6-6c0-4,2-8,6-12c4,4,6,8,6,12C18,21.31,15.31,24,12,24z"/></svg>`;
@@ -307,6 +336,7 @@
             });
         }
 
+        // LÓGICA DE FILTRO & SORT
         function applyFilters() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const countryVal = document.getElementById('countrySelect').value;
@@ -329,11 +359,13 @@
 
                 switch(sortVal) {
                     case 'nome': return a.nome.localeCompare(b.nome);
+                    case 'nomeDesc': return b.nome.localeCompare(a.nome);
                     case 'forcaDesc': return b.forca - a.forca;
                     case 'forcaAsc': return a.forca - b.forca;
                     case 'safraDesc': return parseSafra(b.safra) - parseSafra(a.safra);
                     case 'safraAsc': return parseSafra(a.safra) - parseSafra(b.safra);
                     case 'abvDesc': return parseAbv(b.abv) - parseAbv(a.abv);
+                    case 'abvAsc': return parseAbv(a.abv) - parseAbv(b.abv);
                     default: return 0;
                 }
             });
@@ -350,7 +382,7 @@
             applyFilters();
         }
 
-        // EXPORT PDF (Modo Texto)
+        // EXPORT PDF (MODO TEXTO LIMPO)
         async function exportToPDF() {
             document.getElementById('exportLoading').style.display = 'flex';
             document.body.classList.add('pdf-exporting');
@@ -424,7 +456,7 @@
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
 
-        // LIGHTBOX FIX (Correção do Clique e Zoom)
+        // LIGHTBOX (Zoom + Pan + Scroll Lock)
         let currentScale = 1;
         let isDragging = false;
         let startX, startY, translateX = 0, translateY = 0;
@@ -438,8 +470,8 @@
         function openLightbox(src) {
             modal.style.display = 'flex';
             img.src = src;
-            resetZoom();
             document.body.style.overflow = 'hidden'; 
+            resetZoom();
         }
 
         function closeLightbox() {
@@ -460,12 +492,6 @@
             currentScale = Math.max(1, Math.min(4, currentScale + d));
             updateTransform();
         }
-
-        // Prevent closing when clicking image (FIXED)
-        img.addEventListener('click', e => e.stopPropagation());
-        modal.addEventListener('click', e => {
-            if (e.target === modal || e.target === wrapper) closeLightbox();
-        });
 
         // Drag Mouse
         wrapper.addEventListener('mousedown', e => {
@@ -518,6 +544,11 @@
             if (e.deltaY < 0) zoomManual(0.2);
             else zoomManual(-0.2);
         });
+
+        modal.addEventListener('click', e => {
+            if (e.target === modal || e.target === wrapper) closeLightbox();
+        });
+        img.addEventListener('click', e => e.stopPropagation());
 
         document.addEventListener('keydown', e => {
             if(e.key === "Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }
