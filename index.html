@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adega Pessoal M&M - Catálogo Completo</title>
-
+    <title>Adega Pessoal - Catálogo Final</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
 
     <style>
         /* =========================================
            SISTEMA DE TEMAS (CSS VARIABLES)
            ========================================= */
-
+        
         /* TEMA 1: CLÁSSICO (Padrão) */
         :root {
             --theme-name: "Clássico";
             --bg-page: #f4f1ea;
             --card-bg: #ffffff;
-            --primary: #722f37;
-            /* Merlot */
-            --accent: #c5a059;
-            /* Dourado */
-            --secondary: #9e4755;
-            /* Vinho claro */
+            --primary: #722f37;       /* Merlot */
+            --accent: #c5a059;        /* Dourado */
+            --secondary: #9e4755;     /* Vinho claro */
             --text-main: #2c2c2c;
             --text-muted: #666666;
             --font-title: 'Playfair Display', serif;
@@ -43,12 +37,9 @@
             --theme-name: "Moderno";
             --bg-page: #f0f2f5;
             --card-bg: #ffffff;
-            --primary: #2c3e50;
-            /* Chumbo */
-            --accent: #34495e;
-            /* Azul Aço */
-            --secondary: #7f8c8d;
-            /* Cinza */
+            --primary: #2c3e50;       /* Chumbo */
+            --accent: #34495e;        /* Azul Aço */
+            --secondary: #7f8c8d;     /* Cinza */
             --text-main: #1a1a1a;
             --text-muted: #7f8c8d;
             --font-title: 'Montserrat', sans-serif;
@@ -62,15 +53,11 @@
         /* TEMA 3: RÚSTICO (TERROIR) */
         body.theme-rustic {
             --theme-name: "Rústico";
-            --bg-page: #e8e4d9;
-            /* Papel Kraft claro */
+            --bg-page: #e8e4d9;       /* Papel Kraft claro */
             --card-bg: #fdfbf7;
-            --primary: #5d4037;
-            /* Marrom Terra */
-            --accent: #33691e;
-            /* Verde Oliva Escuro */
-            --secondary: #8d6e63;
-            /* Marrom claro */
+            --primary: #5d4037;       /* Marrom Terra */
+            --accent: #33691e;        /* Verde Oliva Escuro */
+            --secondary: #8d6e63;     /* Marrom claro */
             --text-main: #3e2723;
             --text-muted: #5d4037;
             --font-title: 'Cinzel', serif;
@@ -84,15 +71,11 @@
         /* TEMA 4: ROSÉ (PROVENCE) */
         body.theme-rose {
             --theme-name: "Rosé";
-            --bg-page: #fff0f5;
-            /* Lavanda muito pálido */
+            --bg-page: #fff0f5;       /* Lavanda muito pálido */
             --card-bg: #ffffff;
-            --primary: #d81b60;
-            /* Pink Sofisticado */
-            --accent: #f48fb1;
-            /* Rosa claro */
-            --secondary: #ad1457;
-            /* Rosa escuro */
+            --primary: #d81b60;       /* Pink Sofisticado */
+            --accent: #f48fb1;        /* Rosa claro */
+            --secondary: #ad1457;     /* Rosa escuro */
             --text-main: #4a4a4a;
             --text-muted: #888888;
             --font-title: 'Playfair Display', serif;
@@ -106,16 +89,11 @@
         /* TEMA 5: PREMIUM (GOLD) */
         body.theme-gold {
             --theme-name: "Premium";
-            --bg-page: #1a1a1a;
-            /* Fundo Escuro para tela (mudará na impressão) */
-            --card-bg: #fffcf5;
-            /* Creme rico */
-            --primary: #000000;
-            /* Preto absoluto */
-            --accent: #d4af37;
-            /* Ouro Metálico */
-            --secondary: #b8860b;
-            /* Ouro escuro */
+            --bg-page: #1a1a1a;       /* Fundo Escuro */
+            --card-bg: #fffcf5;       /* Creme rico */
+            --primary: #000000;       /* Preto absoluto */
+            --accent: #d4af37;        /* Ouro Metálico */
+            --secondary: #b8860b;     /* Ouro escuro */
             --text-main: #111111;
             --text-muted: #555555;
             --font-title: 'Cinzel', serif;
@@ -129,15 +107,11 @@
         /* TEMA 6: FRESCOR (VERDE) */
         body.theme-green {
             --theme-name: "Frescor";
-            --bg-page: #f1f8e9;
-            /* Verde menta pálido */
+            --bg-page: #f1f8e9;       /* Verde menta pálido */
             --card-bg: #ffffff;
-            --primary: #2e7d32;
-            /* Verde Floresta */
-            --accent: #8bc34a;
-            /* Verde Lima */
-            --secondary: #558b2f;
-            /* Oliva */
+            --primary: #2e7d32;       /* Verde Floresta */
+            --accent: #8bc34a;        /* Verde Lima */
+            --secondary: #558b2f;     /* Oliva */
             --text-main: #1b5e20;
             --text-muted: #689f38;
             --font-title: 'Montserrat', sans-serif;
@@ -166,16 +140,15 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 50px;
-            max-width: 950px;
+            max-width: 950px; 
             margin: 0 auto;
         }
 
-        /* CARD */
         .wine-card {
             background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 15px 30px var(--shadow-color);
-            overflow: hidden;
+            overflow: hidden; 
             position: relative;
             display: flex;
             flex-direction: column;
@@ -184,7 +157,6 @@
             transition: all 0.5s ease;
         }
 
-        /* DECORAÇÃO DE TOPO (ONDA) */
         .card-wave-top {
             background-color: var(--primary);
             height: 15px;
@@ -199,7 +171,7 @@
             top: 0;
             left: 0;
         }
-
+        
         .card-top-solid {
             height: 10px;
             width: 100%;
@@ -209,19 +181,18 @@
             z-index: 4;
         }
 
-        /* MARCA D'ÁGUA NO TETO */
         .bg-text-top {
             position: absolute;
-            top: -0.18em;
+            top: -0.18em; 
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
             text-align: center;
             font-family: var(--font-title);
             font-weight: 700;
-            font-size: 6.5em;
+            font-size: 6.5em; 
             color: var(--primary);
-            opacity: 0.04;
+            opacity: 0.04; 
             white-space: nowrap;
             z-index: 0;
             pointer-events: none;
@@ -231,7 +202,7 @@
 
         /* CAPA */
         .header-card-body {
-            min-height: 550px;
+            min-height: 550px; 
             padding: 40px;
             text-align: center;
             display: flex;
@@ -269,7 +240,7 @@
             z-index: 2;
         }
 
-        /* CONTEÚDO DO CARD */
+        /* CONTEÚDO */
         .card-body {
             display: flex;
             flex-direction: row;
@@ -308,11 +279,11 @@
         }
 
         .photos img {
-            height: 100%;
+            height: 100%; 
             max-height: 420px;
             width: auto;
             max-width: 130px;
-            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
             object-fit: contain;
             z-index: 1;
         }
@@ -347,11 +318,11 @@
             height: 35px;
             border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
             border: 1px solid #ddd;
             margin-bottom: 5px;
         }
-
+        
         .flag-box svg {
             width: 100%;
             height: 100%;
@@ -375,20 +346,20 @@
             min-height: 55px;
         }
 
-        .wine-name {
+        .wine-name { 
             font-family: var(--font-title);
-            font-size: 2.4em;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 2.4em; 
+            font-weight: 700; 
+            color: var(--primary); 
             line-height: 1;
             margin: 0;
         }
-
-        .wine-region {
-            color: var(--accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9em;
+        
+        .wine-region { 
+            color: var(--accent); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.9em; 
             letter-spacing: 2px;
             margin-top: 5px;
         }
@@ -402,18 +373,16 @@
             margin: 20px 0;
             padding-left: 20px;
             border-left: 4px solid var(--secondary);
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%);
             padding: 15px;
             border-radius: 0 8px 8px 0;
         }
 
-        /* GRID TÉCNICO COM 3 COLUNAS (SAFRA INCLUÍDA) */
         .tech-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr;
-            /* Uva | Safra | Álcool */
             gap: 15px;
-            background-color: rgba(0, 0, 0, 0.02);
+            background-color: rgba(0,0,0,0.02);
             padding: 15px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -435,16 +404,10 @@
             flex-shrink: 0;
         }
 
-        .label {
-            font-weight: 700;
-            color: var(--primary);
-            margin-right: 3px;
-        }
+        .label { font-weight: 700; color: var(--primary); margin-right: 3px; }
 
-        .strength-wrapper {
-            margin-top: 5px;
-        }
-
+        .strength-wrapper { margin-top: 5px; }
+        
         .strength-label {
             font-size: 0.75em;
             text-transform: uppercase;
@@ -468,21 +431,19 @@
             height: 100%;
             border-radius: 20px;
             background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
-            width: 0%;
+            width: 0%; 
             transition: width 1s ease-in-out;
         }
 
-        /* BOTÃO INTELIGENTE */
         .theme-fab {
             position: fixed;
             bottom: 30px;
             right: 30px;
             background-color: var(--primary);
-            color: white;
-            /* Cor do texto no botão */
+            color: white; 
             padding: 12px 25px;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -497,83 +458,33 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        
+        .theme-fab:hover { transform: scale(1.05); }
+        .theme-fab svg { width: 20px; height: 20px; fill: white; }
 
-        .theme-fab:hover {
-            transform: scale(1.05);
-        }
-
-        .theme-fab svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-
-        /* IMPRESSÃO */
         @media print {
-            body {
-                background-color: white;
-                padding: 0;
-            }
-
-            /* Ajuste para o tema Premium economizar tinta no fundo */
-            body.theme-gold {
-                background-color: white !important;
-            }
-
-            .catalog-grid {
-                display: block;
-            }
-
-            .wine-card {
-                box-shadow: none;
-                border: 1px solid #ccc;
-                margin-bottom: 40px;
+            body { background-color: white; padding: 0; }
+            body.theme-gold { background-color: white !important; }
+            .catalog-grid { display: block; }
+            .wine-card { 
+                box-shadow: none; 
+                border: 1px solid #ccc; 
+                margin-bottom: 40px; 
                 page-break-inside: avoid;
             }
-
-            .photos {
-                height: 350px;
-                flex: 0 0 200px;
-            }
-
-            .photos img {
-                max-height: 320px;
-                filter: none;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            /* Esconde o botão */
-
-            .bg-text-top {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                opacity: 0.1 !important;
-            }
-
-            .card-wave-top,
-            .card-top-solid,
-            .strength-fill {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .flag-box {
-                border: 1px solid #000;
-            }
+            .photos { height: 350px; flex: 0 0 200px; }
+            .photos img { max-height: 320px; filter: none; }
+            .no-print { display: none !important; }
+            .bg-text-top { -webkit-print-color-adjust: exact; print-color-adjust: exact; opacity: 0.1 !important; }
+            .card-wave-top, .card-top-solid, .strength-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .flag-box { border: 1px solid #000; }
         }
     </style>
 </head>
-
 <body class="">
 
     <div class="theme-fab no-print" onclick="toggleTheme()" title="Mudar Identidade Visual">
-        <svg viewBox="0 0 24 24">
-            <path
-                d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z" />
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg>
         <span id="theme-label">Clássico 1/6</span>
     </div>
 
@@ -582,13 +493,10 @@
             <div class="card-top-solid"></div>
             <div class="card-wave-top"></div>
             <div class="bg-text-top" style="font-size: 8em; top: 0; opacity: 0.03;">PREMIUM</div>
-
+            
             <div class="header-card-body">
-                <svg class="header-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M12 2C12.5523 2 13 2.44772 13 3V4.17071C14.1652 4.58254 15 5.69378 15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.69378 9.83481 4.58254 11 4.17071V3C11 2.44772 11.4477 2 12 2ZM17 9C18.1046 9 19 9.89543 19 11C19 12.1046 18.1046 13 17 13C16.8993 13 16.8004 12.9922 16.7039 12.9772C16.8929 12.3781 17 11.721 17 11.0256V11H17ZM7 9C7 11.0256 7.10714 12.3781 7.2961 12.9772C7.19962 12.9922 7.10069 13 7 13C5.89543 13 5 12.1046 5 11C5 9.89543 5.89543 9 7 9ZM12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11ZM17.2961 14.0228C17.1071 14.6219 17 15.9744 17 18C17 19.1046 16.1046 20 15 20C14.7176 20 14.4496 19.9413 14.2046 19.8353C14.5427 19.042 14.8166 18.0673 14.9392 17.009C14.9803 16.9995 15.0215 16.9942 15.0628 16.9902C15.0418 16.9537 15.021 16.9171 15.0006 16.8804C14.7766 16.9452 14.5422 16.9859 14.2961 17.0228C14.1071 17.6219 14 18.9744 14 21C14 22.1046 13.1046 23 12 23C10.8954 23 10 22.1046 10 21C10 18.9744 9.89286 17.6219 9.7039 17.0228C9.45781 16.9859 9.22342 16.9452 8.9994 16.8804C8.97898 16.9171 8.95825 16.9537 8.93724 16.9902C8.97854 16.9942 9.01968 16.9995 9.06077 17.009C9.18342 18.0673 9.45729 19.042 9.79538 19.8353C9.55042 19.9413 9.28245 20 9 20C7.89543 20 7 19.1046 7 18C7 15.9744 6.89286 14.6219 6.7039 14.0228C6.80038 14.0078 6.89931 14 7 14C7.02154 14 7.04297 14.0004 7.06428 14.0011C7.14361 14.7779 7.33083 15.626 7.57538 16.5147C7.82855 16.4526 8.09348 16.4116 8.36952 16.3934C8.4287 15.7077 8.65063 15.1189 9 14.6536V14.6364C9 14.4208 9.04467 14.2121 9.12903 14.0121C9.69708 13.6301 10.7423 13.3101 11.9676 13.0401C12.0423 13.3101 13.6971 13.6301 14.2651 14.0121C14.3495 14.2121 14.3942 14.4208 14.3942 14.6364V14.6536C14.7436 15.1189 14.9655 15.7077 15.0247 16.3934C15.3007 16.4116 15.5657 16.4526 15.8188 16.5147C16.0634 15.626 16.2506 14.7779 16.3299 14.0011C16.3512 14.0004 16.3727 14 16.3942 14C16.4949 14 16.5938 14.0078 16.6903 14.0228Z" />
-                </svg>
-                <h1 class="main-title">Adega Pessoal M&M</h1>
+                <svg class="header-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12.5523 2 13 2.44772 13 3V4.17071C14.1652 4.58254 15 5.69378 15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.69378 9.83481 4.58254 11 4.17071V3C11 2.44772 11.4477 2 12 2ZM17 9C18.1046 9 19 9.89543 19 11C19 12.1046 18.1046 13 17 13C16.8993 13 16.8004 12.9922 16.7039 12.9772C16.8929 12.3781 17 11.721 17 11.0256V11H17ZM7 9C7 11.0256 7.10714 12.3781 7.2961 12.9772C7.19962 12.9922 7.10069 13 7 13C5.89543 13 5 12.1046 5 11C5 9.89543 5.89543 9 7 9ZM12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11ZM17.2961 14.0228C17.1071 14.6219 17 15.9744 17 18C17 19.1046 16.1046 20 15 20C14.7176 20 14.4496 19.9413 14.2046 19.8353C14.5427 19.042 14.8166 18.0673 14.9392 17.009C14.9803 16.9995 15.0215 16.9942 15.0628 16.9902C15.0418 16.9537 15.021 16.9171 15.0006 16.8804C14.7766 16.9452 14.5422 16.9859 14.2961 17.0228C14.1071 17.6219 14 18.9744 14 21C14 22.1046 13.1046 23 12 23C10.8954 23 10 22.1046 10 21C10 18.9744 9.89286 17.6219 9.7039 17.0228C9.45781 16.9859 9.22342 16.9452 8.9994 16.8804C8.97898 16.9171 8.95825 16.9537 8.93724 16.9902C8.97854 16.9942 9.01968 16.9995 9.06077 17.009C9.18342 18.0673 9.45729 19.042 9.79538 19.8353C9.55042 19.9413 9.28245 20 9 20C7.89543 20 7 19.1046 7 18C7 15.9744 6.89286 14.6219 6.7039 14.0228C6.80038 14.0078 6.89931 14 7 14C7.02154 14 7.04297 14.0004 7.06428 14.0011C7.14361 14.7779 7.33083 15.626 7.57538 16.5147C7.82855 16.4526 8.09348 16.4116 8.36952 16.3934C8.4287 15.7077 8.65063 15.1189 9 14.6536V14.6364C9 14.4208 9.04467 14.2121 9.12903 14.0121C9.69708 13.6301 10.7423 13.3101 11.9676 13.0401C12.0423 13.3101 13.6971 13.6301 14.2651 14.0121C14.3495 14.2121 14.3942 14.4208 14.3942 14.6364V14.6536C14.7436 15.1189 14.9655 15.7077 15.0247 16.3934C15.3007 16.4116 15.5657 16.4526 15.8188 16.5147C16.0634 15.626 16.2506 14.7779 16.3299 14.0011C16.3512 14.0004 16.3727 14 16.3942 14C16.4949 14 16.5938 14.0078 16.6903 14.0228Z"/></svg>
+                <h1 class="main-title">Adega Pessoal</h1>
                 <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
             </div>
         </div>
@@ -621,7 +529,7 @@
                 safra: "2023",
                 forca: 5,
                 poesia: "Um gigante gentil das planícies quentes do Alentejo. Este vinho traz o sol português engarrafado: potente, escuro e carregado de frutas maduras, como um abraço caloroso em dia de inverno.",
-                imgFrente: "20251202_111906.jpg", imgVerso: "20251202_111914.jpg"
+                imgFrente: "images/20251202_111906.jpg", imgVerso: "images/20251202_111914.jpg"
             },
             {
                 nome: "Duque de Cazarra Roble",
@@ -632,7 +540,7 @@
                 safra: "2022",
                 forca: 5,
                 poesia: "A essência da terra espanhola maturada em carvalho. 'Roble' denota sua passagem pela madeira, conferindo-lhe uma espinha dorsal firme e notas de baunilha que dançam com a rusticidade da uva Bobal.",
-                imgFrente: "20251202_112052.jpg", imgVerso: "20251202_112058.jpg"
+                imgFrente: "images/20251202_112052.jpg", imgVerso: "images/20251202_112058.jpg"
             },
             {
                 nome: "La Tirana",
@@ -643,7 +551,7 @@
                 safra: "2024",
                 forca: 4,
                 poesia: "A casta perdida de Bordeaux que encontrou sua alma nos Andes. Marcante por suas notas de especiarias e pimentão doce, é um vinho aveludado que conta a história do terroir chileno em cada gole.",
-                imgFrente: "20251202_111934.jpg", imgVerso: "20251202_111940.jpg"
+                imgFrente: "images/20251202_111934.jpg", imgVerso: "images/20251202_111940.jpg"
             },
             {
                 nome: "Casal da Torre",
@@ -654,7 +562,7 @@
                 safra: "2023",
                 forca: 4,
                 poesia: "Filho das encostas íngremes e do solo de xisto do Douro. Um vinho sério e mineral, onde a elegância tenta domar a força bruta das uvas que nascem na região vinícola mais antiga do mundo.",
-                imgFrente: "20251202_111706.jpg", imgVerso: "20251202_111714.jpg"
+                imgFrente: "images/20251202_111706.jpg", imgVerso: "images/20251202_111714.jpg"
             },
             {
                 nome: "Montis Anima",
@@ -665,7 +573,7 @@
                 safra: "2024",
                 forca: 4,
                 poesia: "'A Alma da Montanha'. Um Malbec de altitude que equilibra a doçura natural da ameixa madura com o frescor do ar dos Andes. Sedoso, violeta e profundamente satisfatório.",
-                imgFrente: "20251202_112148.jpg", imgVerso: "20251202_112205.jpg"
+                imgFrente: "images/20251202_112148.jpg", imgVerso: "images/20251202_112205.jpg"
             },
             {
                 nome: "Encostas do Outeiro",
@@ -676,7 +584,7 @@
                 safra: "2022",
                 forca: 4,
                 poesia: "Um sopro do Atlântico. Cultivado sob a influência da brisa oceânica de Lisboa, é um vinho que une a estrutura da Syrah com uma frescura salina vibrante, perfeito para a gastronomia.",
-                imgFrente: "20251202_112124.jpg", imgVerso: "20251202_112131.jpg"
+                imgFrente: "images/20251202_112124.jpg", imgVerso: "images/20251202_112131.jpg"
             },
             {
                 nome: "Le Gourmandin",
@@ -687,7 +595,7 @@
                 safra: "2023",
                 forca: 3,
                 poesia: "O cavalheiro francês descomplicado. Como um bistrô parisiense, não exige formalidades: entrega equilíbrio, fruta honesta e aquele 'je ne sais quoi' que convida sempre à próxima taça.",
-                imgFrente: "20251202_112246.jpg", imgVerso: "20251202_112252.jpg"
+                imgFrente: "images/20251202_112246.jpg", imgVerso: "images/20251202_112252.jpg"
             },
             {
                 nome: "Beco Torto",
@@ -698,9 +606,9 @@
                 safra: "2022",
                 forca: 3,
                 poesia: "Assim como as ruelas sinuosas de Lisboa, este vinho é uma descoberta charmosa. Frutado, macio e sem arestas, é feito para conversas longas e descomplicadas entre amigos.",
-                imgFrente: "20251202_112027.jpg", imgVerso: "20251202_112034.jpg"
+                imgFrente: "images/20251202_112027.jpg", imgVerso: "images/20251202_112034.jpg"
             },
-            {
+             {
                 nome: "Emarè Sangiovese",
                 pais: "Itália",
                 regiao: "Rubicone IGT",
@@ -709,7 +617,7 @@
                 safra: "2024",
                 forca: 3,
                 poesia: "A alma rústica da Itália. Com a acidez típica da Sangiovese que 'limpa' o paladar, traz notas de cereja ácida e terra molhada. Um vinho que implora por um prato de massa ao sugo.",
-                imgFrente: "20251202_111845.jpg", imgVerso: "20251202_111852.jpg"
+                imgFrente: "images/20251202_111845.jpg", imgVerso: "images/20251202_111852.jpg"
             },
             {
                 nome: "Emarè Montepulciano",
@@ -720,7 +628,7 @@
                 safra: "2024",
                 forca: 3,
                 poesia: "Escuro como a noite em Abruzzo, mas vibrante no paladar. Um tinto gastronômico, com taninos presentes e um final levemente amargo que é a assinatura de autenticidade italiana.",
-                imgFrente: "20251202_111820.jpg", imgVerso: "20251202_111832.jpg"
+                imgFrente: "images/20251202_111820.jpg", imgVerso: "images/20251202_111832.jpg"
             },
             {
                 nome: "Vivalti Rosé",
@@ -731,7 +639,7 @@
                 safra: "2023",
                 forca: 2,
                 poesia: "O frescor das montanhas catarinenses. Um rosé de altitude, pálido e elegante, que captura o frio da serra em notas de frutas vermelhas frescas e acidez crocante.",
-                imgFrente: "20251202_112003.jpg", imgVerso: "20251202_112008.jpg"
+                imgFrente: "images/20251202_112003.jpg", imgVerso: "images/20251202_112008.jpg"
             },
             {
                 nome: "Tozetti Casca Dura",
@@ -742,9 +650,9 @@
                 safra: "2025",
                 forca: 2,
                 poesia: "Uma relíquia viva da imigração italiana no Paraná. A uva Casca Dura, resistente e rara, entrega um vinho branco com personalidade única, história e a resiliência de Bituruna.",
-                imgFrente: "20251202_111754.jpg", imgVerso: "20251202_111804.jpg"
+                imgFrente: "images/20251202_111754.jpg", imgVerso: "images/20251202_111804.jpg"
             },
-            {
+             {
                 nome: "Duque de Cazarra (Vendimia)",
                 pais: "Espanha",
                 regiao: "Tierra de Castilla",
@@ -753,7 +661,7 @@
                 safra: "2022",
                 forca: 3,
                 poesia: "A juventude vibrante da Espanha. Sem a maquiagem da madeira, a uva Tempranillo se mostra nua e crua: fruta vermelha explosiva, alegre e direta ao ponto.",
-                imgFrente: "20251202_112223.jpg", imgVerso: "20251202_112229.jpg"
+                imgFrente: "images/20251202_112223.jpg", imgVerso: "images/20251202_112229.jpg"
             },
             {
                 nome: "Sanber Bordô Suave",
@@ -764,7 +672,7 @@
                 safra: "NV",
                 forca: 1,
                 poesia: "O sabor da memória. Um vinho de cor violeta profunda que remete às festas de família. Doce, intenso e despretensioso, é o conforto de casa em forma líquida.",
-                imgFrente: "20251202_111735.jpg", imgVerso: "20251202_111735.jpg"
+                imgFrente: "images/20251202_111735.jpg", imgVerso: "images/20251202_111735.jpg" 
             },
             {
                 nome: "Bituruna Niágara Suave",
@@ -775,7 +683,7 @@
                 safra: "NV",
                 forca: 1,
                 poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil, é a simplicidade doce de uma tarde de verão.",
-                imgFrente: "20251202_111725.jpg", imgVerso: "20251202_111725.jpg"
+                imgFrente: "images/20251202_111725.jpg", imgVerso: "images/20251202_111725.jpg"
             }
         ];
 
@@ -844,7 +752,7 @@
             container.appendChild(card);
         });
 
-        // LÓGICA DO BOTÃO DE TEMAS
+        // LÓGICA DO BOTÃO DE TEMAS COM PERSISTÊNCIA
         const themes = [
             { class: '', name: 'Clássico' },
             { class: 'theme-modern', name: 'Moderno' },
@@ -853,20 +761,34 @@
             { class: 'theme-gold', name: 'Premium' },
             { class: 'theme-green', name: 'Frescor' }
         ];
-
+        
+        // Carregar tema salvo
         let currentThemeIndex = 0;
+        const savedThemeIndex = localStorage.getItem('wineCatalogTheme');
+        
+        if (savedThemeIndex !== null) {
+            currentThemeIndex = parseInt(savedThemeIndex, 10);
+            // Validação simples para evitar erro se mudar a qtde de temas no futuro
+            if (currentThemeIndex >= themes.length || isNaN(currentThemeIndex)) {
+                currentThemeIndex = 0;
+            }
+        }
+
+        // Função auxiliar para aplicar tema e atualizar texto
+        function applyTheme() {
+            document.body.className = themes[currentThemeIndex].class;
+            const label = document.getElementById('theme-label');
+            label.textContent = `${themes[currentThemeIndex].name} ${currentThemeIndex + 1}/${themes.length}`;
+        }
+
+        // Aplicar na inicialização
+        applyTheme();
 
         function toggleTheme() {
             currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-
-            // Remove todas as classes de tema e adiciona a nova
-            document.body.className = themes[currentThemeIndex].class;
-
-            // Atualiza o texto do botão
-            const label = document.getElementById('theme-label');
-            label.textContent = `${themes[currentThemeIndex].name} ${currentThemeIndex + 1}/6`;
+            localStorage.setItem('wineCatalogTheme', currentThemeIndex); // Salvar
+            applyTheme();
         }
     </script>
 </body>
-
 </html>
