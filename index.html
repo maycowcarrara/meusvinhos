@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adega Pessoal - Catálogo Completo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================
+           SISTEMA DE TEMAS (CSS VARIABLES)
+           ========================================= */
+
+        /* TEMA 1: CLÁSSICO (Padrão) */
+        :root {
+            --theme-name: "Clássico";
+            --bg-page: #f4f1ea;
+            --card-bg: #ffffff;
+            --primary: #722f37;
+            /* Merlot */
+            --accent: #c5a059;
+            /* Dourado */
+            --secondary: #9e4755;
+            /* Vinho claro */
+            --text-main: #2c2c2c;
+            --text-muted: #666666;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+            --border-color: #e0d8c3;
+            --shadow-color: rgba(114, 47, 55, 0.08);
+            --wave-opacity: 0.4;
+        }
+
+        /* TEMA 2: MODERNO (NOIR) */
+        body.theme-modern {
+            --theme-name: "Moderno";
+            --bg-page: #f0f2f5;
+            --card-bg: #ffffff;
+            --primary: #2c3e50;
+            /* Chumbo */
+            --accent: #34495e;
+            /* Azul Aço */
+            --secondary: #7f8c8d;
+            /* Cinza */
+            --text-main: #1a1a1a;
+            --text-muted: #7f8c8d;
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+            --font-script: 'Montserrat', sans-serif;
+            --border-color: #dfe6e9;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --wave-opacity: 0.8;
+        }
+
+        /* TEMA 3: RÚSTICO (TERROIR) */
+        body.theme-rustic {
+            --theme-name: "Rústico";
+            --bg-page: #e8e4d9;
+            /* Papel Kraft claro */
+            --card-bg: #fdfbf7;
+            --primary: #5d4037;
+            /* Marrom Terra */
+            --accent: #33691e;
+            /* Verde Oliva Escuro */
+            --secondary: #8d6e63;
+            /* Marrom claro */
+            --text-main: #3e2723;
+            --text-muted: #5d4037;
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Cormorant Garamond', serif;
+            --font-script: 'Great Vibes', cursive;
+            --border-color: #bcaaa4;
+            --shadow-color: rgba(93, 64, 55, 0.15);
+            --wave-opacity: 0.6;
+        }
+
+        /* TEMA 4: ROSÉ (PROVENCE) */
+        body.theme-rose {
+            --theme-name: "Rosé";
+            --bg-page: #fff0f5;
+            /* Lavanda muito pálido */
+            --card-bg: #ffffff;
+            --primary: #d81b60;
+            /* Pink Sofisticado */
+            --accent: #f48fb1;
+            /* Rosa claro */
+            --secondary: #ad1457;
+            /* Rosa escuro */
+            --text-main: #4a4a4a;
+            --text-muted: #888888;
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Open Sans', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+            --border-color: #f8bbd0;
+            --shadow-color: rgba(216, 27, 96, 0.1);
+            --wave-opacity: 0.3;
+        }
+
+        /* TEMA 5: PREMIUM (GOLD) */
+        body.theme-gold {
+            --theme-name: "Premium";
+            --bg-page: #1a1a1a;
+            /* Fundo Escuro para tela (mudará na impressão) */
+            --card-bg: #fffcf5;
+            /* Creme rico */
+            --primary: #000000;
+            /* Preto absoluto */
+            --accent: #d4af37;
+            /* Ouro Metálico */
+            --secondary: #b8860b;
+            /* Ouro escuro */
+            --text-main: #111111;
+            --text-muted: #555555;
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Lato', sans-serif;
+            --font-script: 'Cormorant Garamond', serif;
+            --border-color: #d4af37;
+            --shadow-color: rgba(212, 175, 55, 0.2);
+            --wave-opacity: 0.5;
+        }
+
+        /* TEMA 6: FRESCOR (VERDE) */
+        body.theme-green {
+            --theme-name: "Frescor";
+            --bg-page: #f1f8e9;
+            /* Verde menta pálido */
+            --card-bg: #ffffff;
+            --primary: #2e7d32;
+            /* Verde Floresta */
+            --accent: #8bc34a;
+            /* Verde Lima */
+            --secondary: #558b2f;
+            /* Oliva */
+            --text-main: #1b5e20;
+            --text-muted: #689f38;
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Lato', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+            --border-color: #c5e1a5;
+            --shadow-color: rgba(46, 125, 50, 0.1);
+            --wave-opacity: 0.4;
+        }
+
+        /* =========================================
+           ESTILOS GERAIS
+           ========================================= */
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        /* CARD */
+        .wine-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 15px 30px var(--shadow-color);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            page-break-inside: avoid;
+            border: 1px solid var(--border-color);
+            transition: all 0.5s ease;
+        }
+
+        /* DECORAÇÃO DE TOPO (ONDA) */
+        .card-wave-top {
+            background-color: var(--primary);
+            height: 15px;
+            width: 100%;
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E");
+            mask-size: cover;
+            -webkit-mask-size: cover;
+            opacity: var(--wave-opacity);
+            z-index: 5;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .card-top-solid {
+            height: 10px;
+            width: 100%;
+            background-color: var(--primary);
+            position: absolute;
+            top: 0;
+            z-index: 4;
+        }
+
+        /* MARCA D'ÁGUA NO TETO */
+        .bg-text-top {
+            position: absolute;
+            top: -0.18em;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 6.5em;
+            color: var(--primary);
+            opacity: 0.04;
+            white-space: nowrap;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            line-height: 1;
+        }
+
+        /* CAPA */
+        .header-card-body {
+            min-height: 550px;
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .header-icon {
+            width: 80px;
+            height: 80px;
+            fill: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        h1.main-title {
+            font-family: var(--font-title);
+            color: var(--primary);
+            font-size: 4.5em;
+            margin: 0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            position: relative;
+            z-index: 2;
+        }
+
+        p.main-subtitle {
+            font-family: var(--font-script);
+            color: var(--accent);
+            font-size: 2.5em;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* CONTEÚDO DO CARD */
+        .card-body {
+            display: flex;
+            flex-direction: row;
+            padding: 40px 40px 30px 40px;
+            gap: 25px;
+            align-items: center;
+            position: relative;
+            min-height: 480px;
+            z-index: 1;
+        }
+
+        .photos {
+            flex: 0 0 260px;
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 480px;
+            z-index: 2;
+        }
+
+        .photos::before {
+            content: '';
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            background-color: var(--bg-page);
+            border: 1px dashed var(--border-color);
+            border-radius: 50%;
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+        }
+
+        .photos img {
+            height: 100%;
+            max-height: 420px;
+            width: auto;
+            max-width: 130px;
+            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.3));
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .wine-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 5px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 15px;
+        }
+
+        .flag-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60px;
+            flex-shrink: 0;
+        }
+
+        .flag-box {
+            width: 50px;
+            height: 35px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+        }
+
+        .flag-box svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .country-name {
+            font-size: 0.65em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .wine-titles {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 55px;
+        }
+
+        .wine-name {
+            font-family: var(--font-title);
+            font-size: 2.4em;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin: 0;
+        }
+
+        .wine-region {
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        .poetic-desc {
+            font-family: var(--font-title);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.15em;
+            line-height: 1.5;
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 4px solid var(--secondary);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* GRID TÉCNICO COM 3 COLUNAS (SAFRA INCLUÍDA) */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            /* Uva | Safra | Álcool */
+            gap: 15px;
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: var(--text-main);
+        }
+
+        .tech-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .label {
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 3px;
+        }
+
+        .strength-wrapper {
+            margin-top: 5px;
+        }
+
+        .strength-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .strength-track {
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            height: 10px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+
+        /* BOTÃO INTELIGENTE */
+        .theme-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            /* Cor do texto no botão */
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 9999;
+            transition: transform 0.2s, background-color 0.5s;
+            border: 2px solid white;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .theme-fab:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-fab svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* IMPRESSÃO */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            /* Ajuste para o tema Premium economizar tinta no fundo */
+            body.theme-gold {
+                background-color: white !important;
+            }
+
+            .catalog-grid {
+                display: block;
+            }
+
+            .wine-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                margin-bottom: 40px;
+                page-break-inside: avoid;
+            }
+
+            .photos {
+                height: 350px;
+                flex: 0 0 200px;
+            }
+
+            .photos img {
+                max-height: 320px;
+                filter: none;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            /* Esconde o botão */
+
+            .bg-text-top {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                opacity: 0.1 !important;
+            }
+
+            .card-wave-top,
+            .card-top-solid,
+            .strength-fill {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .flag-box {
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+
+<body class="">
+
+    <div class="theme-fab no-print" onclick="toggleTheme()" title="Mudar Identidade Visual">
+        <svg viewBox="0 0 24 24">
+            <path
+                d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z" />
+        </svg>
+        <span id="theme-label">Clássico 1/6</span>
+    </div>
+
+    <div class="catalog-grid">
+        <div class="wine-card">
+            <div class="card-top-solid"></div>
+            <div class="card-wave-top"></div>
+            <div class="bg-text-top" style="font-size: 8em; top: 0; opacity: 0.03;">PREMIUM</div>
+
+            <div class="header-card-body">
+                <svg class="header-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C12.5523 2 13 2.44772 13 3V4.17071C14.1652 4.58254 15 5.69378 15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.69378 9.83481 4.58254 11 4.17071V3C11 2.44772 11.4477 2 12 2ZM17 9C18.1046 9 19 9.89543 19 11C19 12.1046 18.1046 13 17 13C16.8993 13 16.8004 12.9922 16.7039 12.9772C16.8929 12.3781 17 11.721 17 11.0256V11H17ZM7 9C7 11.0256 7.10714 12.3781 7.2961 12.9772C7.19962 12.9922 7.10069 13 7 13C5.89543 13 5 12.1046 5 11C5 9.89543 5.89543 9 7 9ZM12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11ZM17.2961 14.0228C17.1071 14.6219 17 15.9744 17 18C17 19.1046 16.1046 20 15 20C14.7176 20 14.4496 19.9413 14.2046 19.8353C14.5427 19.042 14.8166 18.0673 14.9392 17.009C14.9803 16.9995 15.0215 16.9942 15.0628 16.9902C15.0418 16.9537 15.021 16.9171 15.0006 16.8804C14.7766 16.9452 14.5422 16.9859 14.2961 17.0228C14.1071 17.6219 14 18.9744 14 21C14 22.1046 13.1046 23 12 23C10.8954 23 10 22.1046 10 21C10 18.9744 9.89286 17.6219 9.7039 17.0228C9.45781 16.9859 9.22342 16.9452 8.9994 16.8804C8.97898 16.9171 8.95825 16.9537 8.93724 16.9902C8.97854 16.9942 9.01968 16.9995 9.06077 17.009C9.18342 18.0673 9.45729 19.042 9.79538 19.8353C9.55042 19.9413 9.28245 20 9 20C7.89543 20 7 19.1046 7 18C7 15.9744 6.89286 14.6219 6.7039 14.0228C6.80038 14.0078 6.89931 14 7 14C7.02154 14 7.04297 14.0004 7.06428 14.0011C7.14361 14.7779 7.33083 15.626 7.57538 16.5147C7.82855 16.4526 8.09348 16.4116 8.36952 16.3934C8.4287 15.7077 8.65063 15.1189 9 14.6536V14.6364C9 14.4208 9.04467 14.2121 9.12903 14.0121C9.69708 13.6301 10.7423 13.3101 11.9676 13.0401C12.0423 13.3101 13.6971 13.6301 14.2651 14.0121C14.3495 14.2121 14.3942 14.4208 14.3942 14.6364V14.6536C14.7436 15.1189 14.9655 15.7077 15.0247 16.3934C15.3007 16.4116 15.5657 16.4526 15.8188 16.5147C16.0634 15.626 16.2506 14.7779 16.3299 14.0011C16.3512 14.0004 16.3727 14 16.3942 14C16.4949 14 16.5938 14.0078 16.6903 14.0228Z" />
+                </svg>
+                <h1 class="main-title">Adega Pessoal</h1>
+                <p class="main-subtitle">Coleção Selecionada &bull; Catálogo Analítico</p>
+            </div>
+        </div>
+
+        <div id="app" style="display: contents;"></div>
+    </div>
+
+    <script>
+        const flags = {
+            "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`,
+            "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`,
+            "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`,
+            "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`,
+            "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`,
+            "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`,
+            "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M233,263 C233,263 294,213 460,230" stroke="#fff" stroke-width="12" fill="none"/></svg>`
+        };
+
+        const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,17.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
+        const iconDrop = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M12,2c-5.33,5.33-8,10.67-8,16c0,4.42,3.58,8,8,8s8-3.58,8-8C20,12.67,17.33,7.33,12,2z M12,24c-3.31,0-6-2.69-6-6c0-4,2-8,6-12c4,4,6,8,6,12C18,21.31,15.31,24,12,24z"/></svg>`;
+        const iconCalendar = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`;
+
+        const vinhos = [
+            {
+                nome: "Popolo Private Selection",
+                pais: "Portugal",
+                regiao: "Regional Alentejano",
+                uvas: "Syrah, Aragonez, Trincadeira, Touriga Nacional",
+                abv: "13,5%",
+                safra: "2023",
+                forca: 5,
+                poesia: "Um gigante gentil das planícies quentes do Alentejo. Este vinho traz o sol português engarrafado: potente, escuro e carregado de frutas maduras, como um abraço caloroso em dia de inverno.",
+                imgFrente: "20251202_111906.jpg", imgVerso: "20251202_111914.jpg"
+            },
+            {
+                nome: "Duque de Cazarra Roble",
+                pais: "Espanha",
+                regiao: "Utiel-Requena",
+                uvas: "Bobal, Tempranillo, Cabernet Sauvignon",
+                abv: "13,0%",
+                safra: "2022",
+                forca: 5,
+                poesia: "A essência da terra espanhola maturada em carvalho. 'Roble' denota sua passagem pela madeira, conferindo-lhe uma espinha dorsal firme e notas de baunilha que dançam com a rusticidade da uva Bobal.",
+                imgFrente: "20251202_112052.jpg", imgVerso: "20251202_112058.jpg"
+            },
+            {
+                nome: "La Tirana",
+                pais: "Chile",
+                regiao: "Valle Central",
+                uvas: "Carmenere",
+                abv: "13,5%",
+                safra: "2024",
+                forca: 4,
+                poesia: "A casta perdida de Bordeaux que encontrou sua alma nos Andes. Marcante por suas notas de especiarias e pimentão doce, é um vinho aveludado que conta a história do terroir chileno em cada gole.",
+                imgFrente: "20251202_111934.jpg", imgVerso: "20251202_111940.jpg"
+            },
+            {
+                nome: "Casal da Torre",
+                pais: "Portugal",
+                regiao: "Douro DOC",
+                uvas: "Touriga Franca, Tinta Roriz, Tinto Cão",
+                abv: "13,0%",
+                safra: "2023",
+                forca: 4,
+                poesia: "Filho das encostas íngremes e do solo de xisto do Douro. Um vinho sério e mineral, onde a elegância tenta domar a força bruta das uvas que nascem na região vinícola mais antiga do mundo.",
+                imgFrente: "20251202_111706.jpg", imgVerso: "20251202_111714.jpg"
+            },
+            {
+                nome: "Montis Anima",
+                pais: "Argentina",
+                regiao: "Mendoza",
+                uvas: "Malbec",
+                abv: "13,0%",
+                safra: "2024",
+                forca: 4,
+                poesia: "'A Alma da Montanha'. Um Malbec de altitude que equilibra a doçura natural da ameixa madura com o frescor do ar dos Andes. Sedoso, violeta e profundamente satisfatório.",
+                imgFrente: "20251202_112148.jpg", imgVerso: "20251202_112205.jpg"
+            },
+            {
+                nome: "Encostas do Outeiro",
+                pais: "Portugal",
+                regiao: "Regional Lisboa",
+                uvas: "Syrah, Caladoc, Aragonez",
+                abv: "13,0%",
+                safra: "2022",
+                forca: 4,
+                poesia: "Um sopro do Atlântico. Cultivado sob a influência da brisa oceânica de Lisboa, é um vinho que une a estrutura da Syrah com uma frescura salina vibrante, perfeito para a gastronomia.",
+                imgFrente: "20251202_112124.jpg", imgVerso: "20251202_112131.jpg"
+            },
+            {
+                nome: "Le Gourmandin",
+                pais: "França",
+                regiao: "Vin de France",
+                uvas: "Blend Tinto Fino",
+                abv: "13,0%",
+                safra: "2023",
+                forca: 3,
+                poesia: "O cavalheiro francês descomplicado. Como um bistrô parisiense, não exige formalidades: entrega equilíbrio, fruta honesta e aquele 'je ne sais quoi' que convida sempre à próxima taça.",
+                imgFrente: "20251202_112246.jpg", imgVerso: "20251202_112252.jpg"
+            },
+            {
+                nome: "Beco Torto",
+                pais: "Portugal",
+                regiao: "Regional Lisboa",
+                uvas: "Blend Regional",
+                abv: "13,0%",
+                safra: "2022",
+                forca: 3,
+                poesia: "Assim como as ruelas sinuosas de Lisboa, este vinho é uma descoberta charmosa. Frutado, macio e sem arestas, é feito para conversas longas e descomplicadas entre amigos.",
+                imgFrente: "20251202_112027.jpg", imgVerso: "20251202_112034.jpg"
+            },
+            {
+                nome: "Emarè Sangiovese",
+                pais: "Itália",
+                regiao: "Rubicone IGT",
+                uvas: "Sangiovese",
+                abv: "12,5%",
+                safra: "2024",
+                forca: 3,
+                poesia: "A alma rústica da Itália. Com a acidez típica da Sangiovese que 'limpa' o paladar, traz notas de cereja ácida e terra molhada. Um vinho que implora por um prato de massa ao sugo.",
+                imgFrente: "20251202_111845.jpg", imgVerso: "20251202_111852.jpg"
+            },
+            {
+                nome: "Emarè Montepulciano",
+                pais: "Itália",
+                regiao: "D'Abruzzo DOC",
+                uvas: "Montepulciano",
+                abv: "12,5%",
+                safra: "2024",
+                forca: 3,
+                poesia: "Escuro como a noite em Abruzzo, mas vibrante no paladar. Um tinto gastronômico, com taninos presentes e um final levemente amargo que é a assinatura de autenticidade italiana.",
+                imgFrente: "20251202_111820.jpg", imgVerso: "20251202_111832.jpg"
+            },
+            {
+                nome: "Vivalti Rosé",
+                pais: "Brasil",
+                regiao: "São Joaquim - SC",
+                uvas: "Sangiovese, Touriga Nacional",
+                abv: "12,5%",
+                safra: "2023",
+                forca: 2,
+                poesia: "O frescor das montanhas catarinenses. Um rosé de altitude, pálido e elegante, que captura o frio da serra em notas de frutas vermelhas frescas e acidez crocante.",
+                imgFrente: "20251202_112003.jpg", imgVerso: "20251202_112008.jpg"
+            },
+            {
+                nome: "Tozetti Casca Dura",
+                pais: "Brasil",
+                regiao: "Bituruna - PR",
+                uvas: "Casca Dura",
+                abv: "12,5%",
+                safra: "2025",
+                forca: 2,
+                poesia: "Uma relíquia viva da imigração italiana no Paraná. A uva Casca Dura, resistente e rara, entrega um vinho branco com personalidade única, história e a resiliência de Bituruna.",
+                imgFrente: "20251202_111754.jpg", imgVerso: "20251202_111804.jpg"
+            },
+            {
+                nome: "Duque de Cazarra (Vendimia)",
+                pais: "Espanha",
+                regiao: "Tierra de Castilla",
+                uvas: "Tempranillo",
+                abv: "12,5%",
+                safra: "2022",
+                forca: 3,
+                poesia: "A juventude vibrante da Espanha. Sem a maquiagem da madeira, a uva Tempranillo se mostra nua e crua: fruta vermelha explosiva, alegre e direta ao ponto.",
+                imgFrente: "20251202_112223.jpg", imgVerso: "20251202_112229.jpg"
+            },
+            {
+                nome: "Sanber Bordô Suave",
+                pais: "Brasil",
+                regiao: "Bituruna - PR",
+                uvas: "Bordô",
+                abv: "11,0%",
+                safra: "NV",
+                forca: 1,
+                poesia: "O sabor da memória. Um vinho de cor violeta profunda que remete às festas de família. Doce, intenso e despretensioso, é o conforto de casa em forma líquida.",
+                imgFrente: "20251202_111735.jpg", imgVerso: "20251202_111735.jpg"
+            },
+            {
+                nome: "Bituruna Niágara Suave",
+                pais: "Brasil",
+                regiao: "Bituruna - PR",
+                uvas: "Niágara",
+                abv: "10,7%",
+                safra: "NV",
+                forca: 1,
+                poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil, é a simplicidade doce de uma tarde de verão.",
+                imgFrente: "20251202_111725.jpg", imgVerso: "20251202_111725.jpg"
+            }
+        ];
+
+        const container = document.getElementById('app');
+
+        // GERAÇÃO DOS CARDS
+        vinhos.forEach(vinho => {
+            const card = document.createElement('div');
+            card.className = 'wine-card';
+            const flagSVG = flags[vinho.pais] || '';
+            const widthPercentage = (vinho.forca / 5) * 100;
+
+            card.innerHTML = `
+                <div class="card-top-solid"></div>
+                <div class="card-wave-top"></div>
+                
+                <div class="bg-text-top">${vinho.nome}</div>
+
+                <div class="card-body">
+                    <div class="photos">
+                        <img src="${vinho.imgFrente}" alt="Frente" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                        <img src="${vinho.imgVerso}" alt="Verso" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                    </div>
+                    
+                    <div class="info">
+                        <div class="wine-header">
+                            <div class="flag-wrapper">
+                                <div class="flag-box">${flagSVG}</div>
+                                <div class="country-name">${vinho.pais}</div>
+                            </div>
+                            <div class="wine-titles">
+                                <h2 class="wine-name">${vinho.nome}</h2>
+                                <div class="wine-region">${vinho.regiao}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="poetic-desc">"${vinho.poesia}"</div>
+
+                        <div class="tech-grid">
+                            <div class="tech-item">
+                                ${iconGrapes}
+                                <span><span class="label">Uvas:</span> ${vinho.uvas}</span>
+                            </div>
+                            <div class="tech-item">
+                                ${iconCalendar}
+                                <span><span class="label">Safra:</span> ${vinho.safra}</span>
+                            </div>
+                            <div class="tech-item">
+                                ${iconDrop}
+                                <span><span class="label">Álcool:</span> ${vinho.abv}</span>
+                            </div>
+                        </div>
+
+                        <div class="strength-wrapper">
+                            <div class="strength-label">
+                                <span>Corpo & Estrutura</span>
+                                <span>${vinho.forca}/5</span>
+                            </div>
+                            <div class="strength-track">
+                                <div class="strength-fill" style="width: ${widthPercentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // LÓGICA DO BOTÃO DE TEMAS
+        const themes = [
+            { class: '', name: 'Clássico' },
+            { class: 'theme-modern', name: 'Moderno' },
+            { class: 'theme-rustic', name: 'Rústico' },
+            { class: 'theme-rose', name: 'Rosé' },
+            { class: 'theme-gold', name: 'Premium' },
+            { class: 'theme-green', name: 'Frescor' }
+        ];
+
+        let currentThemeIndex = 0;
+
+        function toggleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+
+            // Remove todas as classes de tema e adiciona a nova
+            document.body.className = themes[currentThemeIndex].class;
+
+            // Atualiza o texto do botão
+            const label = document.getElementById('theme-label');
+            label.textContent = `${themes[currentThemeIndex].name} ${currentThemeIndex + 1}/6`;
+        }
+    </script>
+</body>
+
+</html>
