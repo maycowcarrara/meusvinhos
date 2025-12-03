@@ -10,7 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -28,71 +27,55 @@
         
         .app-container { max-width: 900px; margin: 0 auto; padding: 20px; }
         
-        /* HEADER UNIFICADO */
+        /* HEADER */
         .header-container {
             max-width: 900px; margin: 0 auto 30px auto;
             background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);
-            box-shadow: 0 5px 15px var(--shadow-color);
-            display: flex; flex-direction: column;
-            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow-color); display: flex; flex-direction: column; overflow: hidden;
         }
-
-        .header-title-area {
-            padding: 30px 20px 20px 20px; text-align: center;
-            border-bottom: 1px dashed var(--border-color); /* Separador Sutil */
-        }
-        
+        .header-title-area { padding: 30px 20px 20px 20px; text-align: center; border-bottom: 1px dashed var(--border-color); }
         .header-icon { width: 60px; height: 60px; fill: var(--primary); margin-bottom: 10px; }
         h1.main-title { font-family: var(--font-title); color: var(--primary); font-size: 2.5em; margin: 0; line-height: 1; }
         p.main-subtitle { font-family: var(--font-script); color: var(--accent); font-size: 1.4em; margin-top: 5px; }
 
-        /* FILTROS INTEGRADOS */
+        /* FILTROS */
         .filter-bar {
-            padding: 12px 20px; background: var(--card-bg); /* Fundo contínuo */
-            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-            justify-content: center;
+            padding: 12px 20px; background: var(--card-bg); display: flex; gap: 10px; align-items: center; 
+            flex-wrap: wrap; justify-content: center;
         }
-        
         .filter-input, .filter-select {
-            padding: 8px 12px; border: 1px solid #ccc; background: #fff;
-            border-radius: 4px; font-family: var(--font-body); font-size: 0.9em;
-            outline: none; color: var(--text-main); flex: 1; min-width: 120px;
+            padding: 8px 12px; border: 1px solid #ccc; background: #fff; border-radius: 4px; 
+            font-family: var(--font-body); font-size: 0.9em; outline: none; color: var(--text-main); flex: 1; min-width: 120px;
         }
         .filter-input:focus, .filter-select:focus { border-color: var(--primary); }
-
         .action-btn {
-            background: #fff; border: 1px solid #ccc; color: var(--text-muted);
-            width: 36px; height: 36px; border-radius: 4px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+            background: #fff; border: 1px solid #ccc; color: var(--text-muted); width: 36px; height: 36px; 
+            border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
         }
         .action-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .action-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
         .filter-stats { width: 100%; text-align: center; font-size: 0.8em; color: var(--text-muted); margin-top: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
         /* GRID */
         .catalog-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
 
-        /* WINE CARD */
+        /* CARD */
         .wine-card { background: var(--card-bg); border-radius: 12px; box-shadow: 0 5px 20px var(--shadow-color); position: relative; overflow: hidden; border: 1px solid var(--border-color); page-break-inside: avoid; }
         .card-wave-top { background-color: var(--primary); height: 15px; width: 100%; mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'/%3E%3C/svg%3E"); mask-size: cover; opacity: var(--wave-opacity); position: absolute; top: 0; left: 0; z-index: 1; }
         .card-top-solid { height: 10px; width: 100%; background-color: var(--primary); position: absolute; top: 0; z-index: 0; }
         .bg-text-top { position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); width: 100%; text-align: center; font-family: var(--font-title); font-weight: 700; font-size: 6em; color: var(--primary); opacity: 0.04; white-space: nowrap; pointer-events: none; line-height: 1; z-index: 0; }
-        
         .card-body { display: flex; flex-direction: row; padding: 30px; gap: 25px; position: relative; z-index: 2; }
         .photos { flex: 0 0 200px; display: flex; gap: 8px; justify-content: center; align-items: center; }
         .photos img { height: 320px; width: auto; max-width: 100px; filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.25)); object-fit: contain; cursor: zoom-in; border-radius: 4px; transition: transform 0.2s; }
         .photos img:hover { transform: scale(1.02); }
         .info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         
-        /* Typography */
         .wine-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; }
         .flag-box { width: 40px; height: 26px; border-radius: 3px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 1px solid #ddd; flex-shrink: 0; }
         .flag-box svg { width: 100%; height: 100%; object-fit: cover; display: block; }
         .wine-name { font-family: var(--font-title); font-size: 1.6em; font-weight: 700; color: var(--primary); line-height: 1.1; margin: 0; }
         .wine-region { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1.5px; margin-top: 3px; }
         .poetic-desc { font-family: var(--font-title); font-style: italic; color: var(--text-muted); font-size: 1em; line-height: 1.4; margin: 12px 0; padding-left: 12px; border-left: 3px solid var(--secondary); }
-        
         .tech-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; background-color: rgba(0,0,0,0.03); padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em; }
         .tech-item { display: flex; align-items: center; gap: 5px; color: var(--text-main); }
         .tech-icon { width: 16px; height: 16px; fill: var(--primary); flex-shrink: 0; }
@@ -100,40 +83,40 @@
         .rating-stars span.active { color: #f1c40f; }
         .strength-wrapper { margin-top: auto; }
         .strength-label { display: flex; justify-content: space-between; font-size: 0.7em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; font-weight: bold; }
-        .strength-track { background: #e0e0e0; height: 6px; border-radius: 10px; overflow: hidden; }
-        .strength-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; }
+        .strength-track { background: #e0e0e0; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid #dcdcdc; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .strength-fill { height: 100%; border-radius: 7px; background: linear-gradient(90deg, var(--accent), var(--primary)); width: 0%; position: relative; }
+        .strength-fill::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent); background-size: 14px 14px; }
 
         /* FABs */
-        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 100000; }
         .fab { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid white; opacity: 0.6; transition: all 0.3s; cursor: pointer; }
         .fab:hover { opacity: 1; transform: scale(1.1); }
         .fab svg { width: 22px; height: 22px; fill: white; }
 
         /* MODALS */
-        .modal { display: none; position: fixed; z-index: 9998; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
-        .modal-content { background: var(--card-bg); padding: 25px; width: 90%; max-width: 750px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .modal { display: none; position: fixed; z-index: 100001; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--card-bg); padding: 25px; width: 90%; max-width: 650px; border-radius: 10px; border: 1px solid var(--border-color); color: var(--text-main); position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
         
-        /* GUIA RÁPIDO (Restaurado) */
-        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .guide-card { background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; border-left: 3px solid var(--accent); }
-        .guide-title { font-family: var(--font-title); color: var(--primary); font-weight: bold; margin-bottom: 10px; font-size: 1.1em; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .guide-text { font-size: 0.9em; line-height: 1.6; color: var(--text-muted); }
-        
-        /* BI STATS */
+        /* BI VISUALS */
         .bi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .kpi-card { background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
         .kpi-val { font-size: 2em; font-weight: bold; color: var(--primary); font-family: var(--font-title); }
         .kpi-lbl { font-size: 0.8em; text-transform: uppercase; color: var(--text-muted); }
-        
-        .bar-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.85em; }
-        .bar-label { width: 120px; text-align: right; padding-right: 10px; font-weight: bold; }
-        .bar-track { flex: 1; background: #eee; height: 14px; border-radius: 7px; overflow: hidden; }
-        .bar-fill { height: 100%; background: var(--primary); border-radius: 7px; width: 0; transition: width 1s; }
-        .bar-count { font-size: 0.8em; padding-left: 8px; color: #666; width: 30px; }
+        .chart-row { margin-bottom: 8px; display: flex; align-items: center; font-size: 0.85em; }
+        .chart-label-text { width: 110px; text-align: right; padding-right: 10px; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chart-bar-area { flex: 1; background: #eee; height: 16px; border-radius: 8px; overflow: hidden; position: relative; }
+        .chart-bar-fill { height: 100%; background: var(--primary); display: flex; align-items: center; padding-left: 5px; color: white; font-size: 0.7em; white-space: nowrap; }
+        .chart-count { position: absolute; right: 5px; top:0; line-height: 16px; font-size: 0.75em; color: #555; }
+
+        /* GUIA */
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .guide-card { background: rgba(0,0,0,0.02); padding: 15px; border-radius: 8px; border-left: 3px solid var(--accent); }
+        .guide-title { font-family: var(--font-title); color: var(--primary); font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .guide-text { font-size: 0.9em; line-height: 1.5; color: var(--text-muted); }
 
         /* LIGHTBOX */
-        .lightbox { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
+        .lightbox { display: none; position: fixed; z-index: 100002; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
         .lightbox-content-wrapper { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: grab; display: flex; justify-content: center; align-items: center; touch-action: none; }
         .lightbox-content-wrapper:active { cursor: grabbing; }
         .lightbox-img { max-width: 95%; max-height: 95%; object-fit: contain; transform-origin: center; will-change: transform; user-select: none; pointer-events: auto; transition: transform 0.1s linear; }
@@ -141,29 +124,28 @@
         .lb-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-size: 1.2em; user-select: none; }
         .lb-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
 
-        /* MODO PDF */
-        body.pdf-exporting .photos, body.pdf-exporting .card-wave-top, body.pdf-exporting .bg-text-top, body.pdf-exporting .fab-container, body.pdf-exporting .header-container, body.pdf-exporting .filter-bar { display: none !important; }
+        /* PDF */
+        body.pdf-exporting .photos, body.pdf-exporting .card-wave-top, body.pdf-exporting .bg-text-top, body.pdf-exporting .fab-container, body.pdf-exporting .header-container { display: none !important; }
         body.pdf-exporting .wine-card { box-shadow: none; border: 1px solid #333; margin-bottom: 20px; page-break-inside: avoid; background: #fff; color: #000; }
         body.pdf-exporting .card-body { padding: 15px; }
         body.pdf-exporting .wine-name { color: #000; }
-        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 20000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
+        #exportLoading { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.95); z-index: 200000; justify-content: center; align-items: center; flex-direction: column; color: var(--primary); font-family: var(--font-title); }
 
         @media (max-width: 768px) {
             body { padding: 10px; }
             .app-container { padding: 0; }
-            .header-title-area { padding: 20px 10px; }
+            .header-card-body { padding: 25px 10px; }
             h1.main-title { font-size: 1.8em; }
             .card-body { flex-direction: column; padding: 20px; gap: 15px; }
             .photos { width: 100%; flex: auto; margin-bottom: 15px; }
             .photos img { height: 250px; }
             .tech-grid { grid-template-columns: 1fr; }
-            .filter-bar { justify-content: center; }
-            .filter-input, .filter-select { width: 100%; max-width: none; }
-            .guide-grid { grid-template-columns: 1fr; }
+            .bi-grid, .guide-grid { grid-template-columns: 1fr; }
+            .filter-input, .filter-select { flex-basis: 45%; }
         }
 
         @media print {
-            .no-print, .fab-container, .lightbox, .modal, .filter-bar { display: none !important; }
+            .no-print, .fab-container, .lightbox, .modal, .header-container { display: none !important; }
             body { background: white; padding: 0; }
             .catalog-grid { display: block; }
             .wine-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 30px; page-break-inside: avoid; }
@@ -178,7 +160,7 @@
     <div id="exportLoading"><div style="font-size: 3em;">🍷</div><div style="margin-top:20px;">Gerando PDF (Texto)...</div></div>
 
     <div class="fab-container no-print">
-        <div class="fab" onclick="openInfoModal()" title="Ajuda">?</div>
+        <div class="fab" onclick="openInfoModal()" title="Guia Rápido">?</div>
         <div class="fab" onclick="openDashboard()" title="Estatísticas"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
         <div class="fab" onclick="toggleTheme()" title="Temas"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg></div>
     </div>
@@ -192,14 +174,14 @@
         </div>
     </div>
 
-    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Estatísticas da Adega</h2><div id="chartsContainer"></div></div></div>
+    <div id="biModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('biModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Dashboard Analítico</h2><div id="biContent"></div></div></div>
     
     <div id="infoModal" class="modal no-print"><div class="modal-content"><span class="close-modal" onclick="closeModal('infoModal')">&times;</span><h2 style="text-align:center;color:var(--primary)">Guia Rápido de Vinhos</h2>
         <div class="guide-grid">
             <div class="guide-card">
-                <div class="guide-title">Características</div>
+                <div class="guide-title">O Básico</div>
                 <div class="guide-text">
-                    <strong>Corpo:</strong> O "peso" do vinho na boca. Leve (água) vs Encorpado (leite).<br>
+                    <strong>Corpo:</strong> Peso do vinho na boca. Leve (água) vs Encorpado (leite).<br>
                     <strong>Tanino:</strong> Sensação de secura na gengiva (adstringência), comum em tintos.<br>
                     <strong>Acidez:</strong> Faz a boca salivar, essencial para refrescância.
                 </div>
@@ -221,6 +203,8 @@
                     <div><strong>Carmenere:</strong> Especiarias, pimentão doce, herbácea.</div>
                     <div><strong>Syrah:</strong> Potente, pimenta preta, cor escura.</div>
                     <div><strong>Pinot Noir:</strong> Elegante, cor clara, frutas vermelhas.</div>
+                    <div><strong>Tannat:</strong> Muito tânica e robusta.</div>
+                    <div><strong>Tempranillo:</strong> Frutada, couro, tabaco.</div>
                 </div>
             </div>
         </div>
@@ -241,13 +225,13 @@
                 <select id="abvSelect" class="filter-select" onchange="applyFilters()"><option value="">Álcool</option></select>
                 <select id="sortSelect" class="filter-select" onchange="applyFilters()">
                     <option value="nome">A-Z</option>
-                    <option value="forcaDesc">Força (+)</option>
-                    <option value="forcaAsc">Força (-)</option>
+                    <option value="forcaDesc">Força +</option>
+                    <option value="forcaAsc">Força -</option>
                     <option value="safraDesc">Safra Nova</option>
                     <option value="safraAsc">Safra Antiga</option>
                 </select>
                 <button class="action-btn" onclick="clearFilters()" title="Limpar">&#10005;</button>
-                <button class="action-btn" onclick="exportToPDF()" title="PDF (Texto)"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
+                <button class="action-btn" onclick="exportToPDF()" title="Exportar PDF"><svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h2V8.5zm-5-.5h-1v1h1v-1zm-4 0h-1v1h1v-1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg></button>
                 <span class="filter-stats" id="filterStats"></span>
             </div>
         </div>
@@ -256,6 +240,7 @@
     </div>
 
     <script>
+        // CONSTANTS & DATA (IMAGENS CORRIGIDAS)
         const flags = { "Portugal": `<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><path fill="#f00" d="M0 0h600v400H0z"/><path fill="#006600" d="M0 0h240v400H0z"/><g transform="translate(240 200)"><circle fill="#ff0" r="88"/><path fill="#fff" d="M-50-60h100v100c0 40-20 60-50 60s-50-20-50-60z"/><path fill="#f00" d="M-40-50h80v90c0 30-10 40-40 40s-40-10-40-40z"/><path fill="#003399" d="M-25-30h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10zm-40 20h10v10h-10zm20 0h10v10h-10zm20 0h10v10h-10z"/></g></svg>`, "Espanha": `<svg viewBox="0 0 750 500" xmlns="http://www.w3.org/2000/svg"><path fill="#AA151B" d="M0 0h750v500H0z"/><path fill="#F1BF00" d="M0 125h750v250H0z"/><g transform="translate(150 160) scale(0.6)"><path fill="#FFF" d="M0 0h100v100H0z" stroke="#000"/><path fill="#AA151B" d="M10 10h80v80H10z"/></g></svg>`, "Chile": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#d52b1e" d="M0 300h900v300H0z"/><path fill="#fff" d="M300 0h600v300H300z"/><path fill="#0039a6" d="M0 0h300v300H0z"/><path fill="#fff" d="M150 85l47 145h-152l123-89-47 145 47-145-123-89h152z"/></svg>`, "Argentina": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#75aadb" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 200h900v200H0z"/><circle cx="450" cy="300" r="40" fill="#f6b40e"/></svg>`, "França": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#ED2939" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#002395" d="M0 0h300v600H0z"/></svg>`, "Itália": `<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg"><path fill="#CE2B37" d="M0 0h900v600H0z"/><path fill="#fff" d="M0 0h600v600H0z"/><path fill="#009246" d="M0 0h300v600H0z"/></svg>`, "Brasil": `<svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="500" fill="#009c3b"/><path d="M350 35L665 250L350 465L35 250Z" fill="#ffdf00"/><circle cx="350" cy="250" r="125" fill="#002776"/><path d="M240 250 A 200 200 0 0 0 550 200" stroke="#fff" stroke-width="15" fill="none"/></svg>` };
         const iconGrapes = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M19.5,5.5A3.5,3.5 0 1,0 16,9H16L16,9.16C15.86,9.58 15.58,9.91 15.22,10.1C15.5,10.5 15.56,11.05 15.35,11.53C16.14,12.12 16.5,13.14 16.27,14.12C16.71,14.54 17,15.12 17,15.75A2.25,2.25 0 0,1 14.75,18C14.75,18.66 14.4,19.25 13.88,19.6C13.96,19.95 13.9,20.33 13.7,20.64C13.53,20.89 13.25,21.05 12.95,21.05H11.05C10.66,21.05 10.33,20.77 10.23,20.4C10.03,20.5 9.8,20.55 9.57,20.53C8.68,20.46 7.96,19.75 7.96,18.88C7.55,18.82 7.18,18.61 6.9,18.29C5.83,18.3 4.96,17.43 4.96,17.36C4.96,15.81 5.19,15.31 5.57,14.95C5.17,14.34 5.09,13.56 5.37,12.87C5.12,12.35 5.17,11.72 5.5,11.23C5.15,10.6 5.25,9.8 5.72,9.27C5.55,8.83 5.59,8.34 5.83,7.94C6.46,6.92 7.72,6.5 8.85,6.96C9.15,5.84 10.18,5 11.41,5C11.53,5 11.64,5.03 11.76,5.04C12.06,3.84 13.13,2.95 14.41,2.95C15.82,2.95 16.96,4.09 16.96,5.5H16.95C17.75,5.1 18.71,5.1 19.5,5.5Z" /></svg>`;
         const iconDrop = `<svg class="tech-icon" viewBox="0 0 24 24"><path d="M12,2c-5.33,5.33-8,10.67-8,16c0,4.42,3.58,8,8,8s8-3.58,8-8C20,12.67,17.33,7.33,12,2z M12,24c-3.31,0-6-2.69-6-6c0-4,2-8,6-12c4,4,6,8,6,12C18,21.31,15.31,24,12,24z"/></svg>`;
@@ -279,13 +264,16 @@
             { nome: "Bituruna Niágara Suave", pais: "Brasil", regiao: "Bituruna - PR", uvas: "Niágara", abv: "10,7%", safra: "NV", forca: 1, poesia: "Um jardim em flor. O aroma inconfundível da uva Niágara explode na taça como um perfume adocicado. Leve e fácil.", imgFrente: "images/20251202_111725.jpg", imgVerso: "images/20251202_111725.jpg" }
         ];
 
+        // SETUP
         function populateFilters() {
             const countries = new Set(vinhos.map(v => v.pais).sort());
             const years = new Set(vinhos.map(v => v.safra).sort());
             const abvs = new Set(vinhos.map(v => v.abv).sort());
+            
             const cSelect = document.getElementById('countrySelect');
             const ySelect = document.getElementById('yearSelect');
             const aSelect = document.getElementById('abvSelect');
+
             countries.forEach(val => cSelect.innerHTML += `<option value="${val}">${val}</option>`);
             years.forEach(val => ySelect.innerHTML += `<option value="${val}">${val}</option>`);
             abvs.forEach(val => aSelect.innerHTML += `<option value="${val}">${val}</option>`);
@@ -299,7 +287,10 @@
             container.innerHTML = ''; 
             document.getElementById('filterStats').textContent = `Exibindo ${listToRender.length} rótulos`;
 
-            if(listToRender.length === 0) { container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#999;">Nenhum vinho encontrado.</div>'; return; }
+            if(listToRender.length === 0) {
+                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">Nenhum vinho encontrado.</div>';
+                return;
+            }
 
             listToRender.forEach(vinho => {
                 const card = document.createElement('div');
@@ -316,13 +307,39 @@
                 starsHTML += '</div>';
 
                 card.innerHTML = `
-                    <div class="card-top-solid"></div><div class="card-wave-top"></div><div class="bg-text-top">${vinho.nome}</div>
-                    <div class="card-body"><div class="photos"><img src="${vinho.imgFrente}" onclick="openLightbox(this.src)" onerror="this.style.display='none'"><img src="${vinho.imgVerso}" onclick="openLightbox(this.src)" onerror="this.style.display='none'"></div><div class="info"><div class="wine-header"><div class="flag-box">${flagSVG}</div><div><h2 class="wine-name">${vinho.nome}</h2><div class="wine-region">${vinho.regiao}</div></div></div>${starsHTML}<div class="poetic-desc">"${vinho.poesia}"</div><div class="tech-grid"><div class="tech-item">${iconGrapes}<span>${vinho.uvas}</span></div><div class="tech-item">${iconCalendar}<span>Safra: ${vinho.safra}</span></div><div class="tech-item">${iconDrop}<span>Vol: ${vinho.abv}</span></div></div><div class="strength-wrapper"><div class="strength-label"><span>Corpo</span> <span>${vinho.forca}/5</span></div><div class="strength-track"><div class="strength-fill" style="width:${widthPercentage}%"></div></div></div></div></div>
+                    <div class="card-top-solid"></div>
+                    <div class="card-wave-top"></div>
+                    <div class="bg-text-top">${vinho.nome}</div>
+
+                    <div class="card-body">
+                        <div class="photos">
+                            <img src="${vinho.imgFrente}" alt="Frente" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+                            <img src="${vinho.imgVerso}" alt="Verso" onclick="openLightbox(this.src)" onerror="this.style.display='none'">
+                        </div>
+                        <div class="info">
+                            <div class="wine-header">
+                                <div class="flag-box">${flagSVG}</div>
+                                <div><h2 class="wine-name">${vinho.nome}</h2><div class="wine-region">${vinho.regiao}</div></div>
+                            </div>
+                            ${starsHTML}
+                            <div class="poetic-desc">"${vinho.poesia}"</div>
+                            <div class="tech-grid">
+                                <div class="tech-item">${iconGrapes}<span>${vinho.uvas}</span></div>
+                                <div class="tech-item">${iconCalendar}<span>Safra: ${vinho.safra}</span></div>
+                                <div class="tech-item">${iconDrop}<span>Vol: ${vinho.abv}</span></div>
+                            </div>
+                            <div class="strength-wrapper">
+                                <div class="strength-label"><span>Corpo</span> <span>${vinho.forca}/5</span></div>
+                                <div class="strength-track"><div class="strength-fill" style="width: ${widthPercentage}%"></div></div>
+                            </div>
+                        </div>
+                    </div>
                 `;
                 container.appendChild(card);
             });
         }
 
+        // LÓGICA DE FILTRO & SORT
         function applyFilters() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const countryVal = document.getElementById('countrySelect').value;
@@ -332,55 +349,106 @@
 
             let filtered = vinhos.filter(v => {
                 const allData = (v.nome + " " + v.pais + " " + v.regiao + " " + v.uvas + " " + v.safra + " " + v.abv).toLowerCase();
-                return allData.includes(searchText) && (countryVal === "" || v.pais === countryVal) && (yearVal === "" || v.safra === yearVal) && (abvVal === "" || v.abv === abvVal);
+                const matchText = allData.includes(searchText);
+                const matchCountry = countryVal === "" || v.pais === countryVal;
+                const matchYear = yearVal === "" || v.safra === yearVal;
+                const matchAbv = abvVal === "" || v.abv === abvVal;
+                return matchText && matchCountry && matchYear && matchAbv;
             });
 
             filtered.sort((a,b) => {
-                // CORREÇÃO SAFRA: parseInt para ordenar corretamente números
+                const parseAbv = str => parseFloat(str.replace(',','.').replace('%',''));
                 const parseSafra = str => str === 'NV' ? 0 : parseInt(str);
+
                 switch(sortVal) {
                     case 'nome': return a.nome.localeCompare(b.nome);
                     case 'forcaDesc': return b.forca - a.forca;
                     case 'forcaAsc': return a.forca - b.forca;
-                    case 'safraDesc': return parseSafra(b.safra) - parseSafra(a.safra); // Nova -> Antiga
-                    case 'safraAsc': return parseSafra(a.safra) - parseSafra(b.safra); // Antiga -> Nova
+                    case 'safraDesc': return parseSafra(b.safra) - parseSafra(a.safra);
+                    case 'safraAsc': return parseSafra(a.safra) - parseSafra(b.safra);
+                    case 'abvDesc': return parseAbv(b.abv) - parseAbv(a.abv);
+                    default: return 0;
                 }
             });
+
             renderCatalog(filtered);
         }
 
-        function clearFilters() { document.getElementById('searchInput').value=""; document.getElementById('countrySelect').value=""; document.getElementById('yearSelect').value=""; document.getElementById('abvSelect').value=""; applyFilters(); }
+        function clearFilters() {
+            document.getElementById('searchInput').value = "";
+            document.getElementById('countrySelect').value = "";
+            document.getElementById('yearSelect').value = "";
+            document.getElementById('abvSelect').value = "";
+            document.getElementById('sortSelect').value = "nome";
+            applyFilters();
+        }
 
+        // EXPORT PDF
+        async function exportToPDF() {
+            document.getElementById('exportLoading').style.display = 'flex';
+            document.body.classList.add('pdf-exporting');
+            window.scrollTo(0,0);
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = 210; 
+            const pageHeight = 297;
+            const margin = 10;
+            
+            const cards = document.querySelectorAll('#wineListContainer .wine-card');
+            let yCursor = margin;
+
+            for(let i=0; i<cards.length; i++) {
+                const canvas = await html2canvas(cards[i], { scale: 2, useCORS: true });
+                const imgData = canvas.toDataURL('image/png');
+                const imgProps = doc.getImageProperties(imgData);
+                const pdfWidth = pageWidth - (margin * 2);
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                if (yCursor + pdfHeight > pageHeight - margin) {
+                    doc.addPage();
+                    yCursor = margin;
+                }
+                doc.addImage(imgData, 'PNG', margin, yCursor, pdfWidth, pdfHeight);
+                yCursor += pdfHeight + 5;
+            }
+            doc.save('minha-adega.pdf');
+            document.body.classList.remove('pdf-exporting');
+            document.getElementById('exportLoading').style.display = 'none';
+        }
+
+        // DASHBOARD (BI)
         function openDashboard() {
+            const total = vinhos.length;
             const counts = {}; vinhos.forEach(v => counts[v.pais] = (counts[v.pais] || 0) + 1);
             const sortedCountries = Object.keys(counts).sort((a,b) => counts[b] - counts[a]);
             
             const grapeCounts = {};
-            vinhos.forEach(v => v.uvas.split(',').forEach(u => { const t = u.trim(); grapeCounts[t] = (grapeCounts[t] || 0) + 1; }));
+            vinhos.forEach(v => {
+                v.uvas.split(',').forEach(u => { const t = u.trim(); grapeCounts[t] = (grapeCounts[t] || 0) + 1; });
+            });
             const sortedGrapes = Object.keys(grapeCounts).sort((a,b) => grapeCounts[b] - grapeCounts[a]).slice(0, 5);
-            
-            const forcaCounts = {1:0, 2:0, 3:0, 4:0, 5:0};
-            vinhos.forEach(v => forcaCounts[v.forca]++);
+            const forcaCounts = {1:0, 2:0, 3:0, 4:0, 5:0}; vinhos.forEach(v => forcaCounts[v.forca]++);
 
-            let html = `<div class="bi-grid-top"><div class="kpi-card"><div class="kpi-val">${vinhos.length}</div><div class="kpi-lbl">Rótulos</div></div><div class="kpi-card"><div class="kpi-val">${Object.keys(counts).length}</div><div class="kpi-lbl">Países</div></div></div>`;
+            let html = `<div class="bi-grid">
+                            <div class="kpi-card"><div class="kpi-val">${total}</div><div class="kpi-lbl">Total Rótulos</div></div>
+                            <div class="kpi-card"><div class="kpi-val">${Object.keys(counts).length}</div><div class="kpi-lbl">Países</div></div>
+                        </div>`;
 
             html += '<div class="chart-section"><div class="chart-header">Top Países</div>';
             sortedCountries.forEach(c => {
-                const pct = (counts[c] / vinhos.length) * 100;
+                const pct = (counts[c] / total) * 100;
                 html += `<div class="chart-row"><div class="chart-label-text">${c}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%"><span class="chart-count" style="color:white; padding-left:5px;">${counts[c]}</span></div></div></div>`;
             });
             html += '</div><div class="chart-section"><div class="chart-header">Top Uvas</div>';
             sortedGrapes.forEach(g => {
-                const pct = (grapeCounts[g] / vinhos.length) * 100;
+                const pct = (grapeCounts[g] / total) * 100;
                 html += `<div class="chart-row"><div class="chart-label-text">${g}</div><div class="chart-bar-area"><div class="chart-bar-fill" style="width:${pct}%; background:var(--secondary)"><span class="chart-count" style="color:white; padding-left:5px;">${grapeCounts[g]}</span></div></div></div>`;
             });
-            html += '</div>';
-            
-            // Gráfico Vertical de Força (Corpo)
-            html += '<div class="chart-section"><div class="chart-header">Perfil de Corpo</div><div style="display:flex; align-items:flex-end; height:100px; gap:10px; padding-top:10px;">';
+            html += '</div><div class="chart-section"><div class="chart-header">Corpo/Força</div><div style="display:flex; align-items:flex-end; height:100px; gap:10px; padding-top:10px;">';
             for(let i=1; i<=5; i++) {
-                const pct = (forcaCounts[i] / vinhos.length) * 100;
-                const h = pct > 0 ? pct : 2; // Mínimo visual
+                const pct = (forcaCounts[i] / total) * 100;
+                const h = pct > 0 ? pct : 2; 
                 html += `<div style="flex:1; text-align:center;"><div style="height:${h}%; background:var(--accent); border-radius:4px 4px 0 0; position:relative;"><span style="position:absolute; top:-20px; width:100%; font-size:0.8em; font-weight:bold;">${forcaCounts[i]}</span></div><div style="font-size:0.7em; margin-top:5px;">${i}</div></div>`;
             }
             html += '</div></div>';
@@ -392,6 +460,7 @@
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
         function openInfoModal() { document.getElementById('infoModal').style.display = "flex"; }
 
+        // LIGHTBOX
         let currentScale=1, isDragging=false, startX, startY, translateX=0, translateY=0;
         const img=document.getElementById('lightbox-img'), modal=document.getElementById('lightbox'), wrapper=document.getElementById('lb-wrapper');
         function openLightbox(src) { modal.style.display='flex'; img.src=src; resetZoom(); document.body.style.overflow='hidden'; }
@@ -399,6 +468,7 @@
         function resetZoom() { currentScale=1; translateX=0; translateY=0; updateTransform(); }
         function updateTransform() { img.style.transform=`translate(${translateX}px,${translateY}px) scale(${currentScale})`; }
         function zoomManual(d) { currentScale=Math.max(1,Math.min(4,currentScale+d)); updateTransform(); }
+
         wrapper.addEventListener('mousedown', e => { if(currentScale>1) { isDragging=true; startX=e.clientX-translateX; startY=e.clientY-translateY; e.preventDefault(); }});
         window.addEventListener('mouseup', () => isDragging=false);
         window.addEventListener('mousemove', e => { if(isDragging) { e.preventDefault(); translateX=e.clientX-startX; translateY=e.clientY-startY; updateTransform(); }});
@@ -407,28 +477,15 @@
         img.addEventListener('click', e => e.stopPropagation());
         document.addEventListener('keydown', e => { if(e.key==="Escape") { closeLightbox(); closeModal('biModal'); closeModal('infoModal'); }});
 
-        async function exportToPDF() {
-            document.getElementById('exportLoading').style.display='flex'; document.body.classList.add('pdf-exporting'); window.scrollTo(0,0);
-            const { jsPDF } = window.jspdf; const doc = new jsPDF('p','mm','a4');
-            const cards = document.querySelectorAll('#wineListContainer .wine-card');
-            let y=10;
-            for(let i=0; i<cards.length; i++) {
-                const canvas = await html2canvas(cards[i], {scale:2, useCORS:true});
-                const imgData = canvas.toDataURL('image/png');
-                const props = doc.getImageProperties(imgData);
-                const h = (props.height * 190) / props.width;
-                if(y+h > 287) { doc.addPage(); y=10; }
-                doc.addImage(imgData, 'PNG', 10, y, 190, h);
-                y += h + 5;
-            }
-            doc.save('adega.pdf');
-            document.body.classList.remove('pdf-exporting');
-            document.getElementById('exportLoading').style.display='none';
+        // Theme
+        const themes = [ { class: '', name: 'Clássico' }, { class: 'theme-modern', name: 'Moderno' }, { class: 'theme-rustic', name: 'Rústico' }, { class: 'theme-rose', name: 'Rosé' }, { class: 'theme-gold', name: 'Premium' }, { class: 'theme-green', name: 'Frescor' }, { class: 'theme-superman', name: 'Kal-El' } ];
+        let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme') || 0);
+        if(currentThemeIndex >= themes.length) currentThemeIndex = 0;
+        function toggleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            localStorage.setItem('wineCatalogTheme', currentThemeIndex);
+            document.body.className = themes[currentThemeIndex].class;
         }
-
-        const themes=['','theme-modern','theme-rustic','theme-rose','theme-gold','theme-green','theme-superman'];
-        let currentThemeIndex = parseInt(localStorage.getItem('wineCatalogTheme')||0);
-        function toggleTheme() { currentThemeIndex=(currentThemeIndex+1)%themes.length; localStorage.setItem('wineCatalogTheme', currentThemeIndex); document.body.className=themes[currentThemeIndex].class; }
         document.body.className = themes[currentThemeIndex].class;
 
         populateFilters();
