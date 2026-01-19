@@ -1,6 +1,34 @@
 import { useState } from "react";
 import { askAI } from "./api";
 
+function renderMarkdown(text) {
+    if (!text) return null;
+
+    // Quebra em linhas
+    const lines = text.split('\n');
+
+    return lines.map((line, i) => {
+        // Processa **negrito** e *itálico*
+        const processedLine = line
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>') // **texto** → <strong>
+            .replace(/\*(.+?)\*/g, '<em>$1</em>');              // *texto* → <em>
+
+        // Se for linha vazia, adiciona espaço
+        if (!line.trim()) {
+            return <br key={i} />;
+        }
+
+        // Retorna como parágrafo com HTML processado
+        return (
+            <p
+                key={i}
+                dangerouslySetInnerHTML={{ __html: processedLine }}
+                style={{ margin: '8px 0' }}
+            />
+        );
+    });
+}
+
 export default function AskModal({ open, onClose, vinhos }) {
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
@@ -201,11 +229,10 @@ Analise: corpo, força, uvas, região, harmonização, e qual você recomendaria
                                 padding: "12px",
                                 background: "rgba(0,0,0,0.03)",
                                 borderRadius: "8px",
-                                whiteSpace: "pre-wrap",
                                 lineHeight: "1.6",
                             }}
                         >
-                            {answer}
+                            {renderMarkdown(answer)}
                         </div>
                     </div>
                 )}
