@@ -12,6 +12,7 @@ type Wine = {
 type Env = {
 	GEMINI_API_KEY: string;
 	DEEPSEEK_API_KEY: string;
+	GROQ_API_KEY: string;
 };
 
 const ALLOWED_ORIGINS = [
@@ -129,6 +130,31 @@ async function geminiGenerateText(env: Env, prompt: string): Promise<string> {
 	return out?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join("") ?? "";
 }
 
+async function groqGenerateText(env: Env, prompt: string): Promise<string> {
+	const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Authorization": `Bearer ${env.GROQ_API_KEY}`,
+		},
+		body: JSON.stringify({
+			model: "llama-3.3-70b-versatile",  // Modelo rápido e gratuito
+			messages: [{ role: "user", content: prompt }],
+			temperature: 0.7,
+			max_tokens: 2000,
+		}),
+	});
+
+	if (!res.ok) {
+		const txt = await res.text();
+		throw new Error(`Groq error ${res.status}: ${txt}`);
+	}
+
+	const data = await res.json();
+	return data.choices[0].message.content;
+}
+
+
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const requestOrigin = request.headers.get("Origin") || "";
@@ -233,8 +259,10 @@ export default {
 					JSON.stringify(vinhos);
 
 
-				const answer = await geminiGenerateText(env, prompt);
+				//const answer = await geminiGenerateText(env, prompt);
 				//const answer = await deepseekGenerateText(env, prompt);
+				const answer = await groqGenerateText(env, prompt);
+
 
 				return jsonResponse({ answer }, requestOrigin);
 			} catch (err: any) {
