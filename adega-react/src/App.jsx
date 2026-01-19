@@ -2,11 +2,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { vinhos } from './data/vinhos'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import Stars from './components/Stars'
+import AskModal from "./ai/AskModal";
+import LabelModal from "./ai/LabelModal";
 
 const RATINGS_KEY = 'adega:ratings'
 
 // PIN "1350" (disfarçado; não é segurança real em frontend)
 const PIN = String.fromCharCode(49, 51, 53, 48)
+
+// AI API
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 // Theme storage (no seu original era wineCatalogTheme)
 const THEME_KEY = 'wineCatalogTheme'
@@ -344,19 +349,19 @@ function GuideModal({ onClose }) {
    LIGHTBOX (premium + zoom/pan + setas p/ Frente/Verso)
    Requer CSS: .lightbox, .lb-topbar, .lb-icon-btn, .lightbox-controls, .lb-btn, .lb-zoom-pill, .lb-nav, etc.
    ========================= */
+
 function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
   const slide = slides?.[index]
   const hasMany = (slides?.length || 0) > 1
 
   const [hiLoaded, setHiLoaded] = useState(false)
   const [scale, setScale] = useState(1)
-
   const [minScale, setMinScale] = useState(1)
   const [tx, setTx] = useState(0)
   const [ty, setTy] = useState(0)
 
   const imgRef = useRef(null)
-
+  const wrapRef = useRef(null)
 
   // swipe/pan refs
   const swipeRef = useRef({
@@ -369,11 +374,6 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
     t0: 0,
   })
 
-  const scaleRef = useRef(scale)
-  useEffect(() => {
-    scaleRef.current = scale
-  }, [scale])
-
   const dragRef = useRef({
     active: false,
     id: null,
@@ -383,7 +383,30 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
     ty0: 0,
   })
 
-  const wrapRef = useRef(null)
+  const txRef = useRef(tx)
+  useEffect(() => { txRef.current = tx }, [tx])
+
+  const tyRef = useRef(ty)
+  useEffect(() => { tyRef.current = ty }, [ty])
+
+  const lastPointerRef = useRef({ x: null, y: null })
+
+  const scaleRef = useRef(scale)
+  useEffect(() => {
+    scaleRef.current = scale
+  }, [scale])
+
+  const minScaleRef = useRef(minScale)
+  useEffect(() => {
+    minScaleRef.current = minScale
+  }, [minScale])
+
+  // guarda o "fit" (posição central quando a imagem está em minScale)
+  const fitRef = useRef({ tx: 0, ty: 0 })
+
+  const EPS = 0.001
+  const isZoomedNow = () => scaleRef.current > minScaleRef.current + EPS
+  const isZoomed = scale > minScale + EPS
 
   const clamp = useCallback((n, min, max) => Math.max(min, Math.min(max, n)), [])
 
@@ -394,49 +417,81 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
   }, [])
 
   const clampPan = useCallback(
-    (x, y, scale) => {
+    (x, y, sc) => {
       const img = imgRef.current
       const container = wrapRef.current
       if (!img || !container) return { x, y }
 
-      const imgW = img.naturalWidth * scale
-      const imgH = img.naturalHeight * scale
+      const imgW = img.naturalWidth * sc
+      const imgH = img.naturalHeight * sc
 
-      const maxX = Math.max(0, imgW - container.clientWidth)
-      const maxY = Math.max(0, imgH - container.clientHeight)
+      // Se a imagem ficou menor que o container, mantém centralizado.
+      const clampAxis = (t, size, csize) => {
+        if (size <= csize) return (csize - size) / 2
+        const minT = csize - size // negativo
+        return clamp(t, minT, 0)
+      }
 
       return {
-        x: clamp(x, -maxX, 0),
-        y: clamp(y, -maxY, 0),
+        x: clampAxis(x, imgW, container.clientWidth),
+        y: clampAxis(y, imgH, container.clientHeight),
       }
     },
     [clamp]
   )
 
-
   const resetZoom = useCallback(() => {
     setScale(minScale)
-    setTx(0)
-    setTy(0)
-  }, [])
+    setTx(fitRef.current.tx)
+    setTy(fitRef.current.ty)
+  }, [minScale])
 
-  const zoom = useCallback(
-    (delta) => {
-      setScale((prev) => {
-        const next = clamp(Number((prev + delta).toFixed(2)), minScale, 8)
+  const zoomAt = useCallback(
+    (delta, clientX, clientY) => {
+      const container = wrapRef.current
+      if (!container) return
 
-        // 🔥 ESSENCIAL: ao sair do scale 1, garante pan ativo
-        if (prev === 1 && next > 1) {
-          setTx(0)
-          setTy(0)
-        }
+      const rect = container.getBoundingClientRect()
+      const px = (clientX ?? rect.left + rect.width / 2) - rect.left
+      const py = (clientY ?? rect.top + rect.height / 2) - rect.top
 
-        return next
-      })
+      const sc0 = scaleRef.current
+      const nextScale = clamp(Number((sc0 + delta).toFixed(2)), minScaleRef.current, 8)
+      if (nextScale === sc0) return
+
+      // Coordenada do ponto "embaixo do mouse" no espaço da imagem
+      const xImg = (px - txRef.current) / sc0
+      const yImg = (py - tyRef.current) / sc0
+
+      // Novo translate para manter o mesmo ponto sob o mouse
+      let nextTx = px - xImg * nextScale
+      let nextTy = py - yImg * nextScale
+
+      // Respeita limites
+      const p = clampPan(nextTx, nextTy, nextScale)
+
+      setScale(nextScale)
+      setTx(p.x)
+      setTy(p.y)
     },
-    [clamp, minScale]
+    [clamp, clampPan]
   )
 
+  const zoom = useCallback(
+    (delta) => zoomAt(delta, lastPointerRef.current.x, lastPointerRef.current.y),
+    [zoomAt]
+  )
+
+  const [isPanning, setIsPanning] = useState(false)
+
+
+  // Mantém o pan sempre dentro do permitido quando scale muda
+  useEffect(() => {
+    const p = clampPan(tx, ty, scale)
+    if (p.x !== tx) setTx(p.x)
+    if (p.y !== ty) setTy(p.y)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scale])
 
   // trava scroll + teclas
   useEffect(() => {
@@ -504,7 +559,8 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
 
     const handler = (ev) => {
       ev.preventDefault()
-      zoom(ev.deltaY < 0 ? 0.2 : -0.2)
+      lastPointerRef.current = { x: ev.clientX, y: ev.clientY }
+      zoomAt(ev.deltaY < 0 ? 0.2 : -0.2, ev.clientX, ev.clientY)
     }
 
     el.addEventListener('wheel', handler, { passive: false })
@@ -532,8 +588,9 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
       t0: Date.now(),
     }
 
-    // pan começa só se estiver com zoom
-    if (scaleRef.current > 1) {
+    // pan começa só se estiver com zoom acima do "fit" (minScale)
+    if (isZoomedNow()) {
+      setIsPanning(true)
       dragRef.current = {
         active: true,
         id: e.pointerId,
@@ -557,8 +614,8 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
         swipeRef.current.y1 = ev.clientY
       }
 
-      // pan só se zoom > 1 e drag ativo
-      if (!dragRef.current.active || scaleRef.current <= 1) return
+      // pan só se zoom > minScale e drag ativo
+      if (!dragRef.current.active || !isZoomedNow()) return
       ev.preventDefault()
 
       const dx = ev.clientX - dragRef.current.x0
@@ -574,6 +631,8 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
     const onWinUp = (ev) => {
       if (ev.pointerId !== dragRef.current.id) return
 
+      setIsPanning(false)
+
       window.removeEventListener('pointermove', onWinMove)
       window.removeEventListener('pointerup', onWinUp)
       window.removeEventListener('pointercancel', onWinUp)
@@ -585,7 +644,7 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
         // ignore
       }
 
-      const wasPanning = dragRef.current.active && scaleRef.current > 1
+      const wasPanning = dragRef.current.active && isZoomedNow()
       dragRef.current.active = false
 
       // se estava dando pan, não faz swipe
@@ -594,8 +653,8 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
         return
       }
 
-      // swipe só em zoom 1
-      if (!hasMany || scaleRef.current > 1) {
+      // swipe só no modo "fit" (sem zoom)
+      if (!hasMany || isZoomedNow()) {
         swipeRef.current.active = false
         return
       }
@@ -642,7 +701,6 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
   if (!open || !slide) return null
 
   const srcToShow = hiLoaded ? slide.highSrc : slide.lowSrc
-  const transform = `translate(${tx}px, ${ty}px)`
 
   return (
     <div className="lightbox no-print" onClick={onClose} role="dialog" aria-modal="true" aria-label={slide.title}>
@@ -688,7 +746,7 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
       {/* Imagem (pan/zoom) */}
       <div
         ref={wrapRef}
-        className={`lightbox-content-wrapper ${scale > 1 ? 'is-zoomed' : ''}`}
+        className={`lightbox-content-wrapper ${isZoomed ? 'is-zoomed' : ''}`}
         onClick={(e) => e.stopPropagation()}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -709,13 +767,15 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
             const scaledW = img.naturalWidth * min
             const scaledH = img.naturalHeight * min
 
-            const tx = (container.clientWidth - scaledW) / 2
-            const ty = (container.clientHeight - scaledH) / 2
+            const txFit = (container.clientWidth - scaledW) / 2
+            const tyFit = (container.clientHeight - scaledH) / 2
+
+            fitRef.current = { tx: txFit, ty: tyFit }
 
             setMinScale(min)
             setScale(min)
-            setTx(tx)
-            setTy(ty)
+            setTx(txFit)
+            setTy(tyFit)
           }}
           style={{
             position: 'absolute',
@@ -723,9 +783,12 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
             left: 0,
             transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
             transformOrigin: 'top left',
+            transition: isPanning ? 'none' : 'transform 140ms ease-out',
+            willChange: 'transform',
             userSelect: 'none',
             pointerEvents: 'none',
           }}
+
         />
 
         {!hiLoaded && <div className="lb-loading">Carregando original…</div>}
@@ -737,15 +800,15 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
           −
         </button>
 
-        <div className="lb-zoom-pill" aria-label={`Zoom ${Math.round(scale * 100)}%`}>
-          {Math.round(scale * 100)}%
+        <div className="lb-zoom-pill" aria-label={`Zoom ${Math.round((scale / minScale) * 100)}%`}>
+          {Math.round((scale / minScale) * 100)}%
         </div>
 
         <button className="lb-btn" onClick={() => zoom(0.2)} aria-label="Aumentar zoom">
           +
         </button>
 
-        {scale > 1 && (
+        {isZoomed && (
           <button className="lb-btn lb-btn--ghost" onClick={resetZoom} aria-label="Reset zoom">
             Reset
           </button>
@@ -754,7 +817,6 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
     </div>
   )
 }
-
 export default function App() {
   // filtros
   const [search, setSearch] = useState('')
@@ -773,6 +835,10 @@ export default function App() {
   const [isPinOpen, setIsPinOpen] = useState(false)
   const [pinInput, setPinInput] = useState('')
   const [unlocked, setUnlocked] = useState(false)
+
+  // AI
+  const [isAskOpen, setIsAskOpen] = useState(false);
+  const [isLabelOpen, setIsLabelOpen] = useState(false);
 
   // modal Dashboard
   const [isDashboardOpen, setIsDashboardOpen] = useState(false)
@@ -1127,8 +1193,6 @@ export default function App() {
           const pctForca = Math.max(0, Math.min(100, (forca / 5) * 100))
           const harmonizaText = v.harmoniza || suggestPairing(v)
 
-          // thumb (leve) -> original (pesado)
-          // se não existir thumbFrente/thumbVerso no data, cai no original
           const frontLow = `${BASE}${v.thumbFrente || v.imgFrente}`
           const frontHi = `${BASE}${v.imgFrente}`
           const backLow = `${BASE}${v.thumbVerso || v.imgVerso}`
@@ -1146,7 +1210,6 @@ export default function App() {
               <div className="bg-text-top">{v.nome}</div>
 
               <div className="card-body">
-                {/* Fotos (thumb leve no card + hi-res só ao clicar) */}
                 <div className="photos">
                   <div className="photo-frame">
                     <button
@@ -1209,11 +1272,14 @@ export default function App() {
                     </div>
                   </div>
 
-                  <Stars value={ratings[v.nome] ?? 0} readOnly={!(isEditMode && unlocked)} onChange={(val) => setRating(v.nome, val)} />
+                  <Stars
+                    value={ratings[v.nome] ?? 0}
+                    readOnly={!(isEditMode && unlocked)}
+                    onChange={(val) => setRating(v.nome, val)}
+                  />
 
                   <div className="poetic-desc">{v.poesia}</div>
 
-                  {/* Infos técnicas */}
                   <div className="tech-grid">
                     <div className="tech-item">
                       <span className="tech-emoji" aria-hidden="true">
@@ -1246,7 +1312,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Barra corpo/força */}
                   <div className="strength-wrapper">
                     <div className="strength-label">
                       <span>Corpo</span>
@@ -1264,13 +1329,30 @@ export default function App() {
         })}
       </main>
 
-      {/* Tema (discreto no canto inferior esquerdo) */}
       <div className="no-print" style={themeBadgeStyle}>
         Tema: {currentTheme.name}
       </div>
 
-      {/* FABs */}
       <div className="fab-container no-print" role="group" aria-label="Ações rápidas">
+
+        <button
+          className="fab"
+          onClick={() => setIsAskOpen(true)}
+          title="Perguntar sobre vinhos"
+        >
+          💬
+        </button>
+
+        {unlocked && isEditMode && (
+          <button
+            className="fab"
+            onClick={() => setIsLabelOpen(true)}
+            title="Adicionar rótulo via IA"
+          >
+            📸
+          </button>
+        )}
+
         <button className="fab" title="Guia rápido" onClick={openHelp}>
           ?
         </button>
@@ -1286,13 +1368,10 @@ export default function App() {
         </button>
       </div>
 
-      {/* Lightbox */}
       <Lightbox open={lb.open} slides={lb.slides} index={lb.index} onClose={closeLightbox} onPrev={lbPrev} onNext={lbNext} />
 
-      {/* Modal Guia */}
       {isGuideOpen && <GuideModal onClose={closeHelp} />}
 
-      {/* Modal Dashboard */}
       {isDashboardOpen && (
         <div className="modal no-print" style={{ display: 'flex' }} onClick={closeDashboard}>
           <div className="modal-content dashboard" onClick={(e) => e.stopPropagation()}>
@@ -1396,7 +1475,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Modal PIN */}
       {isPinOpen && (
         <div className="modal no-print" style={{ display: 'flex' }} onClick={closePinModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -1423,6 +1501,22 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {isAskOpen && (
+        <AskModal
+          open
+          onClose={() => setIsAskOpen(false)}
+          vinhos={vinhos}
+        />
+      )}
+
+      {isLabelOpen && (
+        <LabelModal
+          open
+          onClose={() => setIsLabelOpen(false)}
+        />
+      )}
+
     </div>
   )
 }
