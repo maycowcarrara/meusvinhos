@@ -1,10 +1,10 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-export async function askAI(question, vinhos) {
+export async function askAI(question, vinhos, compareMode = false) {
     const res = await fetch(`${API_BASE}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, vinhos }),
+        body: JSON.stringify({ question, vinhos, compareMode }), // ✅ Agora envia o compareMode
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error || "Erro no /ask");

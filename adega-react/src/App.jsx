@@ -848,6 +848,9 @@ export default function App() {
   const [aiAnswer, setAiAnswer] = useState('');
   const [isAILoading, setIsAILoading] = useState(false);
   const [compareMode, setCompareMode] = useState(false);
+  const [wineA, setWineA] = useState('');
+  const [wineB, setWineB] = useState('');
+
 
   // modal Dashboard
   const [isDashboardOpen, setIsDashboardOpen] = useState(false)
@@ -1111,9 +1114,21 @@ export default function App() {
   async function handleAskAI() {
     if (!aiQuestion.trim()) return;
 
+    // Se está em modo comparação e não tem os dois vinhos selecionados, alerta
+    if (compareMode && (!wineA || !wineB)) {
+      alert('Por favor, selecione dois vinhos para comparar');
+      return;
+    }
+
     setIsAILoading(true);
     try {
-      const result = await askAI(aiQuestion, vinhos, compareMode);
+      // Monta a pergunta com contexto dos vinhos selecionados
+      let finalQuestion = aiQuestion;
+      if (compareMode && wineA && wineB) {
+        finalQuestion = `Compare os vinhos "${wineA}" e "${wineB}". ${aiQuestion}`;
+      }
+
+      const result = await askAI(finalQuestion, vinhos);
       setAiAnswer(result);
     } catch (err) {
       setAiAnswer(`❌ Erro: ${err.message}`);
@@ -1121,6 +1136,7 @@ export default function App() {
       setIsAILoading(false);
     }
   }
+
 
   function clearAIPanel() {
     setAiAnswer('');
@@ -1152,14 +1168,76 @@ export default function App() {
         {isAIPanelOpen && (
           <div className="ai-panel">
             <div className="ai-panel-content">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span style={{ fontSize: '24px' }}>🤖</span>
-                  <h3 style={{ margin: 0, color: 'var(--primary)', fontSize: '18px', fontFamily: 'var(--font-title)' }}>
+              {/* Header com botão fechar */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                marginBottom: '16px',
+                gap: '12px'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  flex: '1 1 auto',
+                  minWidth: '0'
+                }}>
+                  <span style={{ fontSize: '24px', flexShrink: 0 }}>🤖</span>
+                  <h3 style={{
+                    margin: 0,
+                    color: 'var(--primary)',
+                    fontSize: '18px',
+                    fontFamily: 'var(--font-title)',
+                    lineHeight: 1.2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>
                     Pergunte sobre seus vinhos
                   </h3>
                 </div>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', cursor: 'pointer', userSelect: 'none' }}>
+
+                {/* Botão fechar - sempre à direita */}
+                <button
+                  onClick={() => setIsAIPanelOpen(false)}
+                  title="Fechar"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '28px',
+                    cursor: 'pointer',
+                    color: 'var(--text-muted)',
+                    padding: '0',
+                    width: '32px',
+                    height: '32px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '4px',
+                    lineHeight: 1,
+                    flexShrink: 0
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.08)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Checkbox em linha separada */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                marginBottom: '16px'
+              }}>
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  userSelect: 'none'
+                }}>
                   <input
                     type="checkbox"
                     checked={compareMode}
@@ -1170,10 +1248,130 @@ export default function App() {
                 </label>
               </div>
 
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+              {/* Seleção de vinhos para comparar */}
+              {compareMode && (
+                <div style={{
+                  marginBottom: '16px',
+                  padding: '16px',
+                  background: 'linear-gradient(135deg, rgba(108, 35, 72, 0.05), rgba(245, 245, 220, 0.05))',
+                  borderRadius: '8px',
+                  border: '2px solid var(--primary)',
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '12px',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: 'var(--primary)'
+                  }}>
+                    <span>⚖️</span>
+                    <span>Selecione os vinhos para comparar</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <select
+                      value={wineA}
+                      onChange={(e) => setWineA(e.target.value)}
+                      style={{
+                        flex: '1 1 100%',
+                        minWidth: '0',
+                        padding: '10px',
+                        border: '2px solid var(--border)',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        fontFamily: 'inherit',
+                        cursor: 'pointer',
+                        background: 'white'
+                      }}
+                    >
+                      <option value="">Selecione o 1º vinho</option>
+                      {vinhos.map((v) => (
+                        <option key={v.nome} value={v.nome}>
+                          {v.nome} ({v.safra})
+                        </option>
+                      ))}
+                    </select>
+
+                    <span style={{
+                      fontSize: '18px',
+                      color: 'var(--text-muted)',
+                      flex: '0 0 auto',
+                      width: '100%',
+                      textAlign: 'center',
+                      display: 'block'
+                    }}>vs</span>
+
+                    <select
+                      value={wineB}
+                      onChange={(e) => setWineB(e.target.value)}
+                      style={{
+                        flex: '1 1 100%',
+                        minWidth: '0',
+                        padding: '10px',
+                        border: '2px solid var(--border)',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        fontFamily: 'inherit',
+                        cursor: 'pointer',
+                        background: 'white'
+                      }}
+                    >
+                      <option value="">Selecione o 2º vinho</option>
+                      {vinhos.map((v) => (
+                        <option key={v.nome} value={v.nome}>
+                          {v.nome} ({v.safra})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {wineA && wineB && (
+                    <div style={{
+                      marginTop: '12px',
+                      padding: '12px',
+                      background: 'rgba(108, 35, 72, 0.08)',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '10px'
+                    }}>
+                      <div style={{
+                        fontSize: '13px',
+                        color: 'var(--accent)',
+                        fontWeight: 500,
+                        textAlign: 'center'
+                      }}>
+                        ✓ {vinhos.find(v => v.nome === wineA)?.nome} vs {vinhos.find(v => v.nome === wineB)?.nome}
+                      </div>
+                      <button
+                        className="action-btn"
+                        onClick={() => {
+                          setAiQuestion(`Quais as principais diferenças entre esses vinhos?`);
+                          setTimeout(() => handleAskAI(), 100);
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '10px',
+                          fontSize: '14px'
+                        }}
+                      >
+                        🔍 Comparar Agora
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Campo de texto + Botão Perguntar */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                marginBottom: '16px'
+              }}>
                 <textarea
                   className="ai-textarea"
-                  placeholder="Ex: Quais vinhos são de Portugal? Qual tem maior teor alcoólico?"
+                  placeholder={compareMode ? "Ex: Quais as principais diferenças entre eles?" : "Ex: Quais vinhos são de Portugal? Qual tem maior teor alcoólico?"}
                   value={aiQuestion}
                   onChange={(e) => setAiQuestion(e.target.value)}
                   onKeyDown={(e) => {
@@ -1184,20 +1382,25 @@ export default function App() {
                   }}
                   rows={2}
                   style={{
-                    flex: 1,
+                    width: '100%',
                     padding: '12px',
                     border: '2px solid var(--border)',
                     borderRadius: '8px',
                     fontFamily: 'inherit',
                     fontSize: '14px',
-                    resize: 'vertical'
+                    resize: 'vertical',
+                    boxSizing: 'border-box'
                   }}
                 />
                 <button
                   className="action-btn"
                   onClick={handleAskAI}
-                  disabled={isAILoading || !aiQuestion.trim()}
-                  style={{ minWidth: '120px', alignSelf: 'flex-start' }}
+                  disabled={isAILoading || !aiQuestion.trim() || (compareMode && (!wineA || !wineB))}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '15px'
+                  }}
                 >
                   {isAILoading ? 'Consultando...' : 'Perguntar'}
                 </button>
@@ -1250,6 +1453,7 @@ export default function App() {
             </div>
           </div>
         )}
+
 
         {/* ===== HEADER COMPACTO ===== */}
         <div style={{
@@ -1344,15 +1548,15 @@ export default function App() {
           </select>
 
           <button className="action-btn action-btn--danger" onClick={clearFilters} title="Limpar">X</button>
-          <button className="action-btn" onClick={openEdit} title={unlocked ? (isEditMode ? "Sair da edição" : "Entrar em edição") : "Desbloquear edição"}>
-            🔓
+
+          <button
+            className="action-btn"
+            onClick={unlocked && isEditMode ? lockEditing : openEdit}
+            title={unlocked && isEditMode ? "Bloquear edição" : (unlocked ? "Entrar em edição" : "Desbloquear edição")}
+          >
+            {unlocked && isEditMode ? "🔒" : "🔓"}
           </button>
 
-          {unlocked && (
-            <button className="action-btn action-btn--ghost" onClick={lockEditing} title="Travar edição">
-              🔒
-            </button>
-          )}
         </div>
 
         <div className="filter-stats">Exibindo {filtered.length} rótulos</div>
