@@ -233,8 +233,8 @@ export default {
 					JSON.stringify(vinhos);
 
 
-				//const answer = await geminiGenerateText(env, prompt);
-				const answer = await deepseekGenerateText(env, prompt);
+				const answer = await geminiGenerateText(env, prompt);
+				//const answer = await deepseekGenerateText(env, prompt);
 
 				return jsonResponse({ answer }, requestOrigin);
 			} catch (err: any) {
