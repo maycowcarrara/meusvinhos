@@ -1520,15 +1520,14 @@ export default function App() {
             </div>
           )
         })}
-      </>
 
-      <div className="no-print" style={themeBadgeStyle}>
-        Tema: {currentTheme.name}
-      </div>
+        <div className="no-print" style={themeBadgeStyle}>
+          Tema: {currentTheme.name}
+        </div>
 
-      <div className="fab-container no-print" role="group" aria-label="Ações rápidas">
+        <div className="fab-container no-print" role="group" aria-label="Ações rápidas">
 
-        {/*<button
+          {/*<button
           className="fab"
           onClick={() => setIsAskOpen(true)}
           title="Perguntar sobre vinhos"
@@ -1536,166 +1535,166 @@ export default function App() {
           💬
         </button>*/}
 
-        {unlocked && isEditMode && (
-          <button
-            className="fab"
-            onClick={() => setIsLabelOpen(true)}
-            title="Adicionar rótulo via IA"
-          >
-            📸
+          {unlocked && isEditMode && (
+            <button
+              className="fab"
+              onClick={() => setIsLabelOpen(true)}
+              title="Adicionar rótulo via IA"
+            >
+              📸
+            </button>
+          )}
+
+          <button className="fab" title="Guia rápido" onClick={openHelp}>
+            ?
           </button>
-        )}
 
-        <button className="fab" title="Guia rápido" onClick={openHelp}>
-          ?
-        </button>
+          <button className="fab" title="Estatísticas" onClick={openDashboard} aria-label="Estatísticas">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+            </svg>
+          </button>
 
-        <button className="fab" title="Estatísticas" onClick={openDashboard} aria-label="Estatísticas">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-          </svg>
-        </button>
+          <button className="fab" title="Temas" onClick={toggleTheme}>
+            🎨
+          </button>
+        </div>
 
-        <button className="fab" title="Temas" onClick={toggleTheme}>
-          🎨
-        </button>
-      </div>
+        <Lightbox open={lb.open} slides={lb.slides} index={lb.index} onClose={closeLightbox} onPrev={lbPrev} onNext={lbNext} />
 
-      <Lightbox open={lb.open} slides={lb.slides} index={lb.index} onClose={closeLightbox} onPrev={lbPrev} onNext={lbNext} />
+        {isGuideOpen && <GuideModal onClose={closeHelp} />}
 
-      {isGuideOpen && <GuideModal onClose={closeHelp} />}
+        {isDashboardOpen && (
+          <div className="modal no-print" style={{ display: 'flex' }} onClick={closeDashboard}>
+            <div className="modal-content dashboard" onClick={(e) => e.stopPropagation()}>
+              <span className="close-modal" onClick={closeDashboard}>
+                &times;
+              </span>
 
-      {isDashboardOpen && (
-        <div className="modal no-print" style={{ display: 'flex' }} onClick={closeDashboard}>
-          <div className="modal-content dashboard" onClick={(e) => e.stopPropagation()}>
-            <span className="close-modal" onClick={closeDashboard}>
-              &times;
-            </span>
+              <h2 style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: 30, fontFamily: 'var(--font-title)' }}>
+                Dashboard Analítico
+              </h2>
 
-            <h2 style={{ textAlign: 'center', color: 'var(--primary)', marginBottom: 30, fontFamily: 'var(--font-title)' }}>
-              Dashboard Analítico
-            </h2>
-
-            <div className="bi-kpi-container">
-              <div className="kpi-box">
-                <div className="kpi-num">{dashboard.total}</div>
-                <div className="kpi-label">Total rótulos</div>
-              </div>
-
-              <div className="kpi-box">
-                <div className="kpi-num">{dashboard.countriesCount}</div>
-                <div className="kpi-label">Países</div>
-              </div>
-
-              <div className="kpi-box">
-                <div className="kpi-num">{dashboard.avgAbv.toFixed(1)}%</div>
-                <div className="kpi-label">Álcool médio</div>
-              </div>
-
-              <div className="kpi-box">
-                <div className="kpi-num">{dashboard.avgRating.toFixed(1)}</div>
-                <div className="kpi-label">Rating médio ({dashboard.ratedCount})</div>
-              </div>
-            </div>
-
-            <div className="bi-charts-row">
-              <div className="bi-col">
-                <div className="bi-chart-title">Origem (Top 3)</div>
-
-                <div className="pie-container">
-                  <div className="pie-chart" style={{ background: dashboard.pieBackground }} />
+              <div className="bi-kpi-container">
+                <div className="kpi-box">
+                  <div className="kpi-num">{dashboard.total}</div>
+                  <div className="kpi-label">Total rótulos</div>
                 </div>
 
-                <div className="pie-legend">
-                  {dashboard.top3.map((c, i) => {
-                    const pct = dashboard.total ? Math.round((dashboard.countryCounts[c] / dashboard.total) * 100) : 0
-                    const legendColors = ['var(--primary)', 'var(--accent)', '#888']
+                <div className="kpi-box">
+                  <div className="kpi-num">{dashboard.countriesCount}</div>
+                  <div className="kpi-label">Países</div>
+                </div>
+
+                <div className="kpi-box">
+                  <div className="kpi-num">{dashboard.avgAbv.toFixed(1)}%</div>
+                  <div className="kpi-label">Álcool médio</div>
+                </div>
+
+                <div className="kpi-box">
+                  <div className="kpi-num">{dashboard.avgRating.toFixed(1)}</div>
+                  <div className="kpi-label">Rating médio ({dashboard.ratedCount})</div>
+                </div>
+              </div>
+
+              <div className="bi-charts-row">
+                <div className="bi-col">
+                  <div className="bi-chart-title">Origem (Top 3)</div>
+
+                  <div className="pie-container">
+                    <div className="pie-chart" style={{ background: dashboard.pieBackground }} />
+                  </div>
+
+                  <div className="pie-legend">
+                    {dashboard.top3.map((c, i) => {
+                      const pct = dashboard.total ? Math.round((dashboard.countryCounts[c] / dashboard.total) * 100) : 0
+                      const legendColors = ['var(--primary)', 'var(--accent)', '#888']
+                      return (
+                        <div className="legend-item" key={c}>
+                          <span className="legend-color" style={{ background: legendColors[i] }} />
+                          {c} ({pct}%)
+                        </div>
+                      )
+                    })}
+
+                    {dashboard.othersCount > 0 && (
+                      <div className="legend-item">
+                        <span className="legend-color" style={{ background: '#e6e6e6' }} />
+                        Outros
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="bi-col">
+                  <div className="bi-chart-title">Top Uvas</div>
+
+                  {dashboard.topGrapes.map((g) => {
+                    const pct = dashboard.total ? (g.count / dashboard.total) * 100 : 0
                     return (
-                      <div className="legend-item" key={c}>
-                        <span className="legend-color" style={{ background: legendColors[i] }} />
-                        {c} ({pct}%)
+                      <div className="stat-item" key={g.name}>
+                        <div className="stat-name" title={g.name}>
+                          {g.name}
+                        </div>
+                        <div className="stat-track">
+                          <div className="stat-fill" style={{ width: `${pct}%` }} />
+                        </div>
+                        <div className="stat-val">{g.count}</div>
                       </div>
                     )
                   })}
 
-                  {dashboard.othersCount > 0 && (
-                    <div className="legend-item">
-                      <span className="legend-color" style={{ background: '#e6e6e6' }} />
-                      Outros
-                    </div>
-                  )}
+                  <div className="bi-chart-title" style={{ marginTop: 18 }}>
+                    Força (1–5)
+                  </div>
+
+                  {[5, 4, 3, 2, 1].map((k) => {
+                    const val = dashboard.strengthCounts[k]
+                    const pct = dashboard.total ? (val / dashboard.total) * 100 : 0
+                    return (
+                      <div className="stat-item" key={k}>
+                        <div className="stat-name">{k} / 5</div>
+                        <div className="stat-track">
+                          <div className="stat-fill" style={{ width: `${pct}%`, background: 'var(--secondary)' }} />
+                        </div>
+                        <div className="stat-val">{val}</div>
+                      </div>
+                    )
+                  })}
                 </div>
-              </div>
-
-              <div className="bi-col">
-                <div className="bi-chart-title">Top Uvas</div>
-
-                {dashboard.topGrapes.map((g) => {
-                  const pct = dashboard.total ? (g.count / dashboard.total) * 100 : 0
-                  return (
-                    <div className="stat-item" key={g.name}>
-                      <div className="stat-name" title={g.name}>
-                        {g.name}
-                      </div>
-                      <div className="stat-track">
-                        <div className="stat-fill" style={{ width: `${pct}%` }} />
-                      </div>
-                      <div className="stat-val">{g.count}</div>
-                    </div>
-                  )
-                })}
-
-                <div className="bi-chart-title" style={{ marginTop: 18 }}>
-                  Força (1–5)
-                </div>
-
-                {[5, 4, 3, 2, 1].map((k) => {
-                  const val = dashboard.strengthCounts[k]
-                  const pct = dashboard.total ? (val / dashboard.total) * 100 : 0
-                  return (
-                    <div className="stat-item" key={k}>
-                      <div className="stat-name">{k} / 5</div>
-                      <div className="stat-track">
-                        <div className="stat-fill" style={{ width: `${pct}%`, background: 'var(--secondary)' }} />
-                      </div>
-                      <div className="stat-val">{val}</div>
-                    </div>
-                  )
-                })}
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {isPinOpen && (
-        <div className="modal no-print" style={{ display: 'flex' }} onClick={closePinModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close-modal" onClick={closePinModal}>
-              &times;
-            </span>
+        {isPinOpen && (
+          <div className="modal no-print" style={{ display: 'flex' }} onClick={closePinModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <span className="close-modal" onClick={closePinModal}>
+                &times;
+              </span>
 
-            <h2 style={{ textAlign: 'center' }}>Desbloquear edição</h2>
+              <h2 style={{ textAlign: 'center' }}>Desbloquear edição</h2>
 
-            <div className="filter-bar">
-              <input
-                className="filter-input"
-                placeholder="PIN"
-                value={pinInput}
-                onChange={(e) => setPinInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') unlock()
-                }}
-              />
-              <button className="action-btn" onClick={unlock}>
-                OK
-              </button>
+              <div className="filter-bar">
+                <input
+                  className="filter-input"
+                  placeholder="PIN"
+                  value={pinInput}
+                  onChange={(e) => setPinInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') unlock()
+                  }}
+                />
+                <button className="action-btn" onClick={unlock}>
+                  OK
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/*
+        {/*
       {isAskOpen && (
         <AskModal
           open
@@ -1705,12 +1704,12 @@ export default function App() {
       )}
       */}
 
-      {isLabelOpen && (
-        <LabelModal
-          open
-          onClose={() => setIsLabelOpen(false)}
-        />
-      )}
+        {isLabelOpen && (
+          <LabelModal
+            open
+            onClose={() => setIsLabelOpen(false)}
+          />
+        )}
 
     </div>
   )
