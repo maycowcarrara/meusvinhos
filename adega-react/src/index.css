@@ -1440,3 +1440,65 @@ p.main-subtitle {
   color: var(--primary);
   opacity: 0.9;
 }
+
+/* ========== PAINEL IA COLAPSÁVEL ========== */
+.ai-panel {
+  background: linear-gradient(135deg, #fdf6f9 0%, #f9f0f5 100%);
+  border-bottom: 3px solid var(--primary);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    max-height: 500px;
+    transform: translateY(0);
+  }
+}
+
+.ai-panel-content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ai-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(139, 34, 82, 0.1);
+}
+
+.ai-answer {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary);
+}
+
+.ai-answer p {
+  margin: 8px 0;
+}
+
+.ai-answer strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .ai-panel-content {
+    padding: 16px;
+  }
+
+  .ai-textarea {
+    font-size: 16px;
+    /* Previne zoom no iOS */
+  }
+}

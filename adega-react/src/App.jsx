@@ -842,6 +842,13 @@ export default function App() {
   const [isAskOpen, setIsAskOpen] = useState(false);
   const [isLabelOpen, setIsLabelOpen] = useState(false);
 
+  // Painel IA colapsável integrado
+  const [isAIPanelOpen, setIsAIPanelOpen] = useState(false);
+  const [aiQuestion, setAiQuestion] = useState('');
+  const [aiAnswer, setAiAnswer] = useState('');
+  const [isAILoading, setIsAILoading] = useState(false);
+  const [compareMode, setCompareMode] = useState(false);
+
   // modal Dashboard
   const [isDashboardOpen, setIsDashboardOpen] = useState(false)
 
@@ -1101,6 +1108,25 @@ export default function App() {
     setThemeIndex((i) => (i + 1) % THEMES.length)
   }
 
+  async function handleAskAI() {
+    if (!aiQuestion.trim()) return;
+
+    setIsAILoading(true);
+    try {
+      const result = await askAI(aiQuestion, vinhos, compareMode);
+      setAiAnswer(result);
+    } catch (err) {
+      setAiAnswer(`❌ Erro: ${err.message}`);
+    } finally {
+      setIsAILoading(false);
+    }
+  }
+
+  function clearAIPanel() {
+    setAiAnswer('');
+    setAiQuestion('');
+  }
+
   const themeBadgeStyle = {
     position: 'fixed',
     left: 12,
@@ -1122,61 +1148,204 @@ export default function App() {
   return (
     <div className="app-container">
       <header className="header-container">
-        <div className="header-title-area">
-          <HeaderIcon />
-          <h1 className="main-title">Adega Pessoal M&amp;M</h1>
-          <p className="main-subtitle">Coleção Selecionada • Catálogo Analítico</p>
+        {/* ===== PAINEL IA COLAPSÁVEL ===== */}
+        {isAIPanelOpen && (
+          <div className="ai-panel">
+            <div className="ai-panel-content">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ fontSize: '24px' }}>🤖</span>
+                  <h3 style={{ margin: 0, color: 'var(--primary)', fontSize: '18px', fontFamily: 'var(--font-title)' }}>
+                    Pergunte sobre seus vinhos
+                  </h3>
+                </div>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', cursor: 'pointer', userSelect: 'none' }}>
+                  <input
+                    type="checkbox"
+                    checked={compareMode}
+                    onChange={(e) => setCompareMode(e.target.checked)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <span>Modo comparação</span>
+                </label>
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                <textarea
+                  className="ai-textarea"
+                  placeholder="Ex: Quais vinhos são de Portugal? Qual tem maior teor alcoólico?"
+                  value={aiQuestion}
+                  onChange={(e) => setAiQuestion(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleAskAI();
+                    }
+                  }}
+                  rows={2}
+                  style={{
+                    flex: 1,
+                    padding: '12px',
+                    border: '2px solid var(--border)',
+                    borderRadius: '8px',
+                    fontFamily: 'inherit',
+                    fontSize: '14px',
+                    resize: 'vertical'
+                  }}
+                />
+                <button
+                  className="action-btn"
+                  onClick={handleAskAI}
+                  disabled={isAILoading || !aiQuestion.trim()}
+                  style={{ minWidth: '120px', alignSelf: 'flex-start' }}
+                >
+                  {isAILoading ? 'Consultando...' : 'Perguntar'}
+                </button>
+              </div>
+
+              {aiAnswer && (
+                <div className="ai-answer">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontWeight: 600, color: 'var(--primary)' }}>💬 Resposta:</span>
+                    <button
+                      onClick={clearAIPanel}
+                      title="Limpar"
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        fontSize: '24px',
+                        cursor: 'pointer',
+                        color: 'var(--text-muted)',
+                        padding: 0,
+                        width: '28px',
+                        height: '28px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '4px'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <div style={{ color: 'var(--text)', lineHeight: 1.6 }}>
+                    {aiAnswer.split('\n').map((line, i) => {
+                      const parts = line.split(/(\*\*.*?\*\*)/g);
+                      return (
+                        <p key={i} style={{ margin: '8px 0' }}>
+                          {parts.map((part, j) => {
+                            if (part.startsWith('**') && part.endsWith('**')) {
+                              return <strong key={j}>{part.slice(2, -2)}</strong>;
+                            }
+                            return part;
+                          })}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ===== HEADER COMPACTO ===== */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '12px 20px',
+          gap: '16px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <svg viewBox="0 0 24 24" width="36" height="36" style={{ flexShrink: 0, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>
+              <path d="M12 2C12.55 2 13 2.45 13 3V4.17C14.17 4.58 15 5.69 15 7C15 8.66 13.66 10 12 10C10.34 10 9 8.66 9 7C9 5.69 9.83 4.58 11 4.17V3C11 2.45 11.45 2 12 2M17 9C18.1 9 19 9.9 19 11C19 12.1 18.1 13 17 13C16.9 13 16.8 13 16.7 12.98C16.89 12.38 17 11.72 17 11.03V11H17M7 9C7 11.03 7.11 12.38 7.3 12.98C7.2 13 7.1 13 7 13C5.9 13 5 12.1 5 11C5 9.9 5.9 9 7 9M12 11C13.66 11 15 12.34 15 14C15 15.66 13.66 17 12 17C10.34 17 9 15.66 9 14C9 12.34 10.34 11 12 11M17.3 14.02C17.11 14.62 17 15.97 17 18C17 19.1 16.1 20 15 20C14.72 20 14.45 19.94 14.2 19.84C14.54 19.04 14.82 18.07 14.94 17.01C14.98 17 15.02 16.99 15.06 16.99C15.04 16.95 15.02 16.92 15 16.88C14.78 16.95 14.54 16.99 14.3 17.02C14.11 17.62 14 18.97 14 21C14 22.1 13.1 23 12 23C10.9 23 10 22.1 10 21C10 18.97 9.89 17.62 9.7 17.02C9.46 16.99 9.22 16.95 9 16.88C8.98 16.92 8.96 16.95 8.94 16.99C8.98 16.99 9.02 17 9.06 17.01C9.18 18.07 9.46 19.04 9.8 19.84C9.55 19.94 9.28 20 9 20C7.9 20 7 19.1 7 18C7 15.97 6.89 14.62 6.7 14.02C6.8 14.01 6.9 14 7 14C7.02 14 7.04 14 7.06 14C7.14 14.78 7.33 15.63 7.58 16.51C7.83 16.45 8.09 16.41 8.37 16.39C8.43 15.71 8.65 15.12 9 14.65V14.64C9 14.42 9.04 14.21 9.13 14.01C9.7 13.63 10.74 13.31 11.97 13.04C12.04 13.31 13.7 13.63 14.27 14.01C14.35 14.21 14.39 14.42 14.39 14.64V14.65C14.74 15.12 14.97 15.71 15.02 16.39C15.3 16.41 15.57 16.45 15.82 16.51C16.06 15.63 16.25 14.78 16.33 14C16.35 14 16.37 14 16.39 14C16.49 14 16.59 14.01 16.69 14.02Z" fill="currentColor" />
+            </svg>
+            <div>
+              <h1 style={{
+                fontSize: '1.6rem',
+                margin: 0,
+                fontFamily: 'var(--font-title)',
+                color: 'var(--text)'
+              }}>
+                Adega Pessoal M&M
+              </h1>
+              <p style={{
+                fontSize: '0.85rem',
+                margin: '2px 0 0 0',
+                color: 'var(--text-muted)'
+              }}>
+                Coleção Selecionada • Catálogo Analítico
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIsAIPanelOpen(!isAIPanelOpen)}
+            title={isAIPanelOpen ? 'Fechar IA' : 'Perguntar à IA'}
+            style={{
+              padding: '8px 16px',
+              background: 'var(--primary)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: 500,
+              whiteSpace: 'nowrap',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            🤖 {isAIPanelOpen ? '▲' : '▼'}
+          </button>
         </div>
 
+        {/* ===== FILTROS (mantidos iguais) ===== */}
         <div className="filter-bar no-print">
-          <input className="filter-input" placeholder="Buscar..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <input
+            className="filter-input"
+            placeholder="Buscar..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
           <select className="filter-select" value={country} onChange={(e) => setCountry(e.target.value)}>
             <option value="">País</option>
-            {countries.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
+            {countries.map((c) => (<option key={c} value={c}>{c}</option>))}
           </select>
 
           <select className="filter-select" value={year} onChange={(e) => setYear(e.target.value)}>
             <option value="">Safra</option>
-            {years.map((y) => (
-              <option key={y} value={y}>
-                {y}
-              </option>
-            ))}
+            {years.map((y) => (<option key={y} value={y}>{y}</option>))}
           </select>
 
           <select className="filter-select" value={abv} onChange={(e) => setAbv(e.target.value)}>
             <option value="">Álcool</option>
-            {abvs.map((a) => (
-              <option key={a} value={a}>
-                {a}
-              </option>
-            ))}
+            {abvs.map((a) => (<option key={a} value={a}>{a}</option>))}
           </select>
 
           <select className="filter-select" value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="nome">Nome (A-Z)</option>
-            <option value="forcaDesc">Força +</option>
-            <option value="forcaAsc">Força -</option>
-            <option value="safraDesc">Safra nova</option>
-            <option value="safraAsc">Safra antiga</option>
-            <option value="abvDesc">Álcool +</option>
+            <option value="forcaDesc">Força ↓</option>
+            <option value="forcaAsc">Força ↑</option>
+            <option value="safraDesc">Safra (nova)</option>
+            <option value="safraAsc">Safra (antiga)</option>
+            <option value="abvDesc">Álcool ↓</option>
           </select>
 
-          <button className="action-btn action-btn--danger" onClick={clearFilters} title="Limpar">
-            X
-          </button>
-
-          <button
-            className="action-btn"
-            onClick={openEdit}
-            title={unlocked ? (isEditMode ? 'Sair da edição' : 'Entrar em edição') : 'Desbloquear edição'}
-          >
-            ✎
+          <button className="action-btn action-btn--danger" onClick={clearFilters} title="Limpar">X</button>
+          <button className="action-btn" onClick={openEdit} title={unlocked ? (isEditMode ? "Sair da edição" : "Entrar em edição") : "Desbloquear edição"}>
+            🔓
           </button>
 
           {unlocked && (
@@ -1184,12 +1353,12 @@ export default function App() {
               🔒
             </button>
           )}
-
-          <div className="filter-stats">Exibindo {filtered.length} rótulos</div>
         </div>
+
+        <div className="filter-stats">Exibindo {filtered.length} rótulos</div>
       </header>
 
-      <main className="catalog-grid">
+      < main className="catalog-grid">
         {filtered.map((v) => {
           const forca = Number(v.forca) || 0
           const pctForca = Math.max(0, Math.min(100, (forca / 5) * 100))
@@ -1351,7 +1520,7 @@ export default function App() {
             </div>
           )
         })}
-      </main>
+      </>
 
       <div className="no-print" style={themeBadgeStyle}>
         Tema: {currentTheme.name}
@@ -1359,13 +1528,13 @@ export default function App() {
 
       <div className="fab-container no-print" role="group" aria-label="Ações rápidas">
 
-        <button
+        {/*<button
           className="fab"
           onClick={() => setIsAskOpen(true)}
           title="Perguntar sobre vinhos"
         >
           💬
-        </button>
+        </button>*/}
 
         {unlocked && isEditMode && (
           <button
@@ -1526,6 +1695,7 @@ export default function App() {
         </div>
       )}
 
+      {/*
       {isAskOpen && (
         <AskModal
           open
@@ -1533,6 +1703,7 @@ export default function App() {
           vinhos={vinhos}
         />
       )}
+      */}
 
       {isLabelOpen && (
         <LabelModal
