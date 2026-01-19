@@ -65,12 +65,21 @@ export default function AskModal({ open, onClose, vinhos }) {
         const v1 = vinhos.find(v => v.nome === wine1);
         const v2 = vinhos.find(v => v.nome === wine2);
 
-        const prompt = `Compare detalhadamente estes dois vinhos:
+        // PROMPT COMPARAÇÃO
+        const prompt = `Você é um sommelier experiente. Compare detalhadamente estes dois vinhos do catálogo:
 
-VINHO 1: ${JSON.stringify(v1)}
-VINHO 2: ${JSON.stringify(v2)}
+        VINHO 1: ${JSON.stringify(v1, null, 2)}
 
-Analise: corpo, força, uvas, região, harmonização, e qual você recomendaria para diferentes ocasiões.`;
+        VINHO 2: ${JSON.stringify(v2, null, 2)}
+
+        Faça uma análise comparativa abordando:
+        - **Perfil sensorial**: uvas, região, características de sabor
+        - **Corpo e força**: qual é mais encorpado/estruturado
+        - **Harmonização**: pratos ideais para cada um
+        - **Ocasiões**: quando escolher um ou outro
+        - **Preço/qualidade**: baseado na safra, região e complexidade
+
+        Seja específico e prático na recomendação.`;
 
         setLoading(true);
         setError("");
