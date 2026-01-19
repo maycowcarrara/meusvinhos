@@ -1274,12 +1274,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  <Stars
-                    value={ratings[v.nome] ?? 0}
-                    readOnly={!(isEditMode && unlocked)}
-                    onChange={(val) => setRating(v.nome, val)}
-                  />
-
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     <Stars
                       value={ratings[v.nome] ?? 0}
