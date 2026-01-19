@@ -196,14 +196,18 @@ export default {
 						400
 					);
 				}
-
+				// PROMPT 
 				const prompt =
-					"Responda usando APENAS os dados do JSON abaixo (catálogo de vinhos). " +
-					"Se não der para responder, diga que não há dados suficientes.\n\n" +
+					"Você é um sommelier experiente. Responda com base no catálogo abaixo.\n\n" +
+					"Se a pergunta for sobre harmonização ou recomendações e o catálogo não tiver detalhes suficientes, " +
+					"use as características dos vinhos (país, região, uvas, força, teor alcoólico) e seu conhecimento de sommelier " +
+					"para sugerir qual(is) vinho(s) do catálogo seria(m) melhor(es).\n\n" +
+					"IMPORTANTE: Recomende APENAS vinhos que estão no catálogo abaixo. Nunca sugira vinhos que não estão listados.\n\n" +
 					"PERGUNTA:\n" +
 					question +
-					"\n\nCATALOGO_JSON:\n" +
+					"\n\nCATÁLOGO:\n" +
 					JSON.stringify(vinhos);
+
 
 				const answer = await geminiGenerateText(env, prompt);
 				return jsonResponse({ answer }, requestOrigin);
