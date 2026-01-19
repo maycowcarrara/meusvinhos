@@ -1710,6 +1710,7 @@ export default function App() {
             onClose={() => setIsLabelOpen(false)}
           />
         )}
+      </main>
 
     </div>
   )
