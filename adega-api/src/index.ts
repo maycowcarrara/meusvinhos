@@ -11,6 +11,7 @@ type Wine = {
 
 type Env = {
 	GEMINI_API_KEY: string;
+	DEEPSEEK_API_KEY: string;
 };
 
 const ALLOWED_ORIGINS = [
@@ -81,6 +82,29 @@ async function geminiGenerateJSON<T>(
 
 	return JSON.parse(text) as T;
 }
+
+async function deepseekGenerateText(env: Env, prompt: string): Promise<string> {
+	const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
+		},
+		body: JSON.stringify({
+			model: "deepseek-chat",
+			messages: [{ role: "user", content: prompt }],
+		}),
+	});
+
+	if (!res.ok) {
+		const txt = await res.text();
+		throw new Error(`DeepSeek error ${res.status}: ${txt}`);
+	}
+
+	const data = await res.json();
+	return data.choices[0].message.content;
+}
+
 
 async function geminiGenerateText(env: Env, prompt: string): Promise<string> {
 	const url =
@@ -209,7 +233,9 @@ export default {
 					JSON.stringify(vinhos);
 
 
-				const answer = await geminiGenerateText(env, prompt);
+				//const answer = await geminiGenerateText(env, prompt);
+				const answer = await deepseekGenerateText(env, prompt);
+
 				return jsonResponse({ answer }, requestOrigin);
 			} catch (err: any) {
 				return jsonResponse({ error: err?.message || "Erro ao processar" }, requestOrigin, 500);
