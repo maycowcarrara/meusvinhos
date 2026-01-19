@@ -4,6 +4,8 @@ import { useLocalStorage } from './hooks/useLocalStorage'
 import Stars from './components/Stars'
 import AskModal from "./ai/AskModal";
 import LabelModal from "./ai/LabelModal";
+import { askAI, suggestRating } from "./ai/api";
+
 
 const RATINGS_KEY = 'adega:ratings'
 
@@ -1277,6 +1279,34 @@ export default function App() {
                     readOnly={!(isEditMode && unlocked)}
                     onChange={(val) => setRating(v.nome, val)}
                   />
+
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <Stars
+                      value={ratings[v.nome] ?? 0}
+                      readOnly={!isEditMode || !unlocked}
+                      onChange={(val) => setRating(v.nome, val)}
+                    />
+
+                    {unlocked && isEditMode && (
+                      <button
+                        className="action-btn"
+                        onClick={async () => {
+                          try {
+                            const nota = await suggestRating(v);
+                            if (confirm(`IA sugere nota ${nota}. Aceitar?`)) {
+                              setRating(v.nome, nota);
+                            }
+                          } catch (err) {
+                            alert("Erro ao sugerir nota: " + err.message);
+                          }
+                        }}
+                        title="IA sugere nota"
+                        style={{ fontSize: "0.8em" }}
+                      >
+                        ✨
+                      </button>
+                    )}
+                  </div>
 
                   <div className="poetic-desc">{v.poesia}</div>
 
