@@ -511,38 +511,6 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
       if (hasMany && e.key === 'ArrowRight') onNext?.()
     }
 
-    // PWA
-    useEffect(() => {
-      function isInStandaloneMode() {
-        return window.matchMedia('(display-mode: standalone)').matches ||
-          window.navigator.standalone === true;
-      }
-
-      function handler(e) {
-        if (isInStandaloneMode()) return; // já está instalado, não mostra
-
-        e.preventDefault();
-        setInstallPromptEvent(e);
-        setShowInstallBar(true);
-      }
-
-      window.addEventListener('beforeinstallprompt', handler);
-      return () => window.removeEventListener('beforeinstallprompt', handler);
-    }, []);
-
-    async function handleInstallClick() {
-      if (!installPromptEvent) return;
-      installPromptEvent.prompt();
-      const { outcome } = await installPromptEvent.userChoice;
-      console.log('Instalação:', outcome);
-      setInstallPromptEvent(null);
-      setShowInstallBar(false);
-    }
-
-    function handleDismissInstall() {
-      setShowInstallBar(false);
-    }
-
     document.addEventListener('keydown', onKeyDown)
     return () => {
       document.body.style.overflow = prevOverflow
@@ -732,6 +700,38 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
     // vazio de propósito (o pan/snap está no window)
   }
 
+  // PWA
+  useEffect(() => {
+    function isInStandaloneMode() {
+      return window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+    }
+
+    function handler(e) {
+      if (isInStandaloneMode()) return; // já está instalado, não mostra
+
+      e.preventDefault();
+      setInstallPromptEvent(e);
+      setShowInstallBar(true);
+    }
+
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  async function handleInstallClick() {
+    if (!installPromptEvent) return;
+    installPromptEvent.prompt();
+    const { outcome } = await installPromptEvent.userChoice;
+    console.log('Instalação:', outcome);
+    setInstallPromptEvent(null);
+    setShowInstallBar(false);
+  }
+
+  function handleDismissInstall() {
+    setShowInstallBar(false);
+  }
+
   if (!open || !slide) return null
 
   const srcToShow = hiLoaded ? slide.highSrc : slide.lowSrc
@@ -893,7 +893,7 @@ export default function App() {
   // lightbox (agora com slides + index)
   const [lb, setLb] = useState({ open: false, index: 0, slides: [] })
   const preloadedRef = useRef(new Set())
-  
+
   // PWA
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
   const [showInstallBar, setShowInstallBar] = useState(false);
@@ -905,6 +905,38 @@ export default function App() {
     const n = raw == null ? 0 : parseInt(raw, 10)
     return Number.isFinite(n) ? n : 0
   })
+
+  // PWA
+  useEffect(() => {
+    function isInStandaloneMode() {
+      return window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+    }
+
+    function handler(e) {
+      if (isInStandaloneMode()) return; // já está instalado, não mostra
+
+      e.preventDefault();
+      setInstallPromptEvent(e);
+      setShowInstallBar(true);
+    }
+
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  async function handleInstallClick() {
+    if (!installPromptEvent) return;
+    installPromptEvent.prompt();
+    const { outcome } = await installPromptEvent.userChoice;
+    console.log('Instalação:', outcome);
+    setInstallPromptEvent(null);
+    setShowInstallBar(false);
+  }
+
+  function handleDismissInstall() {
+    setShowInstallBar(false);
+  }
 
   const currentTheme = THEMES[((themeIndex % THEMES.length) + THEMES.length) % THEMES.length]
 
