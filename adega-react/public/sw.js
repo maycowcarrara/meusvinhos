@@ -27,6 +27,11 @@ self.addEventListener('fetch', event => {
     const { request } = event;
     if (request.method !== 'GET') return;
 
+    // ignora chrome-extension, chrome-devtools etc.
+    if (!request.url.startsWith('http')) {
+        return;
+    }
+
     event.respondWith(
         caches.match(request).then(cached => {
             if (cached) return cached;

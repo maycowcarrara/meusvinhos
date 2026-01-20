@@ -362,9 +362,6 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
   const [tx, setTx] = useState(0)
   const [ty, setTy] = useState(0)
 
-  const [installPromptEvent, setInstallPromptEvent] = useState(null);
-  const [showInstallBar, setShowInstallBar] = useState(false);
-
   const imgRef = useRef(null)
   const wrapRef = useRef(null)
 
@@ -896,6 +893,11 @@ export default function App() {
   // lightbox (agora com slides + index)
   const [lb, setLb] = useState({ open: false, index: 0, slides: [] })
   const preloadedRef = useRef(new Set())
+  
+  // PWA
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
+  const [showInstallBar, setShowInstallBar] = useState(false);
+
 
   // tema (índice salvo)
   const [themeIndex, setThemeIndex] = useState(() => {
@@ -1963,7 +1965,7 @@ export default function App() {
           />
         )}
       </main>
-      
+
       {showInstallBar && (
         <div
           className="no-print"
