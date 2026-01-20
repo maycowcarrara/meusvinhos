@@ -362,6 +362,9 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
   const [tx, setTx] = useState(0)
   const [ty, setTy] = useState(0)
 
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
+  const [showInstallBar, setShowInstallBar] = useState(false);
+
   const imgRef = useRef(null)
   const wrapRef = useRef(null)
 
@@ -509,6 +512,38 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
       if (e.key === '0') resetZoom()
       if (hasMany && e.key === 'ArrowLeft') onPrev?.()
       if (hasMany && e.key === 'ArrowRight') onNext?.()
+    }
+
+    // PWA
+    useEffect(() => {
+      function isInStandaloneMode() {
+        return window.matchMedia('(display-mode: standalone)').matches ||
+          window.navigator.standalone === true;
+      }
+
+      function handler(e) {
+        if (isInStandaloneMode()) return; // já está instalado, não mostra
+
+        e.preventDefault();
+        setInstallPromptEvent(e);
+        setShowInstallBar(true);
+      }
+
+      window.addEventListener('beforeinstallprompt', handler);
+      return () => window.removeEventListener('beforeinstallprompt', handler);
+    }, []);
+
+    async function handleInstallClick() {
+      if (!installPromptEvent) return;
+      installPromptEvent.prompt();
+      const { outcome } = await installPromptEvent.userChoice;
+      console.log('Instalação:', outcome);
+      setInstallPromptEvent(null);
+      setShowInstallBar(false);
+    }
+
+    function handleDismissInstall() {
+      setShowInstallBar(false);
     }
 
     document.addEventListener('keydown', onKeyDown)
@@ -1580,7 +1615,7 @@ export default function App() {
 
           return (
             <div className="wine-card" key={v.nome}>
-              
+
               {/* Label de status */}
               <div
                 className={`status-chip status-${v.status || "available"}`}
@@ -1928,6 +1963,57 @@ export default function App() {
           />
         )}
       </main>
+      
+      {showInstallBar && (
+        <div
+          className="no-print"
+          style={{
+            position: 'fixed',
+            bottom: 16,
+            right: 16,
+            zIndex: 99999,
+            padding: '8px 12px',
+            borderRadius: 999,
+            background: 'rgba(0,0,0,0.85)',
+            color: '#fff',
+            fontSize: 13,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
+          }}
+        >
+          <span>Instalar Adega M&amp;M?</span>
+          <button
+            onClick={handleInstallClick}
+            style={{
+              border: 'none',
+              borderRadius: 999,
+              padding: '4px 10px',
+              background: 'var(--primary)',
+              color: '#fff',
+              cursor: 'pointer',
+              fontSize: 12,
+            }}
+          >
+            Instalar
+          </button>
+          <button
+            onClick={handleDismissInstall}
+            style={{
+              border: 'none',
+              background: 'transparent',
+              color: '#aaa',
+              cursor: 'pointer',
+              fontSize: 16,
+              lineHeight: 1,
+            }}
+            aria-label="Fechar aviso de instalação"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
     </div>
   )
