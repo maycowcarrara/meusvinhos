@@ -700,38 +700,6 @@ function Lightbox({ open, slides, index, onClose, onPrev, onNext }) {
     // vazio de propósito (o pan/snap está no window)
   }
 
-  // PWA
-  useEffect(() => {
-    function isInStandaloneMode() {
-      return window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true;
-    }
-
-    function handler(e) {
-      if (isInStandaloneMode()) return; // já está instalado, não mostra
-
-      e.preventDefault();
-      setInstallPromptEvent(e);
-      setShowInstallBar(true);
-    }
-
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  async function handleInstallClick() {
-    if (!installPromptEvent) return;
-    installPromptEvent.prompt();
-    const { outcome } = await installPromptEvent.userChoice;
-    console.log('Instalação:', outcome);
-    setInstallPromptEvent(null);
-    setShowInstallBar(false);
-  }
-
-  function handleDismissInstall() {
-    setShowInstallBar(false);
-  }
-
   if (!open || !slide) return null
 
   const srcToShow = hiLoaded ? slide.highSrc : slide.lowSrc
