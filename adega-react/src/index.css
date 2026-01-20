@@ -320,6 +320,43 @@ p.main-subtitle {
   overflow: hidden;
 }
 
+
+/* Chip discreto no canto */
+.status-chip {
+  position: absolute;
+  top: 20px;
+  right: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.3);
+  /* fundo bem leve */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Diferença só no contorno/cor do texto, mantendo sempre discreto */
+.status-available {
+  color: var(--text-muted);
+  border-color: rgba(0, 128, 0, 0.25);
+}
+
+.status-reserved {
+  color: var(--accent);
+  /* usa sua cor de destaque */
+  border-color: rgba(255, 165, 0, 0.35);
+}
+
+.status-consumed {
+  color: rgba(120, 0, 0, 0.8);
+  border-color: rgba(120, 0, 0, 0.25);
+}
+
 .card-top-solid {
   height: 10px;
   width: 100%;

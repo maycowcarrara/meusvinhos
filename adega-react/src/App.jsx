@@ -1580,6 +1580,19 @@ export default function App() {
 
           return (
             <div className="wine-card" key={v.nome}>
+              
+              {/* Label de status */}
+              <div
+                className={`status-chip status-${v.status || "available"}`}
+                aria-label={`Status: ${v.status || "available"}`}
+              >
+                {v.status === "consumed"
+                  ? "Consumido"
+                  : v.status === "reserved"
+                    ? "Reservado"
+                    : "Disponível"}
+              </div>
+
               <div className="card-top-solid" />
               <div className="card-wave-top" />
               <div className="bg-text-top">{v.nome}</div>
