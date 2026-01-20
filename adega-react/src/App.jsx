@@ -894,11 +894,6 @@ export default function App() {
   const [lb, setLb] = useState({ open: false, index: 0, slides: [] })
   const preloadedRef = useRef(new Set())
 
-  // PWA
-  const [installPromptEvent, setInstallPromptEvent] = useState(null);
-  const [showInstallBar, setShowInstallBar] = useState(false);
-
-
   // tema (índice salvo)
   const [themeIndex, setThemeIndex] = useState(() => {
     const raw = localStorage.getItem(THEME_KEY)
@@ -907,6 +902,9 @@ export default function App() {
   })
 
   // PWA
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
+  const [showInstallBar, setShowInstallBar] = useState(false);
+
   useEffect(() => {
     function isInStandaloneMode() {
       return window.matchMedia('(display-mode: standalone)').matches ||
