@@ -880,8 +880,8 @@ export default function App() {
     }
 
     function handler(e) {
-      console.log('beforeinstallprompt disparou no mobile');
-      alert('beforeinstallprompt disparou!');
+      //console.log('beforeinstallprompt disparou no mobile');
+      //alert('beforeinstallprompt disparou!');
       if (isInStandaloneMode()) return; // já está instalado, não mostra
 
       e.preventDefault();
