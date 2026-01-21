@@ -843,7 +843,7 @@ export default function App() {
   const [isLabelOpen, setIsLabelOpen] = useState(false);
 
   // Painel IA colapsável integrado
-  const [isAIPanelOpen, setIsAIPanelOpen] = useState(false);
+  const [isAIPanelOpen, setIsAIPanelOpen] = useState(true);
   const [aiQuestion, setAiQuestion] = useState('');
   const [aiAnswer, setAiAnswer] = useState('');
   const [isAILoading, setIsAILoading] = useState(false);
