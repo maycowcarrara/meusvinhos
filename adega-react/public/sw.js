@@ -1,4 +1,4 @@
-const CACHE_NAME = 'adega-mm-v3';
+const CACHE_NAME = 'adega-mm-v4';
 
 const ASSETS = [
     '/meusvinhos/',
